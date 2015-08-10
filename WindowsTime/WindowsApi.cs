@@ -47,9 +47,14 @@ namespace WindowsTime
             return ProcessHelper.GetProcess(processName);
         }
 
-        public static string GetWindowExecutableName(Process process)
+        public static string GetWindowFilePath(Process process)
         {
-            return ProcessHelper.GetWindowExecutableName(process);
+            return ProcessHelper.GetWindowExecutableFileName(process);
+        }
+
+        public static string GetWindowFileDescription(Process process)
+        {
+            return ProcessHelper.GetWindowExecutableDescription(process);
         }
 
         public static Icon GetProcessIcon(Process process)

@@ -3,11 +3,11 @@ using System.Windows.Forms;
 
 namespace WindowsTime
 {
-    public partial class Form1 : Form
+    public partial class FrmDebug : Form
     {
         private readonly MedidorDeTempoDeJanela _medidor = MedidorDeTempoDeJanela.Instance;
 
-        public Form1()
+        public FrmDebug()
         {
             InitializeComponent();
 
@@ -26,7 +26,7 @@ namespace WindowsTime
                 lblHandle.Text = janela.WindowsHandle.ToString();
                 lblIdProcesso.Text = janela.Processo.Id.ToString();
                 lblNomeJanela.Text = janela.Titulo;
-                lblExecutavel.Text = janela.NomeDoExecutavel;
+                lblExecutavel.Text = janela.Executavel;
 
                 DrawProcessIcon(janela);
             }));
@@ -53,6 +53,11 @@ namespace WindowsTime
             {
                 lblTempo.Text = _medidor.JanelaAtiva.TempoDeAtividade.ToString(@"mm\:ss");
             }
+        }
+
+        private void btnChart_Click(object sender, EventArgs e)
+        {
+            new FrmPrincipal().ShowDialog(this);
         }
     }
 }

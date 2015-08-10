@@ -7,9 +7,10 @@ namespace WindowsTime
     {
         private readonly Stopwatch _medidorDetempo = new Stopwatch();
 
-        public int WindowsHandle { get; set; }
-        public string Titulo { get; set; }
-        public Process Processo { get; set; }
+        public int WindowsHandle { get; private set; }
+        public string Titulo { get; private set; }
+        public Process Processo { get; private set; }
+        public string Executavel { get; private set; }
         public string NomeDoExecutavel { get; set; }
         public bool EstaAtiva { get; private set; }
         public TimeSpan TempoDeAtividade { get { return _medidorDetempo.Elapsed; } }
@@ -19,7 +20,8 @@ namespace WindowsTime
             WindowsHandle = windowsHandle;
             Titulo = WindowsApi.GetWindowsText(windowsHandle);
             Processo = WindowsApi.GetProcess(windowsHandle);
-            NomeDoExecutavel = WindowsApi.GetWindowExecutableName(Processo);
+            Executavel = WindowsApi.GetWindowFilePath(Processo);
+            NomeDoExecutavel = WindowsApi.GetWindowFileDescription(Processo);
         }
 
         public void NotificarJanelaAtiva()

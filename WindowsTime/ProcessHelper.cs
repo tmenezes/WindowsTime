@@ -22,11 +22,25 @@ namespace WindowsTime
                        : null;
         }
 
-        public static string GetWindowExecutableName(Process process)
+        public static string GetWindowExecutableFileName(Process process)
         {
             try
             {
                 return process.MainModule.FileName;
+            }
+            catch (Exception)
+            {
+                return process.Id == GetProcess("explorer").Id
+                           ? "Windows Explorer"
+                           : "ERRO";
+            }
+        }
+
+        public static string GetWindowExecutableDescription(Process process)
+        {
+            try
+            {
+                return process.MainModule.FileVersionInfo.FileDescription;
             }
             catch (Exception)
             {

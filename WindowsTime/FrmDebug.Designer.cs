@@ -1,6 +1,6 @@
 ﻿namespace WindowsTime
 {
-    partial class Form1
+    partial class FrmDebug
     {
         /// <summary>
         /// Required designer variable.
@@ -40,6 +40,7 @@
             this.picIconeProcesso = new System.Windows.Forms.PictureBox();
             this.lblTempo = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnChart = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picIconeProcesso)).BeginInit();
             this.SuspendLayout();
             // 
@@ -136,11 +137,22 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // Form1
+            // btnChart
+            // 
+            this.btnChart.Location = new System.Drawing.Point(8, 80);
+            this.btnChart.Name = "btnChart";
+            this.btnChart.Size = new System.Drawing.Size(32, 23);
+            this.btnChart.TabIndex = 12;
+            this.btnChart.Text = "...";
+            this.btnChart.UseVisualStyleBackColor = true;
+            this.btnChart.Click += new System.EventHandler(this.btnChart_Click);
+            // 
+            // FrmDebug
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(806, 112);
+            this.Controls.Add(this.btnChart);
             this.Controls.Add(this.lblTempo);
             this.Controls.Add(this.picIconeProcesso);
             this.Controls.Add(this.lblIdProcesso);
@@ -152,7 +164,7 @@
             this.Controls.Add(this.lblHandle);
             this.Controls.Add(this.lblNomeJanela);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "Form1";
+            this.Name = "FrmDebug";
             this.Text = "Windows Time - TMenezes 2015";
             ((System.ComponentModel.ISupportInitialize)(this.picIconeProcesso)).EndInit();
             this.ResumeLayout(false);
@@ -173,6 +185,7 @@
         private System.Windows.Forms.PictureBox picIconeProcesso;
         private System.Windows.Forms.Label lblTempo;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btnChart;
     }
 }
 
