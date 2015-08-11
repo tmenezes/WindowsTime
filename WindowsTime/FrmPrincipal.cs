@@ -12,7 +12,8 @@ namespace WindowsTime
         private const string TRAY_PREVIEW = "2";
         private const string TRAY_SAIR = "3";
         private readonly MedidorDeTempoDeJanela _medidor = MedidorDeTempoDeJanela.Instance;
-        private bool _jaExibiuPrimeiroBallon = false;
+        private bool _exibiuBallonFechar = false;
+        private bool _exibiuBallonMinimizar = false;
         private int _debugClicks = 0;
 
 
@@ -29,13 +30,9 @@ namespace WindowsTime
         // eventos form
         private void FrmPrincipal_Resize(object sender, EventArgs e)
         {
-            if (FormWindowState.Minimized == this.WindowState)
+            if (WindowState == FormWindowState.Minimized)
             {
-                MinimizarParaSysTray();
-            }
-            else if (FormWindowState.Normal == this.WindowState)
-            {
-                notifyIcon1.Visible = false;
+                MinimizarParaSysTray(fechando: false);
             }
         }
 
@@ -54,7 +51,7 @@ namespace WindowsTime
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                MinimizarParaSysTray();
+                MinimizarParaSysTray(fechando: true);
                 e.Cancel = true;
             }
         }
@@ -73,20 +70,20 @@ namespace WindowsTime
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
         {
-            this.Show();
+            ShowForm();
         }
 
         private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Tag.ToString() == TRAY_ABRIR)
             {
-                this.Show();
+                ShowForm();
                 return;
             }
 
             if (e.ClickedItem.Tag.ToString() == TRAY_PREVIEW)
             {
-                this.Show();
+                ShowForm();
                 return;
             }
 
@@ -138,10 +135,22 @@ namespace WindowsTime
 
         private void CarregarGrid(IEnumerable<JanelaPorExecutavel> janelas)
         {
-            var source = new BindingSource { DataSource = janelas };
+            var linhaSelecionada = (gridProgramas.SelectedRows.Count > 0)
+                ? gridProgramas.SelectedRows[0].Index
+                : -1;
 
+            var source = new BindingSource { DataSource = janelas };
             gridProgramas.AutoGenerateColumns = false;
             gridProgramas.DataSource = source;
+
+            var deveReselecionarLinha = linhaSelecionada >= 0;
+            if (deveReselecionarLinha)
+            {
+                gridProgramas.SelectedRows.OfType<DataGridViewRow>().ToList().ForEach(r => r.Selected = false);
+
+                gridProgramas.Rows[linhaSelecionada].Selected = true;
+                gridProgramas.FirstDisplayedScrollingRowIndex = linhaSelecionada;
+            }
         }
 
         private IEnumerable<JanelaPorExecutavel> GetJanelasAgrupadasPorExecutavel()
@@ -160,15 +169,31 @@ namespace WindowsTime
             return janelas;
         }
 
-        private void MinimizarParaSysTray()
+        private void ShowForm()
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+        }
+
+        private void MinimizarParaSysTray(bool fechando)
         {
             notifyIcon1.Visible = true;
             this.Hide();
 
-            if (!_jaExibiuPrimeiroBallon)
-                notifyIcon1.ShowBalloonTip(3000);
+            if (fechando)
+            {
+                if (!_exibiuBallonFechar)
+                    notifyIcon1.ShowBalloonTip(3000);
 
-            _jaExibiuPrimeiroBallon = true;
+                _exibiuBallonFechar = true;
+            }
+            else
+            {
+                if (!_exibiuBallonMinimizar)
+                    notifyIcon1.ShowBalloonTip(3000);
+
+                _exibiuBallonMinimizar = true;
+            }
         }
     }
 }

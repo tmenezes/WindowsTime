@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 
 namespace WindowsTime
@@ -34,7 +35,7 @@ namespace WindowsTime
 
             return GetWindowText(handle, buffer, chars) > 0
                        ? buffer.ToString()
-                       : "{indefinido}";
+                       : "[ indefinido ]";
         }
 
         public static Process GetProcess(int handle)
@@ -63,7 +64,7 @@ namespace WindowsTime
 
         public static Icon GetProcessIcon(Process process)
         {
-            return ProcessHelper.GetProcessIcon(process.Id);
+            return ProcessHelper.GetProcessIcon(process);
         }
 
         public static Icon GetWindowsShell32Icon(int number, bool largeIcon)

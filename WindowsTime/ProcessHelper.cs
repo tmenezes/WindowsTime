@@ -30,7 +30,7 @@ namespace WindowsTime
             }
             catch (Exception)
             {
-                return process.Id == GetProcess("explorer").Id
+                return IsExplorerProcess(process)
                            ? "Windows Explorer"
                            : "Windows";
             }
@@ -40,31 +40,34 @@ namespace WindowsTime
         {
             try
             {
-                return process.MainModule.FileVersionInfo.FileDescription;
+                return process.MainModule.FileVersionInfo.FileDescription ?? "Windows";
             }
             catch (Exception)
             {
-                return process.Id == GetProcess("explorer").Id
+                return IsExplorerProcess(process)
                            ? "Windows Explorer"
                            : "Windows";
             }
         }
 
-        public static Icon GetProcessIcon(int processId)
+        public static Icon GetProcessIcon(Process process)
         {
             try
             {
-                var process = Process.GetProcessById(processId);
-                var ico = Icon.ExtractAssociatedIcon(process.MainModule.FileName);
-
-                return ico;
+                return WindowsApi.GetIcon(process.MainModule.FileName, 0, true);
             }
             catch (Exception)
             {
-                return processId == GetProcess("explorer").Id
+                return IsExplorerProcess(process)
                            ? WindowsApi.GetExplorerIcon(0, true)
                            : null;
             }
+        }
+
+
+        private static bool IsExplorerProcess(Process process)
+        {
+            return (process != null) && (process.Id == GetProcess("explorer").Id);
         }
     }
 }
