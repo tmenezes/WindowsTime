@@ -11,15 +11,20 @@ namespace WindowsTime
         {
             InitializeComponent();
 
-            _medidor.NovaJanelaAtiva += Medidor_NovaJanelaAtiva;
-            _medidor.Iniciar();
+            _medidor.TempoMedido += Medidor_TempoMedido;
+        }
 
-            timer1.Enabled = true;
-            timer1.Start();
+        private void FrmDebug_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                this.Hide();
+                e.Cancel = true;
+            }
         }
 
 
-        private void Medidor_NovaJanelaAtiva(object sender, Janela janela)
+        private void Medidor_TempoMedido(object sender, Janela janela)
         {
             this.Invoke((Action)(() =>
             {
@@ -27,6 +32,7 @@ namespace WindowsTime
                 lblIdProcesso.Text = janela.Processo.Id.ToString();
                 lblNomeJanela.Text = janela.Titulo;
                 lblExecutavel.Text = janela.Executavel;
+                lblTempo.Text = janela.TempoDeAtividade.ToString(@"mm\:ss");
 
                 DrawProcessIcon(janela);
             }));
@@ -45,19 +51,6 @@ namespace WindowsTime
             {
                 picIconeProcesso.Visible = false;
             }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (_medidor.JanelaAtiva != null)
-            {
-                lblTempo.Text = _medidor.JanelaAtiva.TempoDeAtividade.ToString(@"mm\:ss");
-            }
-        }
-
-        private void btnChart_Click(object sender, EventArgs e)
-        {
-            new FrmPrincipal().ShowDialog(this);
         }
     }
 }

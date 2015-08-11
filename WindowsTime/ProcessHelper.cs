@@ -32,7 +32,7 @@ namespace WindowsTime
             {
                 return process.Id == GetProcess("explorer").Id
                            ? "Windows Explorer"
-                           : "ERRO";
+                           : "Windows";
             }
         }
 
@@ -46,16 +46,25 @@ namespace WindowsTime
             {
                 return process.Id == GetProcess("explorer").Id
                            ? "Windows Explorer"
-                           : "ERRO";
+                           : "Windows";
             }
         }
 
         public static Icon GetProcessIcon(int processId)
         {
-            var process = Process.GetProcessById(processId);
-            var ico = Icon.ExtractAssociatedIcon(process.MainModule.FileName);
+            try
+            {
+                var process = Process.GetProcessById(processId);
+                var ico = Icon.ExtractAssociatedIcon(process.MainModule.FileName);
 
-            return ico;
+                return ico;
+            }
+            catch (Exception)
+            {
+                return processId == GetProcess("explorer").Id
+                           ? WindowsApi.GetExplorerIcon(0, true)
+                           : null;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace WindowsTime
@@ -6,6 +7,7 @@ namespace WindowsTime
     public class Janela
     {
         private readonly Stopwatch _medidorDetempo = new Stopwatch();
+        private readonly Dictionary<string, bool> _titulosConhecidos = new Dictionary<string, bool>();
 
         public int WindowsHandle { get; private set; }
         public string Titulo { get; private set; }
@@ -14,6 +16,7 @@ namespace WindowsTime
         public string NomeDoExecutavel { get; set; }
         public bool EstaAtiva { get; private set; }
         public TimeSpan TempoDeAtividade { get { return _medidorDetempo.Elapsed; } }
+        public int AreaOuAbasVisitadas { get; private set; }
 
         public Janela(int windowsHandle)
         {
@@ -22,7 +25,11 @@ namespace WindowsTime
             Processo = WindowsApi.GetProcess(windowsHandle);
             Executavel = WindowsApi.GetWindowFilePath(Processo);
             NomeDoExecutavel = WindowsApi.GetWindowFileDescription(Processo);
+            AreaOuAbasVisitadas = 1;
+
+            _titulosConhecidos.Add(Titulo, true);
         }
+
 
         public void NotificarJanelaAtiva()
         {
@@ -38,9 +45,20 @@ namespace WindowsTime
             _medidorDetempo.Stop();
         }
 
+        public void NotificarNovaAreaOuAbaVisitada(string novoTitulo)
+        {
+            Titulo = novoTitulo;
+
+            if (!_titulosConhecidos.ContainsKey(novoTitulo))
+            {
+                _titulosConhecidos.Add(novoTitulo, true);
+                AreaOuAbasVisitadas++;
+            }
+        }
+
         public override string ToString()
         {
-            return $"WindowsHandle: {WindowsHandle}, Titulo: {Titulo}";
+            return string.Format("WindowsHandle: {0}, Titulo: {1}", WindowsHandle, Titulo);
         }
     }
 }

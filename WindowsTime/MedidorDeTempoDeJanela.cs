@@ -22,6 +22,7 @@ namespace WindowsTime
 
         // eventos
         public event EventHandler<Janela> NovaJanelaAtiva;
+        public event EventHandler<Janela> TempoMedido;
 
 
         // construtor
@@ -62,10 +63,16 @@ namespace WindowsTime
                 janela.NotificarJanelaAtiva();
                 OnNovaJanelaAtiva(janela);
             }
+            OnTempoMedido(janela);
 
-            var deveNofiticaQueUltimaJanelaFoiDesativada = (janela != ultimaJanelaAtiva) && (ultimaJanelaAtiva != null);
-            if (deveNofiticaQueUltimaJanelaFoiDesativada)
+            var trocouDeJanela = (janela != ultimaJanelaAtiva) && (ultimaJanelaAtiva != null);
+            if (trocouDeJanela)
                 ultimaJanelaAtiva.NotificarJanelaInativa();
+
+            var novoTitulo = WindowsApi.GetWindowsText(handle);
+            var trocouDeTitulo = (janela == ultimaJanelaAtiva) && janela.Titulo != novoTitulo;
+            if (trocouDeTitulo)
+                janela.NotificarNovaAreaOuAbaVisitada(novoTitulo);
 
             ultimaJanelaAtiva = janela;
         }
@@ -86,7 +93,13 @@ namespace WindowsTime
 
         protected virtual void OnNovaJanelaAtiva(Janela janela)
         {
-            NovaJanelaAtiva?.Invoke(this, janela);
+            var handler = NovaJanelaAtiva;
+            if (handler != null) handler(this, janela);
+        }
+        protected virtual void OnTempoMedido(Janela e)
+        {
+            var handler = TempoMedido;
+            if (handler != null) handler(this, e);
         }
     }
 }

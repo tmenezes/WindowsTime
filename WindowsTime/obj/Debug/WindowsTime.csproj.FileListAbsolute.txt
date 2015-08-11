@@ -12,8 +12,9 @@ C:\Thiago\Projetos\WindowsTime\WindowsTime\obj\Debug\WindowsTime.exe
 C:\Thiago\Projetos\WindowsTime\WindowsTime\obj\Debug\WindowsTime.pdb
 C:\Thiago\Projetos\WindowsTime\WindowsTime\bin\Debug\WindowsTime.exe
 C:\Thiago\Projetos\WindowsTime\WindowsTime\bin\Debug\WindowsTime.pdb
-C:\Thiago\Projetos\WindowsTime\WindowsTime\obj\Debug\WindowsTime.csprojResolveAssemblyReference.cache
 C:\Thiago\Projetos\WindowsTime\WindowsTime\obj\Debug\WindowsTime.FrmDebug.resources
 C:\Thiago\Projetos\WindowsTime\WindowsTime\obj\Debug\WindowsTime.Properties.Resources.resources
 C:\Thiago\Projetos\WindowsTime\WindowsTime\obj\Debug\WindowsTime.csproj.GenerateResource.Cache
 C:\Thiago\Projetos\WindowsTime\WindowsTime\obj\Debug\WindowsTime.FrmPrincipal.resources
+C:\Thiago\Projetos\WindowsTime\WindowsTime\obj\Debug\WindowsTime.frmTeste.resources
+C:\Thiago\Projetos\WindowsTime\WindowsTime\obj\Debug\WindowsTime.csprojResolveAssemblyReference.cache

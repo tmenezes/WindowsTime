@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -16,6 +17,9 @@ namespace WindowsTime
 
         [DllImport("user32.dll", SetLastError = true)]
         static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        [DllImport("Shell32.dll", EntryPoint = "ExtractIconExW", CharSet = CharSet.Unicode, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+        private static extern int ExtractIconEx(string sFile, int iIndex, out IntPtr piLargeVersion, out IntPtr piSmallVersion, int amountIcons);
 
 
         public static int GetActiveWindowHandle()
@@ -60,6 +64,32 @@ namespace WindowsTime
         public static Icon GetProcessIcon(Process process)
         {
             return ProcessHelper.GetProcessIcon(process.Id);
+        }
+
+        public static Icon GetWindowsShell32Icon(int number, bool largeIcon)
+        {
+            return GetIcon("shell32.dll", number, largeIcon);
+        }
+
+        public static Icon GetExplorerIcon(int number, bool largeIcon)
+        {
+            var explorerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "explorer.exe");
+            return GetIcon(explorerPath, number, largeIcon);
+        }
+
+        public static Icon GetIcon(string filename, int number, bool largeIcon)
+        {
+            try
+            {
+                IntPtr large, small;
+                ExtractIconEx(filename, number, out large, out small, 1);
+
+                return Icon.FromHandle(largeIcon ? large : small);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
