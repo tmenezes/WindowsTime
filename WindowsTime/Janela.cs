@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using WindowsTime.Properties;
 
 namespace WindowsTime
 {
@@ -8,6 +10,7 @@ namespace WindowsTime
     {
         private readonly Stopwatch _medidorDetempo = new Stopwatch();
         private readonly Dictionary<string, bool> _titulosConhecidos = new Dictionary<string, bool>();
+        private Image _icone;
 
         public int WindowsHandle { get; private set; }
         public string Titulo { get; private set; }
@@ -17,6 +20,8 @@ namespace WindowsTime
         public bool EstaAtiva { get; private set; }
         public TimeSpan TempoDeAtividade { get { return _medidorDetempo.Elapsed; } }
         public int AreaOuAbasVisitadas { get; private set; }
+        public Image Icone { get { return _icone ?? (_icone = (WindowsApi.GetProcessIcon(Processo) ?? Resources.windows).ToBitmap()); } } // TODO: Melhorar
+
 
         public Janela(int windowsHandle)
         {

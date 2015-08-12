@@ -40,11 +40,15 @@ namespace WindowsTime
         {
             AtualizarTela();
             timer1.Enabled = true;
+            this.Opacity = 1;
         }
 
         private void FrmPrincipal_Deactivate(object sender, EventArgs e)
         {
             timer1.Enabled = true;
+
+            if (this.chkSempreVisivel.Checked)
+                this.Opacity = 0.75;
         }
 
         private void FrmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
@@ -177,6 +181,7 @@ namespace WindowsTime
                                       Processo = group.First().Processo,
                                       Tempo = group.Sum(i => i.TempoDeAtividade.TotalSeconds),
                                       TotalJanelas = group.Sum(i => i.AreaOuAbasVisitadas),
+                                      Icone = group.First().Icone,
                                   })
                                   .OrderByDescending(i => i.Tempo)
                                   .ToList();
@@ -208,6 +213,11 @@ namespace WindowsTime
 
                 _exibiuBallonMinimizar = true;
             }
+        }
+
+        private void chkSempreVisivel_CheckedChanged(object sender, EventArgs e)
+        {
+            this.TopMost = chkSempreVisivel.Checked;
         }
     }
 }
