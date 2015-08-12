@@ -120,36 +120,50 @@ namespace WindowsTime
 
         private void DesenharGrafico(IEnumerable<JanelaPorExecutavel> janelas)
         {
-            var pontos = chart1.Series[0].Points;
-            pontos.Clear();
-
-            foreach (var janela in janelas)
+            try
             {
-                var ponto = new DataPoint(0, janela.Tempo)
+                var pontos = chart1.Series[0].Points;
+                pontos.Clear();
+
+                foreach (var janela in janelas)
                 {
-                    LegendText = janela.Executavel
-                };
-                pontos.Add(ponto);
+                    var ponto = new DataPoint(0, janela.Tempo)
+                    {
+                        LegendText = janela.Executavel
+                    };
+                    pontos.Add(ponto);
+                }
+            }
+            catch (Exception)
+            {
+                Text = string.Format("Erro: DesenharGrafico - {0}", DateTime.Now);
             }
         }
 
         private void CarregarGrid(IEnumerable<JanelaPorExecutavel> janelas)
         {
-            var linhaSelecionada = (gridProgramas.SelectedRows.Count > 0)
-                ? gridProgramas.SelectedRows[0].Index
-                : -1;
-
-            var source = new BindingSource { DataSource = janelas };
-            gridProgramas.AutoGenerateColumns = false;
-            gridProgramas.DataSource = source;
-
-            var deveReselecionarLinha = linhaSelecionada >= 0;
-            if (deveReselecionarLinha)
+            try
             {
-                gridProgramas.SelectedRows.OfType<DataGridViewRow>().ToList().ForEach(r => r.Selected = false);
+                var linhaSelecionada = (gridProgramas.SelectedRows.Count > 0)
+                        ? gridProgramas.SelectedRows[0].Index
+                        : -1;
 
-                gridProgramas.Rows[linhaSelecionada].Selected = true;
-                gridProgramas.FirstDisplayedScrollingRowIndex = linhaSelecionada;
+                var source = new BindingSource { DataSource = janelas };
+                gridProgramas.AutoGenerateColumns = false;
+                gridProgramas.DataSource = source;
+
+                var deveReselecionarLinha = linhaSelecionada >= 0;
+                if (deveReselecionarLinha)
+                {
+                    gridProgramas.SelectedRows.OfType<DataGridViewRow>().ToList().ForEach(r => r.Selected = false);
+
+                    gridProgramas.Rows[linhaSelecionada].Selected = true;
+                    gridProgramas.FirstDisplayedScrollingRowIndex = linhaSelecionada;
+                }
+            }
+            catch (Exception)
+            {
+                Text = string.Format("Erro: CarregarGrid - {0}", DateTime.Now);
             }
         }
 
