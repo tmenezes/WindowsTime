@@ -30,22 +30,22 @@ namespace WindowsTime
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint19 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 39D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint20 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 18D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint21 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 15D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint22 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 12D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint23 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 8D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint24 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 4.5D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint25 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 3.20000004768372D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint26 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 2D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint27 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint10 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 39D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint11 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 18D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint12 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 15D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint13 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 12D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint14 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 8D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint15 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 4.5D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint16 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 3.20000004768372D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint17 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 2D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint18 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrincipal));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -81,81 +81,81 @@ namespace WindowsTime
             this.chart1.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
             this.chart1.BorderlineWidth = 2;
             this.chart1.BorderSkin.SkinStyle = System.Windows.Forms.DataVisualization.Charting.BorderSkinStyle.Emboss;
-            chartArea3.Area3DStyle.IsClustered = true;
-            chartArea3.Area3DStyle.IsRightAngleAxes = false;
-            chartArea3.Area3DStyle.PointGapDepth = 900;
-            chartArea3.Area3DStyle.Rotation = 162;
-            chartArea3.Area3DStyle.WallWidth = 25;
-            chartArea3.AxisX.LabelStyle.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold);
-            chartArea3.AxisX.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            chartArea3.AxisX.MajorGrid.Enabled = false;
-            chartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            chartArea3.AxisX.MajorTickMark.Enabled = false;
-            chartArea3.AxisX2.MajorGrid.Enabled = false;
-            chartArea3.AxisX2.MajorTickMark.Enabled = false;
-            chartArea3.AxisY.LabelStyle.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold);
-            chartArea3.AxisY.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            chartArea3.AxisY.MajorGrid.Enabled = false;
-            chartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            chartArea3.AxisY.MajorTickMark.Enabled = false;
-            chartArea3.AxisY2.MajorGrid.Enabled = false;
-            chartArea3.AxisY2.MajorTickMark.Enabled = false;
-            chartArea3.BackColor = System.Drawing.Color.Transparent;
-            chartArea3.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            chartArea3.BackSecondaryColor = System.Drawing.Color.Transparent;
-            chartArea3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            chartArea3.Name = "Area1";
-            chartArea3.ShadowColor = System.Drawing.Color.Transparent;
-            this.chart1.ChartAreas.Add(chartArea3);
+            chartArea2.Area3DStyle.IsClustered = true;
+            chartArea2.Area3DStyle.IsRightAngleAxes = false;
+            chartArea2.Area3DStyle.PointGapDepth = 900;
+            chartArea2.Area3DStyle.Rotation = 162;
+            chartArea2.Area3DStyle.WallWidth = 25;
+            chartArea2.AxisX.LabelStyle.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold);
+            chartArea2.AxisX.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            chartArea2.AxisX.MajorGrid.Enabled = false;
+            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            chartArea2.AxisX.MajorTickMark.Enabled = false;
+            chartArea2.AxisX2.MajorGrid.Enabled = false;
+            chartArea2.AxisX2.MajorTickMark.Enabled = false;
+            chartArea2.AxisY.LabelStyle.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold);
+            chartArea2.AxisY.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            chartArea2.AxisY.MajorGrid.Enabled = false;
+            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            chartArea2.AxisY.MajorTickMark.Enabled = false;
+            chartArea2.AxisY2.MajorGrid.Enabled = false;
+            chartArea2.AxisY2.MajorTickMark.Enabled = false;
+            chartArea2.BackColor = System.Drawing.Color.Transparent;
+            chartArea2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
+            chartArea2.BackSecondaryColor = System.Drawing.Color.Transparent;
+            chartArea2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            chartArea2.Name = "Area1";
+            chartArea2.ShadowColor = System.Drawing.Color.Transparent;
+            this.chart1.ChartAreas.Add(chartArea2);
             this.chart1.IsSoftShadows = false;
-            legend3.BackColor = System.Drawing.Color.Transparent;
-            legend3.Font = new System.Drawing.Font("Trebuchet MS", 8F, System.Drawing.FontStyle.Bold);
-            legend3.IsEquallySpacedItems = true;
-            legend3.IsTextAutoFit = false;
-            legend3.Name = "Default";
-            legend3.TextWrapThreshold = 30;
-            this.chart1.Legends.Add(legend3);
+            legend2.BackColor = System.Drawing.Color.Transparent;
+            legend2.Font = new System.Drawing.Font("Trebuchet MS", 8F, System.Drawing.FontStyle.Bold);
+            legend2.IsEquallySpacedItems = true;
+            legend2.IsTextAutoFit = false;
+            legend2.Name = "Default";
+            legend2.TextWrapThreshold = 30;
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(9, 135);
             this.chart1.Margin = new System.Windows.Forms.Padding(0);
             this.chart1.Name = "chart1";
-            series3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            series3.ChartArea = "Area1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-            series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(65)))), ((int)(((byte)(140)))), ((int)(((byte)(240)))));
-            series3.CustomProperties = "CollectedLabel=Other, MinimumRelativePieSize=20, DoughnutRadius=25, PieDrawingSty" +
+            series2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            series2.ChartArea = "Area1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(65)))), ((int)(((byte)(140)))), ((int)(((byte)(240)))));
+            series2.CustomProperties = "CollectedLabel=Other, MinimumRelativePieSize=20, DoughnutRadius=25, PieDrawingSty" +
     "le=Concave";
-            series3.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold);
-            series3.Label = "#PERCENT{P1}";
-            series3.Legend = "Default";
-            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series3.Name = "Series1";
-            dataPoint19.CustomProperties = "OriginalPointIndex=0";
-            dataPoint19.LegendText = "RUS";
-            dataPoint20.CustomProperties = "OriginalPointIndex=1";
-            dataPoint20.LegendText = "CAN";
-            dataPoint21.CustomProperties = "OriginalPointIndex=2";
-            dataPoint21.LegendText = "USA";
-            dataPoint22.CustomProperties = "OriginalPointIndex=3";
-            dataPoint22.LegendText = "PRC";
-            dataPoint23.CustomProperties = "OriginalPointIndex=5";
-            dataPoint23.LegendText = "DEN";
-            dataPoint24.LegendText = "AUS";
-            dataPoint25.CustomProperties = "OriginalPointIndex=4";
-            dataPoint25.LegendText = "IND";
-            dataPoint26.LegendText = "ARG";
-            dataPoint27.LegendText = "FRA";
-            series3.Points.Add(dataPoint19);
-            series3.Points.Add(dataPoint20);
-            series3.Points.Add(dataPoint21);
-            series3.Points.Add(dataPoint22);
-            series3.Points.Add(dataPoint23);
-            series3.Points.Add(dataPoint24);
-            series3.Points.Add(dataPoint25);
-            series3.Points.Add(dataPoint26);
-            series3.Points.Add(dataPoint27);
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chart1.Series.Add(series3);
+            series2.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Bold);
+            series2.Label = "#PERCENT{P1}";
+            series2.Legend = "Default";
+            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series2.Name = "Series1";
+            dataPoint10.CustomProperties = "OriginalPointIndex=0";
+            dataPoint10.LegendText = "RUS";
+            dataPoint11.CustomProperties = "OriginalPointIndex=1";
+            dataPoint11.LegendText = "CAN";
+            dataPoint12.CustomProperties = "OriginalPointIndex=2";
+            dataPoint12.LegendText = "USA";
+            dataPoint13.CustomProperties = "OriginalPointIndex=3";
+            dataPoint13.LegendText = "PRC";
+            dataPoint14.CustomProperties = "OriginalPointIndex=5";
+            dataPoint14.LegendText = "DEN";
+            dataPoint15.LegendText = "AUS";
+            dataPoint16.CustomProperties = "OriginalPointIndex=4";
+            dataPoint16.LegendText = "IND";
+            dataPoint17.LegendText = "ARG";
+            dataPoint18.LegendText = "FRA";
+            series2.Points.Add(dataPoint10);
+            series2.Points.Add(dataPoint11);
+            series2.Points.Add(dataPoint12);
+            series2.Points.Add(dataPoint13);
+            series2.Points.Add(dataPoint14);
+            series2.Points.Add(dataPoint15);
+            series2.Points.Add(dataPoint16);
+            series2.Points.Add(dataPoint17);
+            series2.Points.Add(dataPoint18);
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(615, 298);
             this.chart1.TabIndex = 1;
             // 
@@ -236,15 +236,16 @@ namespace WindowsTime
             this.gridProgramas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridProgramas.Size = new System.Drawing.Size(609, 247);
             this.gridProgramas.TabIndex = 4;
+            this.gridProgramas.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridProgramas_CellDoubleClick);
             this.gridProgramas.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridProgramas_DataError);
             // 
             // ColIcone
             // 
             this.ColIcone.DataPropertyName = "Icone";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle7.NullValue")));
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(2);
-            this.ColIcone.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle4.NullValue")));
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(2);
+            this.ColIcone.DefaultCellStyle = dataGridViewCellStyle4;
             this.ColIcone.HeaderText = "";
             this.ColIcone.Name = "ColIcone";
             this.ColIcone.ReadOnly = true;
@@ -261,8 +262,8 @@ namespace WindowsTime
             // colTempo
             // 
             this.colTempo.DataPropertyName = "TempoFormatado";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colTempo.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colTempo.DefaultCellStyle = dataGridViewCellStyle5;
             this.colTempo.HeaderText = "Tempo de Utilização";
             this.colTempo.Name = "colTempo";
             this.colTempo.ReadOnly = true;
@@ -271,8 +272,8 @@ namespace WindowsTime
             // colJanelas
             // 
             this.colJanelas.DataPropertyName = "TotalJanelas";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colJanelas.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colJanelas.DefaultCellStyle = dataGridViewCellStyle6;
             this.colJanelas.HeaderText = "Abas/Janelas Visitadas";
             this.colJanelas.Name = "colJanelas";
             this.colJanelas.ReadOnly = true;
@@ -319,7 +320,7 @@ namespace WindowsTime
             // notifyIcon1
             // 
             this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.notifyIcon1.BalloonTipText = "O WindowsTime está observando sua produtividade sem segundo plano...";
+            this.notifyIcon1.BalloonTipText = "O WindowsTime está observando sua produtividade em segundo plano...";
             this.notifyIcon1.BalloonTipTitle = "Windows Time";
             this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
@@ -329,7 +330,7 @@ namespace WindowsTime
             // 
             // timer1
             // 
-            this.timer1.Interval = 10000;
+            this.timer1.Interval = 5000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // chkSempreVisivel

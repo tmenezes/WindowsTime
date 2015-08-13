@@ -114,7 +114,7 @@ namespace WindowsTime
         {
             this.Cursor = Cursors.WaitCursor;
 
-            var janelas = GetJanelasAgrupadasPorExecutavel();
+            var janelas = GraficoHelper.GetJanelasAgrupadasPorExecutavel();
 
             DesenharGrafico(janelas);
             CarregarGrid(janelas);
@@ -171,23 +171,6 @@ namespace WindowsTime
             }
         }
 
-        private IEnumerable<JanelaPorExecutavel> GetJanelasAgrupadasPorExecutavel()
-        {
-            var janelas = _medidor.Janelas.Values
-                                  .GroupBy(j => j.NomeDoExecutavel)
-                                  .Select(group => new JanelaPorExecutavel()
-                                  {
-                                      Executavel = group.Key,
-                                      Processo = group.First().Processo,
-                                      Tempo = group.Sum(i => i.TempoDeAtividade.TotalSeconds),
-                                      TotalJanelas = group.Sum(i => i.AreaOuAbasVisitadas),
-                                      Icone = group.First().Icone,
-                                  })
-                                  .OrderByDescending(i => i.Tempo)
-                                  .ToList();
-            return janelas;
-        }
-
         private void ShowForm()
         {
             this.Show();
@@ -218,6 +201,17 @@ namespace WindowsTime
         private void chkSempreVisivel_CheckedChanged(object sender, EventArgs e)
         {
             this.TopMost = chkSempreVisivel.Checked;
+        }
+
+        private void gridProgramas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var janela = gridProgramas.Rows[e.RowIndex].DataBoundItem as JanelaPorExecutavel;
+
+            if (janela == null)
+                return;
+
+            var frmDetalhe = new FrmDetalhe(janela.Executavel);
+            frmDetalhe.ShowDialog();
         }
     }
 }

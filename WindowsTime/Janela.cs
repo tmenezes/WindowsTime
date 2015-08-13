@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using WindowsTime.Properties;
 
 namespace WindowsTime
@@ -9,7 +10,7 @@ namespace WindowsTime
     public class Janela
     {
         private readonly Stopwatch _medidorDetempo = new Stopwatch();
-        private readonly Dictionary<string, bool> _titulosConhecidos = new Dictionary<string, bool>();
+        private readonly Dictionary<string, bool> _abasVisitadas = new Dictionary<string, bool>();
         private Image _icone;
 
         public int WindowsHandle { get; private set; }
@@ -18,8 +19,10 @@ namespace WindowsTime
         public string Executavel { get; private set; }
         public string NomeDoExecutavel { get; set; }
         public bool EstaAtiva { get; private set; }
+        public int ToralDeAbasVisitadas { get; private set; }
+
         public TimeSpan TempoDeAtividade { get { return _medidorDetempo.Elapsed; } }
-        public int AreaOuAbasVisitadas { get; private set; }
+        public IEnumerable<string> AbasVisitadas { get { return _abasVisitadas.Keys.ToList(); } }
         public Image Icone { get { return _icone ?? (_icone = (WindowsApi.GetProcessIcon(Processo) ?? Resources.windows).ToBitmap()); } } // TODO: Melhorar
 
 
@@ -30,9 +33,9 @@ namespace WindowsTime
             Processo = WindowsApi.GetProcess(windowsHandle);
             Executavel = WindowsApi.GetWindowFilePath(Processo);
             NomeDoExecutavel = WindowsApi.GetWindowFileDescription(Processo);
-            AreaOuAbasVisitadas = 1;
+            ToralDeAbasVisitadas = 1;
 
-            _titulosConhecidos.Add(Titulo, true);
+            _abasVisitadas.Add(Titulo, true);
         }
 
 
@@ -54,10 +57,10 @@ namespace WindowsTime
         {
             Titulo = novoTitulo;
 
-            if (!_titulosConhecidos.ContainsKey(novoTitulo))
+            if (!_abasVisitadas.ContainsKey(novoTitulo))
             {
-                _titulosConhecidos.Add(novoTitulo, true);
-                AreaOuAbasVisitadas++;
+                _abasVisitadas.Add(novoTitulo, true);
+                ToralDeAbasVisitadas++;
             }
         }
 

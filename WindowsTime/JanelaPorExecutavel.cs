@@ -12,6 +12,6 @@ namespace WindowsTime
         public int TotalJanelas { get; set; }
         public Image Icone { get; set; }
 
-        public string TempoFormatado { get { return TimeSpan.FromSeconds(Tempo).ToString(@"mm\:ss"); } }
+        public string TempoFormatado { get { return TimeSpan.FromSeconds(Tempo).ToString(@"hh\:mm\:ss"); } }
     }
 }

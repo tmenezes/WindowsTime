@@ -57,6 +57,12 @@
     <Compile Include="FrmDebug.Designer.cs">
       <DependentUpon>FrmDebug.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmDetalhe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDetalhe.Designer.cs">
+      <DependentUpon>FrmDetalhe.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +75,7 @@
     <Compile Include="frmTeste.Designer.cs">
       <DependentUpon>frmTeste.cs</DependentUpon>
     </Compile>
+    <Compile Include="GraficoHelper.cs" />
     <Compile Include="Janela.cs" />
     <Compile Include="JanelaPorExecutavel.cs" />
     <Compile Include="MedidorDeTempoDeJanela.cs" />
@@ -78,6 +85,9 @@
     <Compile Include="WindowsApi.cs" />
     <EmbeddedResource Include="FrmDebug.resx">
       <DependentUpon>FrmDebug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDetalhe.resx">
+      <DependentUpon>FrmDetalhe.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
