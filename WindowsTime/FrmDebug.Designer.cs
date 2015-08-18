@@ -39,6 +39,7 @@
             this.lblIdProcesso = new System.Windows.Forms.Label();
             this.picIconeProcesso = new System.Windows.Forms.PictureBox();
             this.lblTempo = new System.Windows.Forms.Label();
+            this.lblBloqueouPC = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picIconeProcesso)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,11 +132,21 @@
             this.lblTempo.TabIndex = 11;
             this.lblTempo.Text = "00:00";
             // 
+            // lblBloqueouPC
+            // 
+            this.lblBloqueouPC.AutoSize = true;
+            this.lblBloqueouPC.Location = new System.Drawing.Point(235, 10);
+            this.lblBloqueouPC.Name = "lblBloqueouPC";
+            this.lblBloqueouPC.Size = new System.Drawing.Size(94, 13);
+            this.lblBloqueouPC.TabIndex = 12;
+            this.lblBloqueouPC.Text = "{Não travou o PC}";
+            // 
             // FrmDebug
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(806, 112);
+            this.Controls.Add(this.lblBloqueouPC);
             this.Controls.Add(this.lblTempo);
             this.Controls.Add(this.picIconeProcesso);
             this.Controls.Add(this.lblIdProcesso);
@@ -169,6 +180,7 @@
         private System.Windows.Forms.Label lblIdProcesso;
         private System.Windows.Forms.PictureBox picIconeProcesso;
         private System.Windows.Forms.Label lblTempo;
+        private System.Windows.Forms.Label lblBloqueouPC;
     }
 }
 

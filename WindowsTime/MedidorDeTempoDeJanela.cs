@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Timers;
+using Microsoft.Win32;
 
 namespace WindowsTime
 {
@@ -10,7 +11,8 @@ namespace WindowsTime
         private const int INTERVALO = 100;
         private static MedidorDeTempoDeJanela _instance;
         private readonly Timer _timer;
-        private Janela ultimaJanelaAtiva;
+        private Janela _ultimaJanelaAtiva;
+        private bool _maquinaLockada;
 
         // propriedades
         public Dictionary<int, Janela> Janelas { get; set; }
@@ -18,7 +20,7 @@ namespace WindowsTime
         {
             get { return _instance ?? (_instance = new MedidorDeTempoDeJanela()); }
         }
-        public Janela JanelaAtiva { get { return ultimaJanelaAtiva; } }
+        public Janela JanelaAtiva { get { return _ultimaJanelaAtiva; } }
 
         // eventos
         public event EventHandler<Janela> NovaJanelaAtiva;
@@ -42,18 +44,26 @@ namespace WindowsTime
         // publicos
         public void Iniciar()
         {
+            SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
+
             _timer.Start();
         }
 
         public void Parar()
         {
-            _timer.Start();
+            _timer.Stop();
+
+            SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
         }
 
 
         // privados e etc
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            if (_maquinaLockada)
+                return;
+
+
             var handle = WindowsApi.GetActiveWindowHandle();
 
             var janela = GetJanelaCorrente(handle);
@@ -65,16 +75,31 @@ namespace WindowsTime
             }
             OnTempoMedido(janela);
 
-            var trocouDeJanela = (janela != ultimaJanelaAtiva) && (ultimaJanelaAtiva != null);
+            var trocouDeJanela = (janela != _ultimaJanelaAtiva) && (_ultimaJanelaAtiva != null);
             if (trocouDeJanela)
-                ultimaJanelaAtiva.NotificarJanelaInativa();
+                _ultimaJanelaAtiva.NotificarJanelaInativa();
 
             var novoTitulo = WindowsApi.GetWindowsText(handle);
-            var trocouDeTitulo = (janela == ultimaJanelaAtiva) && janela.Titulo != novoTitulo;
+            var trocouDeTitulo = (janela == _ultimaJanelaAtiva) && janela.Titulo != novoTitulo;
             if (trocouDeTitulo)
                 janela.NotificarMudancaDeTitulo(novoTitulo);
 
-            ultimaJanelaAtiva = janela;
+            _ultimaJanelaAtiva = janela;
+        }
+
+        void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            if (e.Reason == SessionSwitchReason.SessionLock)
+            {
+                _maquinaLockada = true;
+
+                if (_ultimaJanelaAtiva != null)
+                    _ultimaJanelaAtiva.NotificarJanelaInativa();
+            }
+            else if (e.Reason == SessionSwitchReason.SessionUnlock)
+            {
+                _maquinaLockada = false;
+            }
         }
 
         private Janela GetJanelaCorrente(int handle)

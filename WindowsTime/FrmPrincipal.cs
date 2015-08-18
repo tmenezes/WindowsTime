@@ -11,6 +11,7 @@ namespace WindowsTime
         private const string TRAY_ABRIR = "1";
         private const string TRAY_PREVIEW = "2";
         private const string TRAY_SAIR = "3";
+        private const int GRID_TOTAL_LINHAS_VISIVEIS = 6;
         private readonly MedidorDeTempoDeJanela _medidor = MedidorDeTempoDeJanela.Instance;
         private bool _exibiuBallonFechar = false;
         private bool _exibiuBallonMinimizar = false;
@@ -108,6 +109,22 @@ namespace WindowsTime
             }
         }
 
+        private void chkSempreVisivel_CheckedChanged(object sender, EventArgs e)
+        {
+            this.TopMost = chkSempreVisivel.Checked;
+        }
+
+        private void gridProgramas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var programa = gridProgramas.Rows[e.RowIndex].DataBoundItem as DadosDoPrograma;
+
+            if (programa == null)
+                return;
+
+            var frmDetalhe = new FrmDetalhe(programa.Nome);
+            frmDetalhe.ShowDialog();
+        }
+
 
         // privados
         private void AtualizarTela()
@@ -162,10 +179,10 @@ namespace WindowsTime
                     gridProgramas.SelectedRows.OfType<DataGridViewRow>().ToList().ForEach(r => r.Selected = false);
 
                     gridProgramas.Rows[linhaSelecionada].Selected = true;
-                    gridProgramas.FirstDisplayedScrollingRowIndex = linhaSelecionada;
+                    gridProgramas.FirstDisplayedScrollingRowIndex = ((linhaSelecionada + 1) > GRID_TOTAL_LINHAS_VISIVEIS) ? linhaSelecionada - GRID_TOTAL_LINHAS_VISIVEIS + 1 : 0;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Text = string.Format("Erro: CarregarGrid - {0}", DateTime.Now);
             }
@@ -196,22 +213,6 @@ namespace WindowsTime
 
                 _exibiuBallonMinimizar = true;
             }
-        }
-
-        private void chkSempreVisivel_CheckedChanged(object sender, EventArgs e)
-        {
-            this.TopMost = chkSempreVisivel.Checked;
-        }
-
-        private void gridProgramas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            var programa = gridProgramas.Rows[e.RowIndex].DataBoundItem as DadosDoPrograma;
-
-            if (programa == null)
-                return;
-
-            var frmDetalhe = new FrmDetalhe(programa.Nome);
-            frmDetalhe.ShowDialog();
         }
     }
 }

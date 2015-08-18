@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -40,23 +41,25 @@
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint7 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 3.20000004768372D);
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint8 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 2D);
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 1D);
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDetalhe));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gridProgramas = new System.Windows.Forms.DataGridView();
+            this.colPrograma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTempo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.lblPrograma = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.colPrograma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTempo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusBarLabelJanelas = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridProgramas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -122,6 +125,24 @@
             this.gridProgramas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridProgramas.Size = new System.Drawing.Size(562, 290);
             this.gridProgramas.TabIndex = 7;
+            // 
+            // colPrograma
+            // 
+            this.colPrograma.DataPropertyName = "Nome";
+            this.colPrograma.HeaderText = "Abas/Janelas Visitadas";
+            this.colPrograma.Name = "colPrograma";
+            this.colPrograma.ReadOnly = true;
+            this.colPrograma.Width = 400;
+            // 
+            // colTempo
+            // 
+            this.colTempo.DataPropertyName = "TempoFormatado";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colTempo.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colTempo.HeaderText = "Tempo de Utilização";
+            this.colTempo.Name = "colTempo";
+            this.colTempo.ReadOnly = true;
+            this.colTempo.Width = 140;
             // 
             // label3
             // 
@@ -223,39 +244,36 @@
             // 
             // lblPrograma
             // 
-            this.lblPrograma.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPrograma.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrograma.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lblPrograma.Location = new System.Drawing.Point(163, 99);
+            this.lblPrograma.Location = new System.Drawing.Point(160, 96);
             this.lblPrograma.Name = "lblPrograma";
             this.lblPrograma.Size = new System.Drawing.Size(780, 31);
             this.lblPrograma.TabIndex = 8;
-            this.lblPrograma.Text = "<programa>";
+            this.lblPrograma.Text = "Microsoft Windows blablabla";
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.statusBarLabelJanelas});
             this.statusStrip1.Location = new System.Drawing.Point(0, 433);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(955, 22);
             this.statusStrip1.TabIndex = 9;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // colPrograma
+            // toolStripStatusLabel1
             // 
-            this.colPrograma.DataPropertyName = "Executavel";
-            this.colPrograma.HeaderText = "Programa";
-            this.colPrograma.Name = "colPrograma";
-            this.colPrograma.ReadOnly = true;
-            this.colPrograma.Width = 400;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(96, 17);
+            this.toolStripStatusLabel1.Text = "Total de Janelas: ";
             // 
-            // colTempo
+            // statusBarLabelJanelas
             // 
-            this.colTempo.DataPropertyName = "TempoFormatado";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colTempo.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colTempo.HeaderText = "Tempo de Utilização";
-            this.colTempo.Name = "colTempo";
-            this.colTempo.ReadOnly = true;
-            this.colTempo.Width = 140;
+            this.statusBarLabelJanelas.Name = "statusBarLabelJanelas";
+            this.statusBarLabelJanelas.Size = new System.Drawing.Size(51, 17);
+            this.statusBarLabelJanelas.Text = "[janelas]";
             // 
             // FrmDetalhe
             // 
@@ -276,12 +294,14 @@
             this.MinimizeBox = false;
             this.Name = "FrmDetalhe";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmDetalhe";
+            this.Text = "Detalhe de utilização do aplicativo";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridProgramas)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,6 +318,8 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Label lblPrograma;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel statusBarLabelJanelas;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPrograma;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTempo;
     }

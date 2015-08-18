@@ -9,11 +9,11 @@ namespace WindowsTime
     {
         private readonly MedidorDeTempoDeJanela _medidor = MedidorDeTempoDeJanela.Instance;
 
-        public FrmDetalhe(string executavelAlvo)
+        public FrmDetalhe(string programaAlvo)
         {
             InitializeComponent();
 
-            AtualizarTela(executavelAlvo);
+            AtualizarTela(programaAlvo);
         }
 
 
@@ -21,6 +21,9 @@ namespace WindowsTime
         {
             DesenharGrafico(programaAlvo);
             CarregarGrid(programaAlvo);
+
+            lblPrograma.Text = programaAlvo;
+            statusBarLabelJanelas.Text = gridProgramas.RowCount.ToString();
         }
 
         private void DesenharGrafico(string programaAlvo)
@@ -54,7 +57,7 @@ namespace WindowsTime
                 var janelas = MedidorDeTempoDeJanela.Instance.Janelas
                                                     .Where(j => j.Value.Programa.Nome == programaAlvo).Select(i => i.Value)
                                                     .SelectMany(j => j.Programa.AreasVisitadas)
-                                                    .Select(i => new { Executavel = i })
+                                                    .Select(i => new { Nome = i })
                                                     .ToList();
 
                 var source = new BindingSource { DataSource = janelas };

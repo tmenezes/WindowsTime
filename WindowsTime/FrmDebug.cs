@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace WindowsTime
 {
     public partial class FrmDebug : Form
     {
         private readonly MedidorDeTempoDeJanela _medidor = MedidorDeTempoDeJanela.Instance;
+        private int travadasDoPC = 0;
 
         public FrmDebug()
         {
             InitializeComponent();
 
             _medidor.TempoMedido += Medidor_TempoMedido;
+
+            SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
         }
 
         private void FrmDebug_FormClosing(object sender, FormClosingEventArgs e)
@@ -50,6 +54,20 @@ namespace WindowsTime
             catch (Exception)
             {
                 picIconeProcesso.Visible = false;
+            }
+        }
+
+        void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            if (e.Reason == SessionSwitchReason.SessionLock)
+            {
+                //I left my desk
+                travadasDoPC++;
+                lblBloqueouPC.Text = travadasDoPC.ToString();
+            }
+            else if (e.Reason == SessionSwitchReason.SessionUnlock)
+            {
+                //I returned to my desk
             }
         }
     }
