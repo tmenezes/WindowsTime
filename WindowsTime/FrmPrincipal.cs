@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using WindowsTime.ImportExport;
 
 namespace WindowsTime
 {
@@ -25,6 +26,8 @@ namespace WindowsTime
             _medidor.Iniciar();
 
             timer1.Start();
+
+            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
 
 
@@ -123,6 +126,30 @@ namespace WindowsTime
 
             var frmDetalhe = new FrmDetalhe(programa.Nome);
             frmDetalhe.ShowDialog();
+        }
+
+        private void picExportar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = saveFileDialog1.ShowDialog();
+                if (result == DialogResult.Cancel)
+                    return;
+
+
+                var programas = GraficoHelper.GetProgramas();
+                var arquivo = saveFileDialog1.FileName;
+
+                var exportador = ExportFile.GetExporter(ImportExportTypeEnum.CsvFile, arquivo);
+                exportador.DoExport(programas);
+
+                MessageBox.Show("Dados exportados com sucesso!.", "Salvar dados...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao exportar dados. Verifique se o arquivo destino não está em uso e tente novamente.",
+                                "Salvar dados...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 

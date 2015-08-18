@@ -76,6 +76,17 @@
       <DependentUpon>frmTeste.cs</DependentUpon>
     </Compile>
     <Compile Include="GraficoHelper.cs" />
+    <Compile Include="ImportExport\CsvFile\CsvFileConfigurationAttribute.cs" />
+    <Compile Include="ImportExport\CsvFile\CsvFileExporter.cs" />
+    <Compile Include="ImportExport\CsvFile\CsvFileImporter.cs" />
+    <Compile Include="ImportExport\ExportFile.cs" />
+    <Compile Include="ImportExport\IExporter.cs" />
+    <Compile Include="ImportExport\IImporter.cs" />
+    <Compile Include="ImportExport\ImportExportConfigurationBaseAttribute.cs" />
+    <Compile Include="ImportExport\ImportExportException.cs" />
+    <Compile Include="ImportExport\ImportExportHelper.cs" />
+    <Compile Include="ImportExport\ImportExportTypeEnum.cs" />
+    <Compile Include="ImportExport\ImportFile.cs" />
     <Compile Include="Janela.cs" />
     <Compile Include="DadosDoPrograma.cs" />
     <Compile Include="MedidorDeTempoDeJanela.cs" />
@@ -127,6 +138,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <None Include="Resources\64px-Sharethis.svg.png" />
+    <None Include="Resources\export.gif" />
     <None Include="Resources\windows.ico" />
     <None Include="Resources\windowsIco.bmp" />
   </ItemGroup>
