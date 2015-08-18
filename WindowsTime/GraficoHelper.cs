@@ -5,36 +5,34 @@ namespace WindowsTime
 {
     public static class GraficoHelper
     {
-        internal static IEnumerable<JanelaPorExecutavel> GetJanelasAgrupadasPorExecutavel()
+        internal static IEnumerable<DadosDoPrograma> GetProgramas()
         {
             var janelas = MedidorDeTempoDeJanela.Instance.Janelas.Values
-                                                .GroupBy(j => j.NomeDoExecutavel)
-                                                .Select(group => new JanelaPorExecutavel()
+                                                .GroupBy(j => j.Programa.Nome)
+                                                .Select(group => new DadosDoPrograma()
                                                 {
-                                                    Executavel = group.Key,
-                                                    Processo = group.First().Processo,
-                                                    Tempo = group.Sum(i => i.TempoDeAtividade.TotalSeconds),
-                                                    TotalJanelas = group.Sum(i => i.ToralDeAbasVisitadas),
-                                                    Icone = group.First().Icone,
+                                                    Nome = group.Key,
+                                                    TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividade.TotalSeconds),
+                                                    TotalJanelas = group.Sum(i => i.Programa.TotalDeAreasVisitadas),
+                                                    Icone = group.First().Programa.Icone,
                                                 })
-                                                .OrderByDescending(i => i.Tempo)
+                                                .OrderByDescending(i => i.TempoDeUtilizacao)
                                                 .ToList();
             return janelas;
         }
 
-        internal static IEnumerable<JanelaPorExecutavel> GetJanelasAgrupadasPorExecutavel(string executavelAlvo)
+        internal static IEnumerable<DadosDoPrograma> GetProgramas(string programaAlvo)
         {
             var janelas = MedidorDeTempoDeJanela.Instance.Janelas.Values
-                                                .GroupBy(j => (j.NomeDoExecutavel == executavelAlvo) ? executavelAlvo : "Outros")
-                                                .Select(group => new JanelaPorExecutavel()
+                                                .GroupBy(j => (j.Programa.Nome == programaAlvo) ? programaAlvo : "Outros")
+                                                .Select(group => new DadosDoPrograma()
                                                 {
-                                                    Executavel = group.Key,
-                                                    Processo = group.First().Processo,
-                                                    Tempo = group.Sum(i => i.TempoDeAtividade.TotalSeconds),
-                                                    TotalJanelas = group.Sum(i => i.ToralDeAbasVisitadas),
-                                                    Icone = group.First().Icone,
+                                                    Nome = group.Key,
+                                                    TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividade.TotalSeconds),
+                                                    TotalJanelas = group.Sum(i => i.Programa.TotalDeAreasVisitadas),
+                                                    Icone = group.First().Programa.Icone,
                                                 })
-                                                .OrderByDescending(i => i.Tempo)
+                                                .OrderByDescending(i => i.TempoDeUtilizacao)
                                                 .ToList();
             return janelas;
         }

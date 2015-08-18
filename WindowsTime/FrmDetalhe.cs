@@ -17,26 +17,26 @@ namespace WindowsTime
         }
 
 
-        private void AtualizarTela(string executavelAlvo)
+        private void AtualizarTela(string programaAlvo)
         {
-            DesenharGrafico(executavelAlvo);
-            CarregarGrid(executavelAlvo);
+            DesenharGrafico(programaAlvo);
+            CarregarGrid(programaAlvo);
         }
 
-        private void DesenharGrafico(string executavelAlvo)
+        private void DesenharGrafico(string programaAlvo)
         {
             try
             {
                 var pontos = chart1.Series[0].Points;
                 pontos.Clear();
 
-                var janelasDestacandoAlvo = GraficoHelper.GetJanelasAgrupadasPorExecutavel(executavelAlvo);
+                var programasDestacandoAlvo = GraficoHelper.GetProgramas(programaAlvo);
 
-                foreach (var janela in janelasDestacandoAlvo)
+                foreach (var programa in programasDestacandoAlvo)
                 {
-                    var ponto = new DataPoint(0, janela.Tempo)
+                    var ponto = new DataPoint(0, programa.TempoDeUtilizacao)
                     {
-                        LegendText = janela.Executavel
+                        LegendText = programa.Nome
                     };
                     pontos.Add(ponto);
                 }
@@ -47,13 +47,13 @@ namespace WindowsTime
             }
         }
 
-        private void CarregarGrid(string executavelAlvo)
+        private void CarregarGrid(string programaAlvo)
         {
             try
             {
                 var janelas = MedidorDeTempoDeJanela.Instance.Janelas
-                                                    .Where(j => j.Value.NomeDoExecutavel == executavelAlvo).Select(i => i.Value)
-                                                    .SelectMany(j => j.AbasVisitadas)
+                                                    .Where(j => j.Value.Programa.Nome == programaAlvo).Select(i => i.Value)
+                                                    .SelectMany(j => j.Programa.AreasVisitadas)
                                                     .Select(i => new { Executavel = i })
                                                     .ToList();
 

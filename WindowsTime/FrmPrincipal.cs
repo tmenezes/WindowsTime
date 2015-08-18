@@ -114,26 +114,26 @@ namespace WindowsTime
         {
             this.Cursor = Cursors.WaitCursor;
 
-            var janelas = GraficoHelper.GetJanelasAgrupadasPorExecutavel();
+            var programas = GraficoHelper.GetProgramas();
 
-            DesenharGrafico(janelas);
-            CarregarGrid(janelas);
+            DesenharGrafico(programas);
+            CarregarGrid(programas);
 
             this.Cursor = Cursors.Default;
         }
 
-        private void DesenharGrafico(IEnumerable<JanelaPorExecutavel> janelas)
+        private void DesenharGrafico(IEnumerable<DadosDoPrograma> programas)
         {
             try
             {
                 var pontos = chart1.Series[0].Points;
                 pontos.Clear();
 
-                foreach (var janela in janelas)
+                foreach (var programa in programas)
                 {
-                    var ponto = new DataPoint(0, janela.Tempo)
+                    var ponto = new DataPoint(0, programa.TempoDeUtilizacao)
                     {
-                        LegendText = janela.Executavel
+                        LegendText = programa.Nome
                     };
                     pontos.Add(ponto);
                 }
@@ -144,7 +144,7 @@ namespace WindowsTime
             }
         }
 
-        private void CarregarGrid(IEnumerable<JanelaPorExecutavel> janelas)
+        private void CarregarGrid(IEnumerable<DadosDoPrograma> programas)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace WindowsTime
                         ? gridProgramas.SelectedRows[0].Index
                         : -1;
 
-                var source = new BindingSource { DataSource = janelas };
+                var source = new BindingSource { DataSource = programas };
                 gridProgramas.AutoGenerateColumns = false;
                 gridProgramas.DataSource = source;
 
@@ -205,12 +205,12 @@ namespace WindowsTime
 
         private void gridProgramas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var janela = gridProgramas.Rows[e.RowIndex].DataBoundItem as JanelaPorExecutavel;
+            var programa = gridProgramas.Rows[e.RowIndex].DataBoundItem as DadosDoPrograma;
 
-            if (janela == null)
+            if (programa == null)
                 return;
 
-            var frmDetalhe = new FrmDetalhe(janela.Executavel);
+            var frmDetalhe = new FrmDetalhe(programa.Nome);
             frmDetalhe.ShowDialog();
         }
     }

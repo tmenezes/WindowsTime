@@ -72,7 +72,7 @@ namespace WindowsTime
             var novoTitulo = WindowsApi.GetWindowsText(handle);
             var trocouDeTitulo = (janela == ultimaJanelaAtiva) && janela.Titulo != novoTitulo;
             if (trocouDeTitulo)
-                janela.NotificarNovaAreaOuAbaVisitada(novoTitulo);
+                janela.NotificarMudancaDeTitulo(novoTitulo);
 
             ultimaJanelaAtiva = janela;
         }

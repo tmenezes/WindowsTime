@@ -29,9 +29,9 @@ namespace WindowsTime
             this.Invoke((Action)(() =>
             {
                 lblHandle.Text = janela.WindowsHandle.ToString();
-                lblIdProcesso.Text = janela.Processo.Id.ToString();
+                lblIdProcesso.Text = janela.Programa.Processo.Id.ToString();
                 lblNomeJanela.Text = janela.Titulo;
-                lblExecutavel.Text = janela.Executavel;
+                lblExecutavel.Text = janela.Programa.Executavel;
                 lblTempo.Text = janela.TempoDeAtividade.ToString(@"mm\:ss");
 
                 DrawProcessIcon(janela);
@@ -42,7 +42,7 @@ namespace WindowsTime
         {
             try
             {
-                var ico = WindowsApi.GetProcessIcon(janela.Processo);
+                var ico = WindowsApi.GetProcessIcon(janela.Programa.Processo);
 
                 picIconeProcesso.Image = ico.ToBitmap();
                 picIconeProcesso.Visible = true;
