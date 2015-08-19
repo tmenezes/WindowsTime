@@ -20,11 +20,7 @@ namespace WindowsTime
 
         private void FrmDebug_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                this.Hide();
-                e.Cancel = true;
-            }
+            
         }
 
 
@@ -35,6 +31,7 @@ namespace WindowsTime
                 lblHandle.Text = janela.WindowsHandle.ToString();
                 lblIdProcesso.Text = janela.Programa.Processo.Id.ToString();
                 lblNomeJanela.Text = janela.Titulo;
+                lblPrograma.Text = janela.Programa.Nome;
                 lblExecutavel.Text = janela.Programa.Executavel;
                 lblTempo.Text = janela.TempoDeAtividade.ToString(@"mm\:ss");
 

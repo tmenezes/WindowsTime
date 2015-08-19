@@ -40,7 +40,7 @@ namespace WindowsTime
         {
             try
             {
-                return process.MainModule.FileVersionInfo.FileDescription ?? "Windows";
+                return process.MainModule.FileVersionInfo.FileDescription ?? TryGetExecutableName(process);
             }
             catch (Exception)
             {
@@ -68,6 +68,20 @@ namespace WindowsTime
         private static bool IsExplorerProcess(Process process)
         {
             return (process != null) && (process.Id == GetProcess("explorer").Id);
+        }
+
+        private static string TryGetExecutableName(Process process)
+        {
+            try
+            {
+                var filename = process.MainModule.FileName;
+
+                return filename.Substring(filename.LastIndexOf('\\') + 1);
+            }
+            catch (Exception)
+            {
+                return "Windows";
+            }
         }
     }
 }

@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDebug));
             this.lblNomeJanela = new System.Windows.Forms.Label();
             this.lblHandle = new System.Windows.Forms.Label();
-            this.lblExecutavel = new System.Windows.Forms.Label();
+            this.lblPrograma = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,6 +40,8 @@
             this.picIconeProcesso = new System.Windows.Forms.PictureBox();
             this.lblTempo = new System.Windows.Forms.Label();
             this.lblBloqueouPC = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblExecutavel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picIconeProcesso)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,14 +63,14 @@
             this.lblHandle.TabIndex = 1;
             this.lblHandle.Text = "{ID}";
             // 
-            // lblExecutavel
+            // lblPrograma
             // 
-            this.lblExecutavel.AutoSize = true;
-            this.lblExecutavel.Location = new System.Drawing.Point(121, 80);
-            this.lblExecutavel.Name = "lblExecutavel";
-            this.lblExecutavel.Size = new System.Drawing.Size(33, 13);
-            this.lblExecutavel.TabIndex = 2;
-            this.lblExecutavel.Text = "{Exe}";
+            this.lblPrograma.AutoSize = true;
+            this.lblPrograma.Location = new System.Drawing.Point(121, 80);
+            this.lblPrograma.Name = "lblPrograma";
+            this.lblPrograma.Size = new System.Drawing.Size(60, 13);
+            this.lblPrograma.TabIndex = 2;
+            this.lblPrograma.Text = "{Programa}";
             // 
             // label1
             // 
@@ -102,9 +104,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(46, 80);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
+            this.label4.Size = new System.Drawing.Size(55, 13);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Executável:";
+            this.label4.Text = "Programa:";
             // 
             // lblIdProcesso
             // 
@@ -141,11 +143,31 @@
             this.lblBloqueouPC.TabIndex = 12;
             this.lblBloqueouPC.Text = "{Não travou o PC}";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(46, 105);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(63, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Executável:";
+            // 
+            // lblExecutavel
+            // 
+            this.lblExecutavel.AutoSize = true;
+            this.lblExecutavel.Location = new System.Drawing.Point(121, 105);
+            this.lblExecutavel.Name = "lblExecutavel";
+            this.lblExecutavel.Size = new System.Drawing.Size(33, 13);
+            this.lblExecutavel.TabIndex = 13;
+            this.lblExecutavel.Text = "{Exe}";
+            // 
             // FrmDebug
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(806, 112);
+            this.ClientSize = new System.Drawing.Size(806, 136);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lblExecutavel);
             this.Controls.Add(this.lblBloqueouPC);
             this.Controls.Add(this.lblTempo);
             this.Controls.Add(this.picIconeProcesso);
@@ -154,13 +176,15 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.lblExecutavel);
+            this.Controls.Add(this.lblPrograma);
             this.Controls.Add(this.lblHandle);
             this.Controls.Add(this.lblNomeJanela);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "FrmDebug";
             this.Text = "Windows Time - TMenezes 2015";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmDebug_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.picIconeProcesso)).EndInit();
             this.ResumeLayout(false);
@@ -172,7 +196,7 @@
 
         private System.Windows.Forms.Label lblNomeJanela;
         private System.Windows.Forms.Label lblHandle;
-        private System.Windows.Forms.Label lblExecutavel;
+        private System.Windows.Forms.Label lblPrograma;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -181,6 +205,8 @@
         private System.Windows.Forms.PictureBox picIconeProcesso;
         private System.Windows.Forms.Label lblTempo;
         private System.Windows.Forms.Label lblBloqueouPC;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblExecutavel;
     }
 }
 
