@@ -13,6 +13,7 @@ namespace WindowsTime.Monitorador
 
         public ProgramaWin32(Process processo, string titulo) : base(processo, titulo)
         {
+            Tipo = TipoDePrograma.Win32;
             Nome = processo.GetWindowExecutableDescription();
             Executavel = processo.GetWindowExecutableFileName();
         }

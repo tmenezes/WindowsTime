@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using WindowsTime.Monitorador.Api;
 
 namespace WindowsTime.Monitorador
@@ -20,7 +21,8 @@ namespace WindowsTime.Monitorador
         {
             WindowsHandle = windowsHandle;
             Titulo = WindowsApi.GetWindowsText(windowsHandle);
-            Programa = Programa.Criar(windowsHandle, Titulo);
+
+            Task.Factory.StartNew(() => Programa = Programa.Criar(windowsHandle, Titulo));
         }
 
 
