@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using WindowsTime.ImportExport;
+using Microsoft.VisualBasic;
 
 namespace WindowsTime
 {
@@ -54,11 +56,13 @@ namespace WindowsTime
 
         private void FrmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
+#if !DEBUG
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 MinimizarParaSysTray(fechando: true);
                 e.Cancel = true;
             }
+#endif
         }
 
         private void gridProgramas_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -237,6 +241,15 @@ namespace WindowsTime
 
                 _exibiuBallonMinimizar = true;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var processo = Interaction.InputBox("Digite o id do processo ou handle da janela", "Id do Process", "", -1, -1);
+            var packageId = WindowsApi.GetPackageId(Convert.ToInt32(processo));
+
+            MessageBox.Show(Marshal.PtrToStringUni(packageId.name));
+            //MessageBox.Show(packageId.reserved.ToString());
         }
     }
 }

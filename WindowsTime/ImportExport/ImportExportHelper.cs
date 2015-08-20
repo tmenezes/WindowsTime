@@ -24,9 +24,9 @@ namespace WindowsTime.ImportExport
             object[] columnAttributes = property.GetCustomAttributes(typeof(T), true);
 
             if (columnAttributes.Length == 0)
-                throw new ImportExportException($"A propriedade '{property.Name}' não contém um atributo de mapeamento DataPropertyInfo.");
+                throw new ImportExportException("A propriedade '{property.Name}' não contém um atributo de mapeamento DataPropertyInfo.");
             if (columnAttributes.Length > 1)
-                throw new ImportExportException($"A propriedade '{property.Name}' não pode conter mais de um atributo de mapeamento DataPropertyInfo.");
+                throw new ImportExportException("A propriedade '{property.Name}' não pode conter mais de um atributo de mapeamento DataPropertyInfo.");
 
             return (T)columnAttributes[0];
         }
@@ -294,7 +294,7 @@ namespace WindowsTime.ImportExport
             monitoredAction();
 
             stopwatch.Stop();
-            Trace.WriteLine($"Total tempo ({monitorKey}): {stopwatch.ElapsedMilliseconds.ToString("##0,000")}");
+            //Trace.WriteLine($"Total tempo ({monitorKey}): {stopwatch.ElapsedMilliseconds.ToString("##0,000")}");
         }
     }
 }

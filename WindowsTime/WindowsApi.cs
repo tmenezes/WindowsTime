@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -9,6 +10,33 @@ namespace WindowsTime
 {
     public static class WindowsApi
     {
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PACKAGE_ID
+        {
+            public uint reserved;
+            public uint processorArchitecture;
+            public PACKAGE_VERSION version;
+            public IntPtr name;
+            public IntPtr publisher;
+            public IntPtr resourceId;
+            public IntPtr publisherId;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct PACKAGE_VERSION
+        {
+            [FieldOffset(0)]
+            public UInt64 Version;
+            [FieldOffset(0)]
+            public ushort Revision;
+            [FieldOffset(2)]
+            public ushort Build;
+            [FieldOffset(4)]
+            public ushort Minor;
+            [FieldOffset(6)]
+            public ushort Major;
+        }
+
         [DllImport("user32.dll")]
         static extern int GetForegroundWindow();
 
@@ -20,6 +48,9 @@ namespace WindowsTime
 
         [DllImport("Shell32.dll", EntryPoint = "ExtractIconExW", CharSet = CharSet.Unicode, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         private static extern int ExtractIconEx(string sFile, int iIndex, out IntPtr piLargeVersion, out IntPtr piSmallVersion, int amountIcons);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern int GetPackageId(IntPtr hProcess, ref int bufferLength, IntPtr pBuffer);
 
 
         public static int GetActiveWindowHandle()
@@ -46,11 +77,30 @@ namespace WindowsTime
                        : null;
         }
 
-        public static Process GetProcessByName(string processName)
+        public static PACKAGE_ID GetPackageId(int handle)
         {
-            return ProcessHelper.GetProcess(processName);
+            var hprocess = ProcessHelper.GetProcess(handle).Handle;
+            int len = 0;
+            int retval = GetPackageId(hprocess, ref len, IntPtr.Zero);
+            //if (retval != ERROR_INSUFFICIENT_BUFFER)
+            //    throw new Win32Exception();
+
+            IntPtr buffer = Marshal.AllocHGlobal((int)len);
+            try
+            {
+                retval = GetPackageId(hprocess, ref len, buffer);
+                //if (retval != ERROR_SUCCESS)
+                //    throw new Win32Exception();
+                PACKAGE_ID packageID = (PACKAGE_ID)Marshal.PtrToStructure(buffer, typeof(PACKAGE_ID));
+
+                return packageID;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(buffer);
+            }
         }
-        
+
 
         public static Icon GetWindowsShell32Icon(int number, bool largeIcon)
         {

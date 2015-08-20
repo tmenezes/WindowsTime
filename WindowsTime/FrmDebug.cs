@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
 using Microsoft.Win32;
 
 namespace WindowsTime
@@ -10,6 +11,7 @@ namespace WindowsTime
         private int travadasDoPC = 0;
         private string executavelAnterior;
         private string idProcessoAnterior;
+        private string handleAnterior;
 
         public FrmDebug()
         {
@@ -29,6 +31,7 @@ namespace WindowsTime
         {
             this.Invoke((Action)(() =>
             {
+                handleAnterior = lblHandle.Text;
                 executavelAnterior = lblExecutavel.Text;
                 idProcessoAnterior = lblIdProcesso.Text;
 
@@ -83,5 +86,34 @@ namespace WindowsTime
                 MessageBox.Show(ex.Message, "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnDetalheProcesso_Click(object sender, EventArgs e)
+        {
+            ExibirProcesso(idProcessoAnterior);
+        }
+
+        private void btnDetalheProcesso_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                var processo = Interaction.InputBox("Prompt", "Id do Process", "0", -1, -1);
+                ExibirProcesso(processo);
+            }
+        }
+
+        private void ExibirProcesso(string idProcesso)
+        {
+            try
+            {
+                //propertyGridEx1.SelectedObject = ProcessHelper.GetProcess(Convert.ToInt32(idProcesso));
+                propertyGridEx1.SelectedObject = WindowsApi.GetPackageId(Convert.ToInt32(idProcesso));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                propertyGridEx1.SelectedObject = ex;
+            }
+        }
+
     }
 }
