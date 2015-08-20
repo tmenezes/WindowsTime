@@ -13,7 +13,6 @@ namespace WindowsTime
         private const string TRAY_PREVIEW = "2";
         private const string TRAY_SAIR = "3";
         private const int GRID_TOTAL_LINHAS_VISIVEIS = 6;
-        private readonly MedidorDeTempoDeJanela _medidor = MedidorDeTempoDeJanela.Instance;
         private bool _exibiuBallonFechar = false;
         private bool _exibiuBallonMinimizar = false;
         private int _debugClicks = 0;
@@ -22,8 +21,6 @@ namespace WindowsTime
         public FrmPrincipal()
         {
             InitializeComponent();
-
-            _medidor.Iniciar();
 
             timer1.Start();
 

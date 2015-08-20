@@ -42,6 +42,7 @@
             this.lblBloqueouPC = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lblExecutavel = new System.Windows.Forms.Label();
+            this.btnTeste = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picIconeProcesso)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,11 +162,22 @@
             this.lblExecutavel.TabIndex = 13;
             this.lblExecutavel.Text = "{Exe}";
             // 
+            // btnTeste
+            // 
+            this.btnTeste.Location = new System.Drawing.Point(8, 94);
+            this.btnTeste.Name = "btnTeste";
+            this.btnTeste.Size = new System.Drawing.Size(31, 23);
+            this.btnTeste.TabIndex = 15;
+            this.btnTeste.Text = "...";
+            this.btnTeste.UseVisualStyleBackColor = true;
+            this.btnTeste.Click += new System.EventHandler(this.btnTeste_Click);
+            // 
             // FrmDebug
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(806, 136);
+            this.Controls.Add(this.btnTeste);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lblExecutavel);
             this.Controls.Add(this.lblBloqueouPC);
@@ -179,6 +191,7 @@
             this.Controls.Add(this.lblPrograma);
             this.Controls.Add(this.lblHandle);
             this.Controls.Add(this.lblNomeJanela);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -207,6 +220,7 @@
         private System.Windows.Forms.Label lblBloqueouPC;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblExecutavel;
+        private System.Windows.Forms.Button btnTeste;
     }
 }
 

@@ -15,9 +15,10 @@ namespace WindowsTime
         {
             ConfigureGlobalExceptionHandler();
 
+            IniciadorDoMonitorador.Iniciar(new WindowsTimeIconeResource());
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new FrmDebug());
             Application.Run(new FrmPrincipal());
         }
 

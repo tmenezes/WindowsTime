@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using WindowsTime.Properties;
 
 namespace WindowsTime
 {
@@ -12,12 +11,19 @@ namespace WindowsTime
         private Image _icone;
 
         public Process Processo { get; private set; }
-        public string Nome { get; set; }
+        public string Nome { get; private set; }
         public string Executavel { get; private set; }
         public int TotalDeAreasVisitadas { get; private set; }
 
         public IEnumerable<string> AreasVisitadas { get { return _areasVisitadas.Keys.ToList(); } }
-        public Image Icone { get { return _icone ?? (_icone = (WindowsApi.GetProcessIcon(Processo) ?? Resources.windows).ToBitmap()); } } // TODO: Melhorar
+        public Image Icone
+        {
+            get { return _icone ?? (_icone = IconeHelper.GetIcone(this)); }
+        }
+        public bool Win32App
+        {
+            get { return !string.IsNullOrEmpty(Executavel) && Executavel.Contains('\\') && Executavel.Contains('.'); }
+        }
 
 
         // construtor

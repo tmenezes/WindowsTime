@@ -76,6 +76,8 @@
       <DependentUpon>frmTeste.cs</DependentUpon>
     </Compile>
     <Compile Include="GraficoHelper.cs" />
+    <Compile Include="IconeHelper.cs" />
+    <Compile Include="IIconeResource.cs" />
     <Compile Include="ImportExport\CsvFile\CsvFileConfigurationAttribute.cs" />
     <Compile Include="ImportExport\CsvFile\CsvFileExporter.cs" />
     <Compile Include="ImportExport\CsvFile\CsvFileImporter.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="ImportExport\ImportExportHelper.cs" />
     <Compile Include="ImportExport\ImportExportTypeEnum.cs" />
     <Compile Include="ImportExport\ImportFile.cs" />
+    <Compile Include="IniciadorDoMonitorador.cs" />
     <Compile Include="Janela.cs" />
     <Compile Include="DadosDoPrograma.cs" />
     <Compile Include="MedidorDeTempoDeJanela.cs" />
@@ -95,6 +98,7 @@
     <Compile Include="Programa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowsApi.cs" />
+    <Compile Include="WindowsTimeIconeResource.cs" />
     <EmbeddedResource Include="FrmDebug.resx">
       <DependentUpon>FrmDebug.cs</DependentUpon>
     </EmbeddedResource>

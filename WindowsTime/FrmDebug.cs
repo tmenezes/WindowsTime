@@ -6,30 +6,34 @@ namespace WindowsTime
 {
     public partial class FrmDebug : Form
     {
-        private readonly MedidorDeTempoDeJanela _medidor = MedidorDeTempoDeJanela.Instance;
+        private readonly MonitoradorDeJanela _monitorador = MonitoradorDeJanela.Instance;
         private int travadasDoPC = 0;
+        private string executavelAnterior;
+        private string idProcessoAnterior;
 
         public FrmDebug()
         {
             InitializeComponent();
 
-            _medidor.TempoMedido += Medidor_TempoMedido;
+            _monitorador.TempoMedido += MonitoradorTempoMedido;
 
             SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
         }
 
         private void FrmDebug_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
         }
 
 
-        private void Medidor_TempoMedido(object sender, Janela janela)
+        private void MonitoradorTempoMedido(object sender, Janela janela)
         {
             this.Invoke((Action)(() =>
             {
+                executavelAnterior = lblExecutavel.Text;
+                idProcessoAnterior = lblIdProcesso.Text;
+
                 lblHandle.Text = janela.WindowsHandle.ToString();
-                lblIdProcesso.Text = janela.Programa.Processo.Id.ToString();
+                lblIdProcesso.Text = (janela.Programa.Processo != null) ? janela.Programa.Processo.Id.ToString() : "???";
                 lblNomeJanela.Text = janela.Titulo;
                 lblPrograma.Text = janela.Programa.Nome;
                 lblExecutavel.Text = janela.Programa.Executavel;
@@ -65,6 +69,18 @@ namespace WindowsTime
             else if (e.Reason == SessionSwitchReason.SessionUnlock)
             {
                 //I returned to my desk
+            }
+        }
+
+        private void btnTeste_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                new frmTeste(executavelAnterior).Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

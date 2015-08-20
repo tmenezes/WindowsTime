@@ -6,18 +6,18 @@ namespace WindowsTime
 {
     public partial class frmTeste : Form
     {
-        public frmTeste()
+        public frmTeste(string executavel)
         {
             InitializeComponent();
 
-            CarregarIcones();
+            CarregarIcones(executavel);
         }
 
-        private void CarregarIcones()
+        private void CarregarIcones(string executavel)
         {
             var icones = new List<IconeWindows>
                          {
-                             new IconeWindows(SystemIcons.Application.ToBitmap(), 0, "SystemIcons"), 
+                             new IconeWindows(SystemIcons.Application.ToBitmap(), 0, "SystemIcons"),
                              new IconeWindows(SystemIcons.Asterisk.ToBitmap(), 0, "SystemIcons"),
                              new IconeWindows(SystemIcons.Error.ToBitmap(), 0, "SystemIcons"),
                              new IconeWindows(SystemIcons.Exclamation.ToBitmap(), 0, "SystemIcons"),
@@ -28,6 +28,16 @@ namespace WindowsTime
                              new IconeWindows(SystemIcons.Warning.ToBitmap(), 0, "SystemIcons"),
                              new IconeWindows(SystemIcons.WinLogo.ToBitmap(), 0, "SystemIcons"),
                          };
+
+            string filename = executavel.Substring(executavel.LastIndexOf('\\') + 1);
+            for (int i = 0; i < 10; i++)
+            {
+                var icone = WindowsApi.GetIcon(executavel, i, true);
+                if (icone != null)
+                {
+                    icones.Add(new IconeWindows(icone.ToBitmap(), i, filename));
+                }
+            }
 
             for (int i = 0; i < 512; i++)
             {
@@ -48,7 +58,7 @@ namespace WindowsTime
             }
 
 
-            
+
             var source = new BindingSource { DataSource = icones };
 
             dataGridView1.AutoGenerateColumns = true;

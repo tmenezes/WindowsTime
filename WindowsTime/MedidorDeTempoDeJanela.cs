@@ -5,20 +5,20 @@ using Microsoft.Win32;
 
 namespace WindowsTime
 {
-    public class MedidorDeTempoDeJanela
+    public class MonitoradorDeJanela
     {
         // atributos
         private const int INTERVALO = 100;
-        private static MedidorDeTempoDeJanela _instance;
+        private static MonitoradorDeJanela _instance;
         private readonly Timer _timer;
         private Janela _ultimaJanelaAtiva;
         private bool _maquinaLockada;
 
         // propriedades
         public Dictionary<int, Janela> Janelas { get; set; }
-        public static MedidorDeTempoDeJanela Instance
+        public static MonitoradorDeJanela Instance
         {
-            get { return _instance ?? (_instance = new MedidorDeTempoDeJanela()); }
+            get { return _instance ?? (_instance = new MonitoradorDeJanela()); }
         }
         public Janela JanelaAtiva { get { return _ultimaJanelaAtiva; } }
 
@@ -28,7 +28,7 @@ namespace WindowsTime
 
 
         // construtor
-        private MedidorDeTempoDeJanela()
+        private MonitoradorDeJanela()
         {
             Janelas = new Dictionary<int, Janela>();
 
@@ -42,14 +42,14 @@ namespace WindowsTime
 
 
         // publicos
-        public void Iniciar()
+        internal void Iniciar()
         {
             SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
 
             _timer.Start();
         }
 
-        public void Parar()
+        internal void Parar()
         {
             _timer.Stop();
 

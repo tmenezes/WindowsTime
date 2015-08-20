@@ -7,8 +7,6 @@ namespace WindowsTime
 {
     public partial class FrmDetalhe : Form
     {
-        private readonly MedidorDeTempoDeJanela _medidor = MedidorDeTempoDeJanela.Instance;
-
         public FrmDetalhe(string programaAlvo)
         {
             InitializeComponent();
@@ -54,11 +52,11 @@ namespace WindowsTime
         {
             try
             {
-                var janelas = MedidorDeTempoDeJanela.Instance.Janelas
-                                                    .Where(j => j.Value.Programa.Nome == programaAlvo).Select(i => i.Value)
-                                                    .SelectMany(j => j.Programa.AreasVisitadas)
-                                                    .Select(i => new { Nome = i })
-                                                    .ToList();
+                var janelas = MonitoradorDeJanela.Instance.Janelas
+                                                 .Where(j => j.Value.Programa.Nome == programaAlvo).Select(i => i.Value)
+                                                 .SelectMany(j => j.Programa.AreasVisitadas)
+                                                 .Select(i => new { Nome = i })
+                                                 .ToList();
 
                 var source = new BindingSource { DataSource = janelas };
                 gridProgramas.AutoGenerateColumns = false;

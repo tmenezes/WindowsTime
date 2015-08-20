@@ -50,6 +50,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(445, 529);
             this.Controls.Add(this.dataGridView1);
+            this.DoubleBuffered = true;
             this.Name = "frmTeste";
             this.Text = "frmTeste";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
