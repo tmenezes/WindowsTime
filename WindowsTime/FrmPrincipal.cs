@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using WindowsTime.ImportExport;
 using Microsoft.VisualBasic;
+using WindowsTime.ImportExport;
+using WindowsTime.Monitorador.Api;
+using WindowsTime.Monitorador.Api.Helpers;
 
 namespace WindowsTime
 {
@@ -245,11 +246,17 @@ namespace WindowsTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var processo = Interaction.InputBox("Digite o id do processo ou handle da janela", "Id do Process", "", -1, -1);
-            var packageId = WindowsApi.GetPackageId(Convert.ToInt32(processo));
+            var idProcesso = Interaction.InputBox("Digite o id do processo ou handle da janela", "Id do Process", "", -1, -1);
 
-            MessageBox.Show(Marshal.PtrToStringUni(packageId.name));
-            //MessageBox.Show(packageId.reserved.ToString());
+            var processo = ProcessHelper.GetProcess(Convert.ToInt32(idProcesso));
+            if (!WindowsApi.IsWindowsStoreApp(processo))
+            {
+                MessageBox.Show("Não é Windows Store App");
+                return;
+            }
+
+            var packageId = WindowsApi.GetWindowsStorePackageId(processo);
+            MessageBox.Show(packageId.Name);
         }
     }
 }

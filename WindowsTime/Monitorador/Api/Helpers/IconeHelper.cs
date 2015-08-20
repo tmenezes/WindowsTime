@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using WindowsTime.Monitorador.Api.Extensions;
 
-namespace WindowsTime
+namespace WindowsTime.Monitorador.Api.Helpers
 {
     public static class IconeHelper
     {
@@ -21,7 +22,7 @@ namespace WindowsTime
             if (icone != null)
                 return icone.ToBitmap();
 
-            return programa.Win32App
+            return programa.Tipo == TipoDePrograma.Win32
                        ? IconeResource.AplicacaoWin32
                        : IconeResource.WindowsLogo;
         }

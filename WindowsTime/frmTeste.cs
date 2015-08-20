@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using WindowsTime.Monitorador;
+using WindowsTime.Monitorador.Api;
 
 namespace WindowsTime
 {

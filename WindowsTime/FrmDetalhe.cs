@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using WindowsTime.Monitorador;
 
 namespace WindowsTime
 {

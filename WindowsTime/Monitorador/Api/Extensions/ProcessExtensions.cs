@@ -2,8 +2,9 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using WindowsTime.Monitorador.Api.Helpers;
 
-namespace WindowsTime
+namespace WindowsTime.Monitorador.Api.Extensions
 {
     internal static class ProcessExtensions
     {
@@ -76,11 +77,11 @@ namespace WindowsTime
             }
         }
 
-
-        private static bool IsExplorerProcess(Process process)
+        public static bool IsExplorerProcess(this Process process)
         {
             return (process != null) && (process.Id == ProcessHelper.GetWindowsExplorerProcess().Id);
         }
+
 
         private static string TryGetExecutableName(Process process)
         {

@@ -1,42 +1,17 @@
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using WindowsTime.Monitorador.Api.Extensions;
+using WindowsTime.Monitorador.Api.Helpers;
+using WindowsTime.Monitorador.Api.Structs;
 
-namespace WindowsTime
+namespace WindowsTime.Monitorador.Api
 {
     public static class WindowsApi
     {
-        [StructLayout(LayoutKind.Sequential)]
-        public struct PACKAGE_ID
-        {
-            public uint reserved;
-            public uint processorArchitecture;
-            public PACKAGE_VERSION version;
-            public IntPtr name;
-            public IntPtr publisher;
-            public IntPtr resourceId;
-            public IntPtr publisherId;
-        }
-
-        [StructLayout(LayoutKind.Explicit)]
-        public struct PACKAGE_VERSION
-        {
-            [FieldOffset(0)]
-            public UInt64 Version;
-            [FieldOffset(0)]
-            public ushort Revision;
-            [FieldOffset(2)]
-            public ushort Build;
-            [FieldOffset(4)]
-            public ushort Minor;
-            [FieldOffset(6)]
-            public ushort Major;
-        }
-
         [DllImport("user32.dll")]
         static extern int GetForegroundWindow();
 
@@ -51,6 +26,9 @@ namespace WindowsTime
 
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern int GetPackageId(IntPtr hProcess, ref int bufferLength, IntPtr pBuffer);
+
+        [DllImport("user32.dll")]
+        static extern bool IsImmersiveProcess(IntPtr hProcess);
 
 
         public static int GetActiveWindowHandle()
@@ -77,27 +55,38 @@ namespace WindowsTime
                        : null;
         }
 
-        public static PACKAGE_ID GetPackageId(int handle)
+        public static WindowsStorePackageId GetWindowsStorePackageId(Process process)
         {
-            var hprocess = ProcessHelper.GetProcess(handle).Handle;
             int len = 0;
-            int retval = GetPackageId(hprocess, ref len, IntPtr.Zero);
+            int retval = GetPackageId(process.Handle, ref len, IntPtr.Zero);
             //if (retval != ERROR_INSUFFICIENT_BUFFER)
             //    throw new Win32Exception();
 
             IntPtr buffer = Marshal.AllocHGlobal((int)len);
             try
             {
-                retval = GetPackageId(hprocess, ref len, buffer);
+                retval = GetPackageId(process.Handle, ref len, buffer);
                 //if (retval != ERROR_SUCCESS)
                 //    throw new Win32Exception();
                 PACKAGE_ID packageID = (PACKAGE_ID)Marshal.PtrToStructure(buffer, typeof(PACKAGE_ID));
 
-                return packageID;
+                return new WindowsStorePackageId(packageID);
             }
             finally
             {
                 Marshal.FreeHGlobal(buffer);
+            }
+        }
+
+        public static bool IsWindowsStoreApp(Process process)
+        {
+            try
+            {
+                return (process != null) && IsImmersiveProcess(process.Handle) && !(process.IsExplorerProcess());
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 

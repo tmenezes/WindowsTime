@@ -1,4 +1,7 @@
-namespace WindowsTime
+using WindowsTime.Monitorador.Api;
+using WindowsTime.Monitorador.Api.Helpers;
+
+namespace WindowsTime.Monitorador
 {
     public class IniciadorDoMonitorador
     {

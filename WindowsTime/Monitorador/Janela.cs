@@ -1,7 +1,8 @@
 using System;
 using System.Diagnostics;
+using WindowsTime.Monitorador.Api;
 
-namespace WindowsTime
+namespace WindowsTime.Monitorador
 {
     public class Janela
     {
@@ -19,7 +20,7 @@ namespace WindowsTime
         {
             WindowsHandle = windowsHandle;
             Titulo = WindowsApi.GetWindowsText(windowsHandle);
-            Programa = new Programa(windowsHandle, Titulo);
+            Programa = Programa.Criar(windowsHandle, Titulo);
         }
 
 

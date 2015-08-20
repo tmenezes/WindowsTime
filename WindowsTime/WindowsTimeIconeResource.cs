@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using WindowsTime.Monitorador;
 using WindowsTime.Properties;
 
 namespace WindowsTime

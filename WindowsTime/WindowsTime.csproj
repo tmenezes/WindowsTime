@@ -100,8 +100,6 @@
       <DependentUpon>frmTeste.cs</DependentUpon>
     </Compile>
     <Compile Include="GraficoHelper.cs" />
-    <Compile Include="IconeHelper.cs" />
-    <Compile Include="IIconeResource.cs" />
     <Compile Include="ImportExport\CsvFile\CsvFileConfigurationAttribute.cs" />
     <Compile Include="ImportExport\CsvFile\CsvFileExporter.cs" />
     <Compile Include="ImportExport\CsvFile\CsvFileImporter.cs" />
@@ -113,16 +111,24 @@
     <Compile Include="ImportExport\ImportExportHelper.cs" />
     <Compile Include="ImportExport\ImportExportTypeEnum.cs" />
     <Compile Include="ImportExport\ImportFile.cs" />
-    <Compile Include="IniciadorDoMonitorador.cs" />
-    <Compile Include="Janela.cs" />
     <Compile Include="DadosDoPrograma.cs" />
-    <Compile Include="MedidorDeTempoDeJanela.cs" />
-    <Compile Include="ProcessExtensions.cs" />
-    <Compile Include="ProcessHelper.cs" />
+    <Compile Include="Monitorador\Api\Helpers\MarshalHelper.cs" />
+    <Compile Include="Monitorador\Api\Helpers\IconeHelper.cs" />
+    <Compile Include="Monitorador\Api\Structs\Win32Structs.cs" />
+    <Compile Include="Monitorador\Api\WindowsStorePackageId.cs" />
+    <Compile Include="Monitorador\IIconeResource.cs" />
+    <Compile Include="Monitorador\IniciadorDoMonitorador.cs" />
+    <Compile Include="Monitorador\Janela.cs" />
+    <Compile Include="Monitorador\MedidorDeTempoDeJanela.cs" />
+    <Compile Include="Monitorador\Api\Extensions\ProcessExtensions.cs" />
+    <Compile Include="Monitorador\Api\Helpers\ProcessHelper.cs" />
+    <Compile Include="Monitorador\Programa.cs" />
+    <Compile Include="Monitorador\Api\WindowsApi.cs" />
+    <Compile Include="Monitorador\ProgramaWin32.cs" />
+    <Compile Include="Monitorador\ProgramaWindowsStore.cs" />
+    <Compile Include="Monitorador\TipoDePrograma.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Programa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WindowsApi.cs" />
     <Compile Include="WindowsTimeIconeResource.cs" />
     <EmbeddedResource Include="FrmDebug.resx">
       <DependentUpon>FrmDebug.cs</DependentUpon>
@@ -172,6 +178,7 @@
     <None Include="Resources\windows.ico" />
     <None Include="Resources\windowsIco.bmp" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

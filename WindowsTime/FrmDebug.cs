@@ -2,6 +2,9 @@
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using Microsoft.Win32;
+using WindowsTime.Monitorador;
+using WindowsTime.Monitorador.Api.Extensions;
+using WindowsTime.Monitorador.Api.Helpers;
 
 namespace WindowsTime
 {
@@ -105,13 +108,13 @@ namespace WindowsTime
         {
             try
             {
-                //propertyGridEx1.SelectedObject = ProcessHelper.GetProcess(Convert.ToInt32(idProcesso));
-                propertyGridEx1.SelectedObject = WindowsApi.GetPackageId(Convert.ToInt32(idProcesso));
+                propertyGridEx1.SelectedObject = ProcessHelper.GetProcess(Convert.ToInt32(idProcesso));
+                //propertyGridEx1.SelectedObject = WindowsApi.GetPackageId(Convert.ToInt32(idProcesso));
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                propertyGridEx1.SelectedObject = ex;
+                //propertyGridEx1.SelectedObject = ex;
             }
         }
 

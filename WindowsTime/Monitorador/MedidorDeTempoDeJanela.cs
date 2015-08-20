@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Timers;
+using WindowsTime.Monitorador.Api;
 using Microsoft.Win32;
 
-namespace WindowsTime
+namespace WindowsTime.Monitorador
 {
     public class MonitoradorDeJanela
     {

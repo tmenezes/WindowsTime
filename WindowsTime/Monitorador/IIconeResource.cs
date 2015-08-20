@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace WindowsTime
+namespace WindowsTime.Monitorador
 {
     public interface IIconeResource
     {
