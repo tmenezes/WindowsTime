@@ -16,7 +16,7 @@ namespace WindowsTime
             if (programa.Processo == null)
                 return IconeResource.WindowsLogo;
 
-            var icone = WindowsApi.GetProcessIcon(programa.Processo);
+            var icone = programa.Processo.GetIcon();
 
             if (icone != null)
                 return icone.ToBitmap();

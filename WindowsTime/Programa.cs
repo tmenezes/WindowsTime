@@ -30,8 +30,8 @@ namespace WindowsTime
         public Programa(int windowsHandle, string titulo)
         {
             Processo = WindowsApi.GetProcess(windowsHandle);
-            Nome = WindowsApi.GetWindowFileDescription(Processo);
-            Executavel = WindowsApi.GetWindowFilePath(Processo);
+            Nome = Processo.GetWindowExecutableDescription();
+            Executavel = Processo.GetWindowExecutableFileName();
             TotalDeAreasVisitadas = 1;
 
             _areasVisitadas.Add(titulo, true);

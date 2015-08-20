@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 
 namespace WindowsTime
@@ -51,21 +50,7 @@ namespace WindowsTime
         {
             return ProcessHelper.GetProcess(processName);
         }
-
-        public static string GetWindowFilePath(Process process)
-        {
-            return ProcessHelper.GetWindowExecutableFileName(process);
-        }
-
-        public static string GetWindowFileDescription(Process process)
-        {
-            return ProcessHelper.GetWindowExecutableDescription(process);
-        }
-
-        public static Icon GetProcessIcon(Process process)
-        {
-            return ProcessHelper.GetProcessIcon(process);
-        }
+        
 
         public static Icon GetWindowsShell32Icon(int number, bool largeIcon)
         {

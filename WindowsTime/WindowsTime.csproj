@@ -93,6 +93,7 @@
     <Compile Include="Janela.cs" />
     <Compile Include="DadosDoPrograma.cs" />
     <Compile Include="MedidorDeTempoDeJanela.cs" />
+    <Compile Include="ProcessExtensions.cs" />
     <Compile Include="ProcessHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Programa.cs" />

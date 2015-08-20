@@ -47,7 +47,7 @@ namespace WindowsTime
         {
             try
             {
-                var ico = WindowsApi.GetProcessIcon(janela.Programa.Processo);
+                var ico = janela.Programa.Processo.GetIcon();
 
                 picIconeProcesso.Image = ico.ToBitmap();
                 picIconeProcesso.Visible = true;
