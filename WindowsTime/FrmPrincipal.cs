@@ -256,8 +256,8 @@ namespace WindowsTime
             }
 
             var packageId = WindowsApi.GetWindowsStorePackageId(processo);
-            var handle = WindowsApi.GetWindowsStoreWindowHandle(processo);
-            MessageBox.Show(string.Format("{0} - {1}", handle, packageId));
+            //var handle = WindowsApi.GetWindowsStoreWindowHandle(processo);
+            MessageBox.Show(string.Format("{0} - {1}", 0, packageId));
         }
     }
 }

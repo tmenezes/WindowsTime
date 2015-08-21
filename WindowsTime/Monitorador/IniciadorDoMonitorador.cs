@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using WindowsTime.Monitorador.Api;
 using WindowsTime.Monitorador.Api.Helpers;
 
@@ -9,6 +10,8 @@ namespace WindowsTime.Monitorador
 
         public static void Iniciar(IIconeResource iconeResource)
         {
+            Task.Factory.StartNew(() => WindowsApi.LoadWindowsStoreProcess());
+
             IconeHelper.IconeResource = iconeResource;
 
             monitoradorDeJanela.Iniciar();

@@ -9,7 +9,7 @@ namespace WindowsTime.Monitorador
     {
         private readonly Stopwatch _medidorDetempo = new Stopwatch();
 
-        public int WindowsHandle { get; private set; }
+        public IntPtr WindowsHandle { get; private set; }
         public string Titulo { get; private set; }
         public Programa Programa { get; private set; }
         public bool EstaAtiva { get; private set; }
@@ -17,7 +17,7 @@ namespace WindowsTime.Monitorador
         public TimeSpan TempoDeAtividade { get { return _medidorDetempo.Elapsed; } }
 
 
-        public Janela(int windowsHandle)
+        public Janela(IntPtr windowsHandle)
         {
             WindowsHandle = windowsHandle;
             Titulo = WindowsApi.GetWindowsText(windowsHandle);

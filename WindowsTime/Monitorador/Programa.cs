@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -29,7 +30,7 @@ namespace WindowsTime.Monitorador
             _areasVisitadas.Add(titulo, true);
         }
 
-        public static Programa Criar(int windowsHandle, string titulo)
+        public static Programa Criar(IntPtr windowsHandle, string titulo)
         {
             var processo = WindowsApi.GetProcess(windowsHandle);
             var windowsStoreApp = WindowsApi.IsWindowsStoreApp(processo);

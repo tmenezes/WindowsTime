@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Timers;
-using WindowsTime.Monitorador.Api;
 using Microsoft.Win32;
+using WindowsTime.Monitorador.Api;
 
 namespace WindowsTime.Monitorador
 {
@@ -16,7 +16,7 @@ namespace WindowsTime.Monitorador
         private bool _maquinaLockada;
 
         // propriedades
-        public Dictionary<int, Janela> Janelas { get; set; }
+        public Dictionary<IntPtr, Janela> Janelas { get; set; }
         public static MonitoradorDeJanela Instance
         {
             get { return _instance ?? (_instance = new MonitoradorDeJanela()); }
@@ -31,7 +31,7 @@ namespace WindowsTime.Monitorador
         // construtor
         private MonitoradorDeJanela()
         {
-            Janelas = new Dictionary<int, Janela>();
+            Janelas = new Dictionary<IntPtr, Janela>();
 
             _timer = new Timer
             {
@@ -103,7 +103,7 @@ namespace WindowsTime.Monitorador
             }
         }
 
-        private Janela GetJanelaCorrente(int handle)
+        private Janela GetJanelaCorrente(IntPtr handle)
         {
             var janelaJaMonitorada = Janelas.ContainsKey(handle);
 

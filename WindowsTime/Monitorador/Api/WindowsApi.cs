@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using WindowsTime.Monitorador.Api.Extensions;
 using WindowsTime.Monitorador.Api.Helpers;
 using WindowsTime.Monitorador.Api.Structs;
@@ -24,13 +23,14 @@ namespace WindowsTime.Monitorador.Api
         private const uint SECURITY_MANDATORY_HIGH_RID = 0x00003000;
         private const uint TOKEN_READ = 0x00020008;
 
-        private static IDictionary<int, IntPtr> windowsStoreWindowsHandles = new ConcurrentDictionary<int, IntPtr>(); // process Id, handle janela principal
+        private static readonly IDictionary<IntPtr, Process> windowsStoreWindowsHandles = new ConcurrentDictionary<IntPtr, Process>(); // handle janela, processo
+        private static bool loadingStoreProcess = false;
 
         [DllImport("user32.dll")]
-        static extern int GetForegroundWindow();
+        static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")]
-        static extern int GetWindowText(int hWnd, StringBuilder text, int count);
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
         [DllImport("user32.dll", SetLastError = true)]
         static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
@@ -76,13 +76,13 @@ namespace WindowsTime.Monitorador.Api
 
 
         [HandleProcessCorruptedStateExceptions()]
-        public static int GetActiveWindowHandle()
+        public static IntPtr GetActiveWindowHandle()
         {
             return GetForegroundWindow();
         }
 
         [HandleProcessCorruptedStateExceptions()]
-        public static string GetWindowsText(int handle)
+        public static string GetWindowsText(IntPtr handle)
         {
             const int chars = 256;
             var buffer = new StringBuilder(chars);
@@ -93,11 +93,11 @@ namespace WindowsTime.Monitorador.Api
         }
 
         [HandleProcessCorruptedStateExceptions()]
-        public static Process GetProcess(int handle)
+        public static Process GetProcess(IntPtr handle)
         {
             uint processId;
 
-            return GetWindowThreadProcessId((IntPtr)handle, out processId) > 0
+            return GetWindowThreadProcessId(handle, out processId) > 0
                        ? ProcessHelper.GetProcess((int)processId)
                        : null;
         }
@@ -169,28 +169,26 @@ namespace WindowsTime.Monitorador.Api
         }
 
         [HandleProcessCorruptedStateExceptions()]
-        public static IntPtr GetWindowsStoreWindowHandle(Process process)
+        public static Process GetWindowsStoreRealProcess(IntPtr windowHanle)
         {
             try
             {
-                if (windowsStoreWindowsHandles.ContainsKey(process.Id))
-                    return windowsStoreWindowsHandles[process.Id];
+                if (windowsStoreWindowsHandles.ContainsKey(windowHanle))
+                    return windowsStoreWindowsHandles[windowHanle];
 
-                lock ("lock_GetWindowsStoreWindowHandle")
+                // wait for background thread loading Windows Store processes
+                while (loadingStoreProcess)
                 {
-                    if (windowsStoreWindowsHandles.ContainsKey(process.Id))
-                        return windowsStoreWindowsHandles[process.Id];
-
-                    LoadWindowsStoreProcess();
+                    Thread.Sleep(100);
                 }
-
-                return windowsStoreWindowsHandles.ContainsKey(process.Id)
-                    ? windowsStoreWindowsHandles[process.Id]
-                    : IntPtr.Zero;
+                
+                return windowsStoreWindowsHandles.ContainsKey(windowHanle)
+                    ? windowsStoreWindowsHandles[windowHanle]
+                    : GetProcess(windowHanle);
             }
             catch (Exception)
             {
-                return IntPtr.Zero;
+                return null;
             }
         }
 
@@ -223,36 +221,26 @@ namespace WindowsTime.Monitorador.Api
         }
 
 
-        private static void LoadWindowsStoreProcess()
+        internal static void LoadWindowsStoreProcess()
         {
-            var pids = new int[1024];
-            int bytesNeeded;
-
-            if (!EnumProcesses(pids, 1024, out bytesNeeded))
-            {
-                pids = Process.GetProcesses().Where(IsWindowsStoreApp).Select(p => p.Id).ToArray();
-            }
+            var processes = Process.GetProcesses().Where(IsWindowsStoreApp).ToList();
 
             windowsStoreWindowsHandles.Clear();
 
-            for (int i = 0; i < pids.Length; i++)
+            foreach (var process in processes)
             {
-                if (windowsStoreWindowsHandles.ContainsKey(pids[i]))
-                    continue;
+                var handle = FindWindowsStoreWindowHandle(process);
 
-                //var processHandle = OpenProcess(/*PROCESS_ALL_ACCESS*/ 2035711, false, pids[i]); CloseHandle(processHandle);
-                //var handle = FindWindowsStoreWindowHandle(pids[i], processHandle);
-                var handle = FindWindowsStoreWindowHandle(Process.GetProcessById(pids[i]));
                 if (handle != IntPtr.Zero)
                 {
-                    windowsStoreWindowsHandles.Add(pids[i], handle);
+                    windowsStoreWindowsHandles.Add(handle, process);
                 }
             }
         }
 
         private static IntPtr FindWindowsStoreWindowHandle(Process process)
         {
-            var isWindowsStoreApp = IsWindowsStoreApp(process); //IsImmersiveProcess(processHandle); //IsWindowsStoreApp(process);
+            var isWindowsStoreApp = IsWindowsStoreApp(process);  //IsImmersiveProcess(processHandle); //
             if (!isWindowsStoreApp)
                 return IntPtr.Zero;
 
@@ -271,7 +259,7 @@ namespace WindowsTime.Monitorador.Api
                     break;
 
                 // Check whether window belongs to the correct process.
-                var nextWindowProcess = GetProcess((int)nextWindow);
+                var nextWindowProcess = GetProcess(nextWindow);
 
                 if (nextWindowProcess == null)
                     break;
@@ -297,6 +285,6 @@ namespace WindowsTime.Monitorador.Api
             }
 
             return IntPtr.Zero;
-        }        
+        }
     }
 }
