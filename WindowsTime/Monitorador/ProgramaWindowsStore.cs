@@ -14,12 +14,13 @@ namespace WindowsTime.Monitorador
         public override Image Icone { get { return _icone ?? (_icone = IconeHelper.GetIcone(this)); } }
 
 
-        public ProgramaWindowsStore(Process processo, string titulo) : base(processo, titulo)
+        public ProgramaWindowsStore(Process processo, string titulo)
+            : base(processo, titulo)
         {
             Tipo = TipoDePrograma.WindowsStore;
             PackageId = WindowsApi.GetWindowsStorePackageId(processo);
 
-            Nome = PackageId.Name;
+            Nome = PackageId.Name ?? PackageId.FullName ?? "Windows Store App";
             Executavel = processo.GetWindowExecutableFileName();
         }
     }

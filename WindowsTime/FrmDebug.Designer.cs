@@ -45,6 +45,7 @@
             this.btnTeste = new System.Windows.Forms.Button();
             this.btnDetalheProcesso = new System.Windows.Forms.Button();
             this.propertyGridEx1 = new href.Controls.PropGridEx.PropertyGridEx();
+            this.propertyGridEx2 = new href.Controls.PropGridEx.PropertyGridEx();
             ((System.ComponentModel.ISupportInitialize)(this.picIconeProcesso)).BeginInit();
             this.SuspendLayout();
             // 
@@ -194,14 +195,27 @@
             this.propertyGridEx1.DrawFlat = true;
             this.propertyGridEx1.Location = new System.Drawing.Point(12, 138);
             this.propertyGridEx1.Name = "propertyGridEx1";
-            this.propertyGridEx1.Size = new System.Drawing.Size(782, 370);
+            this.propertyGridEx1.Size = new System.Drawing.Size(384, 370);
             this.propertyGridEx1.TabIndex = 17;
+            // 
+            // propertyGridEx2
+            // 
+            this.propertyGridEx2.CategoryForeColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.propertyGridEx2.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+            this.propertyGridEx2.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
+            this.propertyGridEx2.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
+            this.propertyGridEx2.DrawFlat = true;
+            this.propertyGridEx2.Location = new System.Drawing.Point(402, 138);
+            this.propertyGridEx2.Name = "propertyGridEx2";
+            this.propertyGridEx2.Size = new System.Drawing.Size(392, 370);
+            this.propertyGridEx2.TabIndex = 18;
             // 
             // FrmDebug
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(806, 520);
+            this.Controls.Add(this.propertyGridEx2);
             this.Controls.Add(this.propertyGridEx1);
             this.Controls.Add(this.btnDetalheProcesso);
             this.Controls.Add(this.btnTeste);
@@ -250,6 +264,7 @@
         private System.Windows.Forms.Button btnTeste;
         private System.Windows.Forms.Button btnDetalheProcesso;
         private href.Controls.PropGridEx.PropertyGridEx propertyGridEx1;
+        private href.Controls.PropGridEx.PropertyGridEx propertyGridEx2;
     }
 }
 

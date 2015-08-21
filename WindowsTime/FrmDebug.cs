@@ -108,7 +108,10 @@ namespace WindowsTime
         {
             try
             {
-                propertyGridEx1.SelectedObject = ProcessHelper.GetProcess(Convert.ToInt32(idProcesso));
+                var processo = ProcessHelper.GetProcess(Convert.ToInt32(idProcesso));
+                propertyGridEx1.SelectedObject = processo;
+                propertyGridEx2.SelectedObject = processo.MainModule.FileVersionInfo;
+                this.Text = processo.ToString();
                 //propertyGridEx1.SelectedObject = WindowsApi.GetPackageId(Convert.ToInt32(idProcesso));
             }
             catch (Exception ex)
