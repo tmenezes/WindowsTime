@@ -10,7 +10,7 @@ namespace WindowsTime.Monitorador
 
         public static void Iniciar(IIconeResource iconeResource)
         {
-            Task.Factory.StartNew(() => WindowsApi.LoadWindowsStoreProcess());
+            Task.Factory.StartNew(() => WindowsStoreApi.LoadWindowsStoreProcess());
 
             IconeHelper.IconeResource = iconeResource;
 

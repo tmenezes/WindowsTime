@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 using Microsoft.Win32;
 using WindowsTime.Monitorador.Api;
@@ -9,11 +11,12 @@ namespace WindowsTime.Monitorador
     public class MonitoradorDeJanela
     {
         // atributos
-        private const int INTERVALO = 100;
+        private const int INTERVALO = 250;
         private static MonitoradorDeJanela _instance;
         private readonly Timer _timer;
         private Janela _ultimaJanelaAtiva;
         private bool _maquinaLockada;
+        private DateTime _ultimaAtualizacaoDeProgramas;
 
         // propriedades
         public Dictionary<IntPtr, Janela> Janelas { get; set; }
@@ -47,6 +50,9 @@ namespace WindowsTime.Monitorador
         {
             SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
 
+            _ultimaAtualizacaoDeProgramas = DateTime.Now;
+            _timer_Elapsed(this, null);
+
             _timer.Start();
         }
 
@@ -66,7 +72,6 @@ namespace WindowsTime.Monitorador
 
 
             var handle = WindowsApi.GetActiveWindowHandle();
-
             var janela = GetJanelaCorrente(handle);
 
             if (!janela.EstaAtiva)
@@ -86,7 +91,10 @@ namespace WindowsTime.Monitorador
                 janela.NotificarMudancaDeTitulo(novoTitulo);
 
             _ultimaJanelaAtiva = janela;
+
+            AtualizarProgramasDasJanelas();
         }
+
 
         void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
@@ -115,6 +123,22 @@ namespace WindowsTime.Monitorador
                 Janelas.Add(handle, janela);
 
             return janela;
+        }
+
+        private void AtualizarProgramasDasJanelas()
+        {
+            var deveAtualizarProgramas = (DateTime.Now - _ultimaAtualizacaoDeProgramas).TotalSeconds > 5;
+            if (deveAtualizarProgramas)
+            {
+                var janelasWindowsStore = Instance.Janelas.Values.Where(j => j.Programa.Tipo == TipoDePrograma.WindowsStore &&
+                                                                             j.Programa.Processo.ProcessName == "ApplicationFrameHost");
+                foreach (var janela in janelasWindowsStore)
+                {
+                    janela.AtualizarPrograma();
+                }
+
+                _ultimaAtualizacaoDeProgramas = DateTime.Now;
+            }
         }
 
         protected virtual void OnNovaJanelaAtiva(Janela janela)

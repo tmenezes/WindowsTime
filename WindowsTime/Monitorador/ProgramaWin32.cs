@@ -11,11 +11,14 @@ namespace WindowsTime.Monitorador
         public override Image Icone { get { return _icone ?? (_icone = IconeHelper.GetIcone(this)); } }
 
 
-        public ProgramaWin32(Process processo, string titulo) : base(processo, titulo)
+        public ProgramaWin32(Process processo, Janela janela)
+            : base(janela)
         {
             Tipo = TipoDePrograma.Win32;
-            Nome = processo.GetWindowExecutableDescription();
-            Executavel = processo.GetWindowExecutableFileName();
+            Processo = processo;
+
+            Nome = processo.GetDescription() ?? ProcessHelper.POGRAMA_DESCONHECIDO;
+            Executavel = processo.GetFileName();
         }
     }
 }

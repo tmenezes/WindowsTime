@@ -23,56 +23,53 @@ namespace WindowsTime.Monitorador.Api
         private const uint SECURITY_MANDATORY_HIGH_RID = 0x00003000;
         private const uint TOKEN_READ = 0x00020008;
 
-        private static readonly IDictionary<IntPtr, Process> windowsStoreWindowsHandles = new ConcurrentDictionary<IntPtr, Process>(); // handle janela, processo
-        private static bool loadingStoreProcess = false;
 
         [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
+        internal static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+        internal static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+        internal static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         [DllImport("Shell32.dll", EntryPoint = "ExtractIconExW", CharSet = CharSet.Unicode, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
-        private static extern int ExtractIconEx(string sFile, int iIndex, out IntPtr piLargeVersion, out IntPtr piSmallVersion, int amountIcons);
+        internal static extern int ExtractIconEx(string sFile, int iIndex, out IntPtr piLargeVersion, out IntPtr piSmallVersion, int amountIcons);
 
         [DllImport("user32.dll")]
-        static extern bool IsImmersiveProcess(IntPtr hProcess);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern int GetPackageId(IntPtr hProcess, ref int bufferLength, IntPtr pBuffer);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-        private static extern uint GetPackageFullName(IntPtr hProcess, ref uint packageFullNameLength, StringBuilder packageFullName);
+        internal static extern bool IsImmersiveProcess(IntPtr hProcess);        
 
         [DllImport("user32.dll", EntryPoint = "GetPropW", CharSet = CharSet.Unicode)]
-        private static extern int GetProp(IntPtr hwnd, string lpString);
+        internal static extern int GetProp(IntPtr hwnd, string lpString);
 
         [DllImport("user32.dll", SetLastError = false)]
-        static extern IntPtr GetDesktopWindow();
+        internal static extern IntPtr GetDesktopWindow();
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        public static extern bool IsWindowVisible(IntPtr hWnd);
+        internal static extern bool IsWindowVisible(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        public static extern bool IsIconic(IntPtr hWnd);
+        internal static extern bool IsIconic(IntPtr hWnd);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string lclassName, string windowTitle);
+        internal static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string lclassName, string windowTitle);
 
         [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
-        public static extern IntPtr GetParent(IntPtr hWnd);
+        internal static extern IntPtr GetParent(IntPtr hWnd);
 
         [DllImport("psapi.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool EnumProcesses(int[] lpidProcess, int cb, out int cbNeeded);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+        internal static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool CloseHandle(IntPtr hObject);
+        internal static extern bool CloseHandle(IntPtr hObject);
+
+        internal delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+        [DllImport("user32.dll")]
+        internal static extern bool EnumChildWindows(IntPtr hwndParent, EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
 
 
         [HandleProcessCorruptedStateExceptions()]
@@ -113,83 +110,27 @@ namespace WindowsTime.Monitorador.Api
             {
                 return false;
             }
-        }
+        }        
+        
 
         [HandleProcessCorruptedStateExceptions()]
-        public static WindowsStorePackageId GetWindowsStorePackageId(Process process)
+        public static List<IntPtr> GetChildWindows(IntPtr windowHanle)
         {
-            int len = 0;
-            int retval = GetPackageId(process.Handle, ref len, IntPtr.Zero);
-            //if (retval != ERROR_INSUFFICIENT_BUFFER)
-            //    throw new Win32Exception();
+            var result = new List<IntPtr>();
 
-            IntPtr buffer = Marshal.AllocHGlobal((int)len);
             try
             {
-                retval = GetPackageId(process.Handle, ref len, buffer);
-                //if (retval != ERROR_SUCCESS)
-                //    throw new Win32Exception();
-                PACKAGE_ID packageID = (PACKAGE_ID)Marshal.PtrToStructure(buffer, typeof(PACKAGE_ID));
-
-                var fullname = GetWindowsStorePackageFullName(process);
-                return new WindowsStorePackageId(packageID, fullname);
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(buffer);
-            }
-        }
-
-        [HandleProcessCorruptedStateExceptions()]
-        public static string GetWindowsStorePackageFullName(Process process)
-        {
-            try
-            {
-                uint packageFullNameLength = 0;
-                var packageFullNameBld = new StringBuilder();
-
-                var ret = GetPackageFullName(process.Handle, ref packageFullNameLength, packageFullNameBld);
-
-                //if ((ret == APPMODEL_ERROR_NO_PACKAGE) || (packageFullNameLength == 0))
-                //{
-                //    // Not a WindowsStoreApp process
-                //    return;
-                //}
-
-                // Call again, now that we know the size
-                packageFullNameBld = new StringBuilder((int)packageFullNameLength);
-                ret = GetPackageFullName(process.Handle, ref packageFullNameLength, packageFullNameBld);
-
-                return packageFullNameBld.ToString();
-            }
-            catch (Exception)
-            {
-                return string.Empty;
-            }
-        }
-
-        [HandleProcessCorruptedStateExceptions()]
-        public static Process GetWindowsStoreRealProcess(IntPtr windowHanle)
-        {
-            try
-            {
-                if (windowsStoreWindowsHandles.ContainsKey(windowHanle))
-                    return windowsStoreWindowsHandles[windowHanle];
-
-                // wait for background thread loading Windows Store processes
-                while (loadingStoreProcess)
+                EnumChildWindows(windowHanle, (handle, pointer) =>
                 {
-                    Thread.Sleep(100);
-                }
-                
-                return windowsStoreWindowsHandles.ContainsKey(windowHanle)
-                    ? windowsStoreWindowsHandles[windowHanle]
-                    : GetProcess(windowHanle);
+                    result.Add(handle);
+                    return true;
+                }, IntPtr.Zero);
             }
             catch (Exception)
             {
-                return null;
             }
+
+            return result;
         }
 
 
@@ -218,73 +159,6 @@ namespace WindowsTime.Monitorador.Api
             {
                 return null;
             }
-        }
-
-
-        internal static void LoadWindowsStoreProcess()
-        {
-            var processes = Process.GetProcesses().Where(IsWindowsStoreApp).ToList();
-
-            windowsStoreWindowsHandles.Clear();
-
-            foreach (var process in processes)
-            {
-                var handle = FindWindowsStoreWindowHandle(process);
-
-                if (handle != IntPtr.Zero)
-                {
-                    windowsStoreWindowsHandles.Add(handle, process);
-                }
-            }
-        }
-
-        private static IntPtr FindWindowsStoreWindowHandle(Process process)
-        {
-            var isWindowsStoreApp = IsWindowsStoreApp(process);  //IsImmersiveProcess(processHandle); //
-            if (!isWindowsStoreApp)
-                return IntPtr.Zero;
-
-
-            bool found = false;
-            var prevWindow = IntPtr.Zero;
-
-            while (!found)
-            {
-                var desktopWindow = GetDesktopWindow();
-                if (desktopWindow == IntPtr.Zero)
-                    break;
-
-                var nextWindow = FindWindowEx(desktopWindow, prevWindow, null, null);
-                if (nextWindow == IntPtr.Zero)
-                    break;
-
-                // Check whether window belongs to the correct process.
-                var nextWindowProcess = GetProcess(nextWindow);
-
-                if (nextWindowProcess == null)
-                    break;
-
-                if (nextWindowProcess.Id == process.Id)
-                {
-                    // Add additional checks. In my case, I had to bring the window to front so these checks were necessary.
-                    if (IsWindowVisible(nextWindow)
-                        && !IsIconic(nextWindow)
-                        && GetParent(nextWindow) == IntPtr.Zero)
-                        return nextWindow;
-                    else
-                    {
-                        var parent = GetParent(nextWindow);
-                        var validParent = IsWindowVisible(parent) && !IsIconic(parent);
-                        //&& GetProp(parent, "Windows.ImmersiveShell.IdentifyAsMainCoreWindow") > 0;
-                        if (validParent)
-                            return parent;
-                    }
-                }
-
-                prevWindow = nextWindow;
-            }
-
-            return IntPtr.Zero;
-        }
+        }        
     }
 }

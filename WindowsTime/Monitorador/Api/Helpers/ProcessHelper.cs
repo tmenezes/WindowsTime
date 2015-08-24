@@ -4,6 +4,9 @@ namespace WindowsTime.Monitorador.Api.Helpers
 {
     internal static class ProcessHelper
     {
+        public const string POGRAMA_DESCONHECIDO = "Windows";
+        public const string PROGRAMA_WINDOWS_EXPLORER = "Windows Explorer";
+
         public static Process GetProcess(int id)
         {
             var process = Process.GetProcessById(id);

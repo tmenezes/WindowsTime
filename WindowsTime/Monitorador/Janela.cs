@@ -21,8 +21,10 @@ namespace WindowsTime.Monitorador
         {
             WindowsHandle = windowsHandle;
             Titulo = WindowsApi.GetWindowsText(windowsHandle);
+            Programa = Programa.Desconhecido(this);
 
-            Task.Factory.StartNew(() => Programa = Programa.Criar(windowsHandle, Titulo));
+            // carrega o programa corretamente
+            AtualizarPrograma();
         }
 
 
@@ -45,6 +47,11 @@ namespace WindowsTime.Monitorador
             Titulo = novoTitulo;
 
             Programa.NotificarNovaAreaAcessada(novoTitulo);
+        }
+
+        public void AtualizarPrograma()
+        {
+            Task.Factory.StartNew(() => Programa = Programa.Carregar(this));
         }
 
         public override string ToString()

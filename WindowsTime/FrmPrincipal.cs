@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Microsoft.VisualBasic;
 using WindowsTime.ImportExport;
+using WindowsTime.Monitorador;
 using WindowsTime.Monitorador.Api;
 using WindowsTime.Monitorador.Api.Helpers;
 
@@ -246,18 +247,75 @@ namespace WindowsTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var idProcesso = Interaction.InputBox("Digite o id do processo ou handle da janela", "Id do Process", "", -1, -1);
+            #region windows store package pelo PID
+            //var idProcesso = Interaction.InputBox("Digite o id do processo ou handle da janela", "Id do Process", "", -1, -1);
 
-            var processo = ProcessHelper.GetProcess(Convert.ToInt32(idProcesso));
-            if (!WindowsApi.IsWindowsStoreApp(processo))
+            //var processo = ProcessHelper.GetProcess(Convert.ToInt32(idProcesso));
+            //if (!WindowsApi.IsWindowsStoreApp(processo))
+            //{
+            //    MessageBox.Show("Não é Windows Store App");
+            //    return;
+            //}
+
+            //var packageId = WindowsApi.GetWindowsStorePackageId(processo);
+            ////var process = WindowsApi.GetWindowsStorere(processo);
+            //MessageBox.Show(string.Format("{0} - {1}", 0, packageId)); 
+            #endregion
+
+            #region janelas filhas pelo window handle
+            //var input = Interaction.InputBox("Digite o handle da janela", "Handle da janela", "", -1, -1);
+            //var handle = new IntPtr(Convert.ToInt32(input));
+            //var janelasFilhas = WindowsApi.GetChildWindows(handle);
+
+            //if (janelasFilhas.Any())
+            //{
+            //    janelasFilhas.Insert(0, handle);
+            //    var janelas = janelasFilhas.Select(i => new { Handle = i.ToString(), Processo = WindowsApi.GetProcess(i) })
+            //                               .Select(i => string.Format("Handle:{0} - PID:{1}, {2}", i.Handle, i.Processo.Id, i.Processo))
+            //                               .Aggregate((um, outro) => string.Format("{0}\n{1}", um, outro));
+            //    MessageBox.Show(janelas);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Nada");
+            //} 
+            #endregion
+
+
+            #region atualizar programas das janelas
+            var janelasWindowsStore = MonitoradorDeJanela.Instance.Janelas.Values.Where(j => j.Programa.Tipo == TipoDePrograma.WindowsStore &&
+                                                                                             j.Programa.Processo.ProcessName == "ApplicationFrameHost");
+            foreach (var janela in janelasWindowsStore)
             {
-                MessageBox.Show("Não é Windows Store App");
-                return;
+                janela.AtualizarPrograma();
             }
+            #endregion
 
-            var packageId = WindowsApi.GetWindowsStorePackageId(processo);
-            //var handle = WindowsApi.GetWindowsStoreWindowHandle(processo);
-            MessageBox.Show(string.Format("{0} - {1}", 0, packageId));
+            #region janelas filhas com verificacao de monitaradas
+            //var input = Interaction.InputBox("Digite o handle da janela", "Handle da janela", "", -1, -1);
+            //var handle = new IntPtr(Convert.ToInt32(input));
+
+            //bool janelaExisteNoMonitorador = MonitoradorDeJanela.Instance.Janelas.ContainsKey(handle);
+            //MessageBox.Show("janelaExisteNoMonitorador: " + janelaExisteNoMonitorador);
+
+
+            //var childWindows = WindowsApi.GetChildWindows(handle);
+
+            //if (!childWindows.Any())
+            //{
+            //    MessageBox.Show("nada");
+            //    return;
+            //}
+
+            //var processes = childWindows.Select(i => WindowsApi.GetProcess(i))
+            //                            .GroupBy(p => p.Id)
+            //                            .Select(group => group.First())
+            //                            .Select(i => string.Format("PID:{0}, {1}", i.Id, i.ProcessName))
+            //                            .Aggregate((um, outro) => string.Format("{0}\n{1}", um, outro));
+            //MessageBox.Show(processes); 
+            #endregion
+
+
         }
     }
 }

@@ -8,10 +8,7 @@ namespace WindowsTime.Monitorador.Api.Extensions
 {
     internal static class ProcessExtensions
     {
-        private const string FILENAME_DESCONHECIDO = "Windows";
-        private const string FILENAME_EXPLORER = "Windows Explorer";
-
-        public static string GetWindowExecutableFileName(this Process process)
+        public static string GetFileName(this Process process)
         {
             try
             {
@@ -25,17 +22,17 @@ namespace WindowsTime.Monitorador.Api.Extensions
                     return GetConsoleFileName();
 
 
-                return FILENAME_DESCONHECIDO;
+                return ProcessHelper.POGRAMA_DESCONHECIDO;
             }
             catch (Exception)
             {
                 return IsExplorerProcess(process)
-                           ? FILENAME_EXPLORER
-                           : FILENAME_DESCONHECIDO;
+                           ? ProcessHelper.PROGRAMA_WINDOWS_EXPLORER
+                           : ProcessHelper.POGRAMA_DESCONHECIDO;
             }
         }
 
-        public static string GetWindowExecutableDescription(this Process process)
+        public static string GetDescription(this Process process)
         {
             try
             {
@@ -49,8 +46,8 @@ namespace WindowsTime.Monitorador.Api.Extensions
             catch (Exception)
             {
                 return IsExplorerProcess(process)
-                           ? FILENAME_EXPLORER
-                           : FILENAME_DESCONHECIDO;
+                           ? ProcessHelper.PROGRAMA_WINDOWS_EXPLORER
+                           : null;
             }
         }
 
