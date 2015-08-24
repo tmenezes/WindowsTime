@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Timers;
 using Microsoft.Win32;
 using WindowsTime.Monitorador.Api;
@@ -131,7 +130,7 @@ namespace WindowsTime.Monitorador
             if (deveAtualizarProgramas)
             {
                 var janelasWindowsStore = Instance.Janelas.Values.Where(j => j.Programa.Tipo == TipoDePrograma.WindowsStore &&
-                                                                             j.Programa.Processo.ProcessName == "ApplicationFrameHost");
+                                                                             WindowsStoreApi.IsFrameHostProcess(j.Programa.Processo));
                 foreach (var janela in janelasWindowsStore)
                 {
                     janela.AtualizarPrograma();

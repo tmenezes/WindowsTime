@@ -13,9 +13,20 @@ namespace WindowsTime.Monitorador.Api
 {
     public static class WindowsStoreApi
     {
-        private static readonly IDictionary<IntPtr, Process> windowsStoreWindowsHandles = new ConcurrentDictionary<IntPtr, Process>(); // handle janela, processo
-        private static readonly IDictionary<string, bool> ignoredAppFrameHostNames = new Dictionary<string, bool>() { { "ApplicationFrameHost", true } };
+        private static readonly IDictionary<IntPtr, Process> windowsStoreWindowsHandles;// handle janela, processo
+        private static readonly IDictionary<string, bool> appFrameHostNames;
         private static bool loadingStoreProcess = false;
+
+        static WindowsStoreApi()
+        {
+            windowsStoreWindowsHandles = new ConcurrentDictionary<IntPtr, Process>();
+            appFrameHostNames = new Dictionary<string, bool>()
+                                {
+                                    { "ApplicationFrameHost", true },
+                                    { "WWAHost", true }
+                                };
+        }
+
 
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern int GetPackageId(IntPtr hProcess, ref int bufferLength, IntPtr pBuffer);
@@ -97,7 +108,7 @@ namespace WindowsTime.Monitorador.Api
                 var processes = childWindows.Select(i => WindowsApi.GetProcess(i))
                                             .GroupBy(p => p.Id)
                                             .Select(group => group.First())
-                                            .Where(p => !ignoredAppFrameHostNames.ContainsKey(p.ProcessName))
+                                            .Where(p => !appFrameHostNames.ContainsKey(p.ProcessName))
                                             .ToList();
                 if (processes.Count == 1)
                     return processes.First();
@@ -111,12 +122,17 @@ namespace WindowsTime.Monitorador.Api
                         return process;
                 }
 
-                return WindowsApi.GetProcess(windowHanle);                
+                return WindowsApi.GetProcess(windowHanle);
             }
             catch (Exception)
             {
                 return null;
             }
+        }
+
+        public static bool IsFrameHostProcess(Process process)
+        {
+            return process != null && appFrameHostNames.ContainsKey(process.ProcessName);
         }
 
 
@@ -138,7 +154,7 @@ namespace WindowsTime.Monitorador.Api
             {
                 try
                 {
-                    if (ignoredAppFrameHostNames.ContainsKey(process.ProcessName))
+                    if (appFrameHostNames.ContainsKey(process.ProcessName))
                         continue;
 
                     var handle = FindWindowsStoreWindowHandle(process);

@@ -36,7 +36,7 @@ namespace WindowsTime.Monitorador
             var windowsStoreApp = WindowsApi.IsWindowsStoreApp(processo);
 
             var programa = (windowsStoreApp)
-                ? new ProgramaWindowsStore(janela) as Programa
+                ? new ProgramaWindowsStore(processo, janela) as Programa
                 : new ProgramaWin32(processo, janela);
 
             return programa;
