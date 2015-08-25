@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
+using Windows.Management.Deployment;
 using WindowsTime.Monitorador.Api;
 using WindowsTime.Monitorador.Api.Extensions;
 using WindowsTime.Monitorador.Api.Helpers;
@@ -36,6 +37,10 @@ namespace WindowsTime.Monitorador
                 return processo;
             }
 
+            
+            //Windows.Management.Deployment.PackageManager packageManager = new PackageManager().FindPackage().Id.
+            //Windows.Management.Core.ApplicationDataManager.CreateForPackageFamily("").LocalSettings.Values.
+            Windows.Foundation.Metadata.
 
             Thread.Sleep(1000); // aguarda o Windows 10 mudar contexto da aplicação de AppFrameHost p/ a app real
 
