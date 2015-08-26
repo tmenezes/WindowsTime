@@ -118,8 +118,10 @@
     <Compile Include="ImportExport\ImportExportTypeEnum.cs" />
     <Compile Include="ImportExport\ImportFile.cs" />
     <Compile Include="DadosDoPrograma.cs" />
+    <Compile Include="Monitorador\Api\Helpers\SerializationHelper.cs" />
     <Compile Include="Monitorador\Api\Helpers\MarshalHelper.cs" />
     <Compile Include="Monitorador\Api\Helpers\IconeHelper.cs" />
+    <Compile Include="Monitorador\Api\Structs\AppxManifestStructs.cs" />
     <Compile Include="Monitorador\Api\Structs\Win32Structs.cs" />
     <Compile Include="Monitorador\Api\WindowsStoreApi.cs" />
     <Compile Include="Monitorador\Api\WindowsStorePackageId.cs" />

@@ -1,10 +1,12 @@
+using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Threading;
-using Windows.Management.Deployment;
 using WindowsTime.Monitorador.Api;
 using WindowsTime.Monitorador.Api.Extensions;
 using WindowsTime.Monitorador.Api.Helpers;
+using WindowsTime.Monitorador.Api.Structs;
 
 namespace WindowsTime.Monitorador
 {
@@ -19,14 +21,13 @@ namespace WindowsTime.Monitorador
         public ProgramaWindowsStore(Process processo, Janela janela)
             : base(janela)
         {
+            Tipo = TipoDePrograma.WindowsStore;
+
             Processo = ObterProcessoReal(processo, janela);
 
-            Tipo = TipoDePrograma.WindowsStore;
-            PackageId = WindowsStoreApi.GetWindowsStorePackageId(Processo);
-
-            Nome = ObterNome();
-            Executavel = Processo.GetFileName();
+            CarregarDadosDoPrograma();
         }
+
 
 
         private Process ObterProcessoReal(Process processo, Janela janela)
@@ -37,18 +38,36 @@ namespace WindowsTime.Monitorador
                 return processo;
             }
 
-            
-            //Windows.Management.Deployment.PackageManager packageManager = new PackageManager().FindPackage().Id.
-            //Windows.Management.Core.ApplicationDataManager.CreateForPackageFamily("").LocalSettings.Values.
-            Windows.Foundation.Metadata.
-
             Thread.Sleep(1000); // aguarda o Windows 10 mudar contexto da aplicação de AppFrameHost p/ a app real
 
             return WindowsStoreApi.GetWindowsStoreRealProcess(janela.WindowsHandle) ?? WindowsApi.GetProcess(janela.WindowsHandle);
         }
 
-        private string ObterNome()
+        private void CarregarDadosDoPrograma()
         {
+            var isFrameHost = WindowsStoreApi.IsFrameHostProcess(Processo);
+
+            PackageId = WindowsStoreApi.GetWindowsStorePackageId(Processo);
+            Executavel = Processo.GetFileName();
+
+            var pastaBase = (isFrameHost)
+                ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps", PackageId.FullName)
+                : Path.GetDirectoryName(Executavel);
+
+            var arquivoAppxManifest = Path.Combine(pastaBase, "AppxManifest.xml");
+            var pacoteAppxManifest = SerializationHelper.DeSerializeObject<Package>(arquivoAppxManifest);
+
+            Nome = ObterNome(pacoteAppxManifest);
+        }
+
+        private string ObterNome(Package pacoteAppxManifest)
+        {
+            var displayNameValido = pacoteAppxManifest != null && !pacoteAppxManifest.GetDisplayName().ToLower().Contains("ms-resource");
+            if (displayNameValido)
+            {
+                return pacoteAppxManifest.GetDisplayName();
+            }
+
             var isFrameHost = WindowsStoreApi.IsFrameHostProcess(Processo);
 
             return (isFrameHost)
