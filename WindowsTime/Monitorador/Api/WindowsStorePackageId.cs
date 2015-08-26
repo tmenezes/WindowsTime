@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.IO;
 using WindowsTime.Monitorador.Api.Helpers;
 using WindowsTime.Monitorador.Api.Structs;
 
@@ -15,12 +15,15 @@ namespace WindowsTime.Monitorador.Api
         public string ResourceId { get; private set; }
         public string PublisherId { get; private set; }
 
-        public int Version;
-        public int Major;
-        public int Minor;
-        public int Build;
-        public int Revision;
+        public int Version { get; private set; }
+        public int Major { get; private set; }
+        public int Minor { get; private set; }
+        public int Build { get; private set; }
+        public int Revision { get; private set; }
         public string PackageVersion { get { return string.Format("{0}.{1}.{2}.{3}", Major, Minor, Build, Revision); } }
+
+        public string InstalledFolder { get; set; }
+        public string ResourcesPriFilePath { get; set; }
 
         public WindowsStorePackageId(PACKAGE_ID packageId, string fullname)
         {
@@ -38,11 +41,14 @@ namespace WindowsTime.Monitorador.Api
             Minor = (int)packageId.version.Minor;
             Build = (int)packageId.version.Build;
             Revision = (int)packageId.version.Revision;
+
+            InstalledFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps", FullName);
+            ResourcesPriFilePath = Path.Combine(InstalledFolder, "resources.pri");
         }
 
         public override string ToString()
         {
-            return string.Format("Name: {0}, FullName: {1}, Version: {2}, Publisher: {3}, ResourceId: {4}, PublisherId: {5}", 
+            return string.Format("Name: {0}, FullName: {1}, Version: {2}, Publisher: {3}, ResourceId: {4}, PublisherId: {5}",
                 Name, FullName, PackageVersion, Publisher, ResourceId, PublisherId);
         }
     }

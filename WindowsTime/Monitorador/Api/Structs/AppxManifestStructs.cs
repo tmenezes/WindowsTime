@@ -235,7 +235,7 @@ namespace WindowsTime.Monitorador.Api.Structs
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2013/manifest")]
     public class Application
     {
         [XmlElement("VisualElements")]
@@ -285,6 +285,12 @@ namespace WindowsTime.Monitorador.Api.Structs
 
         [XmlAttribute()]
         public string ToastCapable { get; set; }
+
+        [XmlAttribute()]
+        public string Square150x150Logo { get; set; }
+
+        [XmlAttribute()]
+        public string Square30x30Logo { get; set; }
     }
 
     /// <remarks/>

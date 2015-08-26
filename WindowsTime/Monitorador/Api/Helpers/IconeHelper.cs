@@ -23,8 +23,8 @@ namespace WindowsTime.Monitorador.Api.Helpers
                 return icone.ToBitmap();
 
             return programa.Tipo == TipoDePrograma.Win32
-                       ? IconeResource.AplicacaoWin32
+                       ? IconeResource.ProgramaWin32
                        : IconeResource.WindowsLogo;
-        }
+        }        
     }
 }

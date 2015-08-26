@@ -1,17 +1,13 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 using WindowsTime.Monitorador.Api.Extensions;
 using WindowsTime.Monitorador.Api.Helpers;
-using WindowsTime.Monitorador.Api.Structs;
 
 namespace WindowsTime.Monitorador.Api
 {
@@ -37,7 +33,7 @@ namespace WindowsTime.Monitorador.Api
         internal static extern int ExtractIconEx(string sFile, int iIndex, out IntPtr piLargeVersion, out IntPtr piSmallVersion, int amountIcons);
 
         [DllImport("user32.dll")]
-        internal static extern bool IsImmersiveProcess(IntPtr hProcess);        
+        internal static extern bool IsImmersiveProcess(IntPtr hProcess);
 
         [DllImport("user32.dll", EntryPoint = "GetPropW", CharSet = CharSet.Unicode)]
         internal static extern int GetProp(IntPtr hwnd, string lpString);
@@ -70,6 +66,8 @@ namespace WindowsTime.Monitorador.Api
         [DllImport("user32.dll")]
         internal static extern bool EnumChildWindows(IntPtr hwndParent, EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
+        [DllImport("shlwapi.dll", BestFitMapping = false, CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = false, ThrowOnUnmappableChar = true)]
+        private static extern int SHLoadIndirectString(string pszSource, StringBuilder pszOutBuf, int cchOutBuf, IntPtr ppvReserved);
 
 
         [HandleProcessCorruptedStateExceptions()]
@@ -110,8 +108,7 @@ namespace WindowsTime.Monitorador.Api
             {
                 return false;
             }
-        }        
-        
+        }
 
         [HandleProcessCorruptedStateExceptions()]
         public static List<IntPtr> GetChildWindows(IntPtr windowHanle)
@@ -131,6 +128,16 @@ namespace WindowsTime.Monitorador.Api
             }
 
             return result;
+        }
+
+        [HandleProcessCorruptedStateExceptions()]
+        public static string GetResourceString(string resourcePath, string resourceKey)
+        {
+            string resourceManifestString = string.Format("@{{{0}? {1}}}", resourcePath, resourceKey);
+            var outBuff = new StringBuilder(1024);
+
+            int result = SHLoadIndirectString(resourceManifestString, outBuff, outBuff.Capacity, IntPtr.Zero);
+            return outBuff.ToString();
         }
 
 
@@ -159,6 +166,6 @@ namespace WindowsTime.Monitorador.Api
             {
                 return null;
             }
-        }        
+        }
     }
 }
