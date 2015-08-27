@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace WindowsTime.Monitorador.Helpers
 {
@@ -16,19 +11,19 @@ namespace WindowsTime.Monitorador.Helpers
                 var configPastaDeContraste = ConfigurationManager.AppSettings["Logo.PastasDeContraste"];
 
                 PastasDeContraste = (string.IsNullOrEmpty(configPastaDeContraste))
-                    ? new[] { "contrast-black", "" }
+                    ? new[] { "", "contrast-black" }
                     : configPastaDeContraste.Split(',');
 
 
                 var configTamanhosAlvo = ConfigurationManager.AppSettings["Logo.TamanhosAlvo"];
 
                 TamanhosAlvo = (string.IsNullOrEmpty(configTamanhosAlvo))
-                    ? new[] { "contrast-black_targetsize-32.png", "contrast-black_scale-100.png", 
-                              "contrast-black_targetsize-36.png", "contrast-black_targetsize-40.png", 
-                              "contrast-black_scale-125.png", "contrast-black_scale-150.png", 
-                              ".png",
+                    ? new[] { ".png",
                               "targetsize-32.png", "scale-100.png", 
                               "targetsize-36.png", "targetsize-40.png", 
+                              "contrast-black_targetsize-32.png", "contrast-black_scale-100.png", 
+                              "contrast-black_targetsize-36.png", "contrast-black_targetsize-40.png", 
+                              "contrast-black_scale-125.png", "contrast-black_scale-150.png", 
                               "scale-125.png", "scale-150.png", 
                               "targetsize-48.png", "targetsize-256.png" }
                     : configTamanhosAlvo.Split(',');
