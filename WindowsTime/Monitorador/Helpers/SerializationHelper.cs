@@ -2,7 +2,7 @@
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace WindowsTime.Monitorador.Api.Helpers
+namespace WindowsTime.Monitorador.Helpers
 {
     internal static class SerializationHelper
     {
@@ -35,7 +35,7 @@ namespace WindowsTime.Monitorador.Api.Helpers
                     var outType = typeof(T);
 
                     var serializer = new XmlSerializer(outType);
-                    using (var reader = new XmlTextReader(read))
+                    using (var reader = new NamespaceIgnorantXmlTextReader(read))
                     {
                         objectOut = (T)serializer.Deserialize(reader);
                         reader.Close();
@@ -49,6 +49,16 @@ namespace WindowsTime.Monitorador.Api.Helpers
             catch (System.Exception)
             {
                 return default(T);
+            }
+        }
+
+        internal class NamespaceIgnorantXmlTextReader : XmlTextReader
+        {
+            public NamespaceIgnorantXmlTextReader(System.IO.TextReader reader) : base(reader) { }
+
+            public override string NamespaceURI
+            {
+                get { return ""; }
             }
         }
     }

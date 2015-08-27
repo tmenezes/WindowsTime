@@ -3,8 +3,8 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using WindowsTime.Monitorador;
-using WindowsTime.Monitorador.Api.Extensions;
-using WindowsTime.Monitorador.Api.Helpers;
+using WindowsTime.Monitorador.Extensions;
+using WindowsTime.Monitorador.Helpers;
 
 namespace WindowsTime
 {

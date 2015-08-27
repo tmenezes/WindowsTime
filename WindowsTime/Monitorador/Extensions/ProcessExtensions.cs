@@ -2,9 +2,10 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using WindowsTime.Monitorador.Api.Helpers;
+using WindowsTime.Monitorador.Api;
+using WindowsTime.Monitorador.Helpers;
 
-namespace WindowsTime.Monitorador.Api.Extensions
+namespace WindowsTime.Monitorador.Extensions
 {
     internal static class ProcessExtensions
     {

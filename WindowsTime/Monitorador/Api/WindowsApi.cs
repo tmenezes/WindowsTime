@@ -6,8 +6,8 @@ using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using WindowsTime.Monitorador.Api.Extensions;
-using WindowsTime.Monitorador.Api.Helpers;
+using WindowsTime.Monitorador.Extensions;
+using WindowsTime.Monitorador.Helpers;
 
 namespace WindowsTime.Monitorador.Api
 {

@@ -65,6 +65,7 @@
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.InteropServices.WindowsRuntime" />
@@ -118,19 +119,22 @@
     <Compile Include="ImportExport\ImportExportTypeEnum.cs" />
     <Compile Include="ImportExport\ImportFile.cs" />
     <Compile Include="DadosDoPrograma.cs" />
-    <Compile Include="Monitorador\Api\Helpers\SerializationHelper.cs" />
-    <Compile Include="Monitorador\Api\Helpers\MarshalHelper.cs" />
-    <Compile Include="Monitorador\Api\Helpers\IconeHelper.cs" />
+    <Compile Include="Monitorador\Api\WindowsColor\ColorFunctions.cs" />
+    <Compile Include="Monitorador\Api\WindowsColor\ImmersiveColors.cs" />
     <Compile Include="Monitorador\Api\Structs\AppxManifestStructs.cs" />
     <Compile Include="Monitorador\Api\Structs\Win32Structs.cs" />
     <Compile Include="Monitorador\Api\WindowsStoreApi.cs" />
     <Compile Include="Monitorador\Api\WindowsStorePackageId.cs" />
+    <Compile Include="Monitorador\Extensions\ProcessExtensions.cs" />
+    <Compile Include="Monitorador\Helpers\ConfiguracaoHelper.cs" />
+    <Compile Include="Monitorador\Helpers\IconeHelper.cs" />
+    <Compile Include="Monitorador\Helpers\MarshalHelper.cs" />
+    <Compile Include="Monitorador\Helpers\ProcessHelper.cs" />
+    <Compile Include="Monitorador\Helpers\SerializationHelper.cs" />
     <Compile Include="Monitorador\IIconeResource.cs" />
     <Compile Include="Monitorador\IniciadorDoMonitorador.cs" />
     <Compile Include="Monitorador\Janela.cs" />
     <Compile Include="Monitorador\MonitoradorDeJanela.cs" />
-    <Compile Include="Monitorador\Api\Extensions\ProcessExtensions.cs" />
-    <Compile Include="Monitorador\Api\Helpers\ProcessHelper.cs" />
     <Compile Include="Monitorador\Programa.cs" />
     <Compile Include="Monitorador\Api\WindowsApi.cs" />
     <Compile Include="Monitorador\ProgramaDesconhecido.cs" />

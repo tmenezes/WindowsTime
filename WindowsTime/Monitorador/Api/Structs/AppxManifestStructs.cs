@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
 using System.Xml.Serialization;
 
 // 
@@ -123,8 +124,8 @@ namespace WindowsTime.Monitorador.Api.Structs
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://schemas.microsoft.com/appx/2010/manifest", IsNullable = false)]
+    //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
+    //[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://schemas.microsoft.com/appx/manifest/foundation/windows10", IsNullable = false)]
     public partial class Package
     {
         [XmlElement("Identity")]
@@ -139,6 +140,12 @@ namespace WindowsTime.Monitorador.Api.Structs
         [System.Xml.Serialization.XmlArrayItemAttribute("Application", typeof(Application), IsNullable = false)]
         public Application[] Applications { get; set; }
 
+        [XmlAttribute("xmlns")]
+        public string XmlNameSpace { get; set; }
+
+        public bool IsWindows10Package { get { return XmlNameSpace == "http://schemas.microsoft.com/appx/manifest/foundation/windows10"; } }
+        public bool IsWindows8Package { get { return !IsWindows10Package; } }
+
         public string GetDisplayName()
         {
             return (Properties ?? new Properties()).DisplayName;
@@ -150,7 +157,7 @@ namespace WindowsTime.Monitorador.Api.Structs
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
+    //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
     public partial class Identity
     {
         /// <remarks/>
@@ -175,7 +182,7 @@ namespace WindowsTime.Monitorador.Api.Structs
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
+    //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
     public partial class Properties
     {
         public Properties()
@@ -200,7 +207,7 @@ namespace WindowsTime.Monitorador.Api.Structs
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
+    //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
     public partial class Prerequisites
     {
         public string OSMinVersion { get; set; }
@@ -235,7 +242,7 @@ namespace WindowsTime.Monitorador.Api.Structs
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2013/manifest")]
+    //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/manifest/uap/windows10")]
     public class Application
     {
         [XmlElement("VisualElements")]
@@ -256,7 +263,7 @@ namespace WindowsTime.Monitorador.Api.Structs
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
+    //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://schemas.microsoft.com/appx/2010/manifest")]
     public partial class VisualElements
     {
         [XmlElement("DefaultTile")]
@@ -291,6 +298,14 @@ namespace WindowsTime.Monitorador.Api.Structs
 
         [XmlAttribute()]
         public string Square30x30Logo { get; set; }
+
+        [XmlAttribute()]
+        public string Square44x44Logo { get; set; }
+
+        public string GetLogo()
+        {
+            return SmallLogo ?? Square30x30Logo ?? Square44x44Logo ?? Logo ?? Square150x150Logo;
+        }
     }
 
     /// <remarks/>

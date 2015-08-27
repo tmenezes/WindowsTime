@@ -5,9 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using WindowsTime.Monitorador.Api;
-using WindowsTime.Monitorador.Api.Extensions;
-using WindowsTime.Monitorador.Api.Helpers;
 using WindowsTime.Monitorador.Api.Structs;
+using WindowsTime.Monitorador.Api.WindowsColor;
+using WindowsTime.Monitorador.Extensions;
+using WindowsTime.Monitorador.Helpers;
 
 namespace WindowsTime.Monitorador
 {
@@ -127,25 +128,36 @@ namespace WindowsTime.Monitorador
 
 
             var aplicacao = AppxPackage.Applications.First();
-            var targetSizes = new[] { "targetsize-32.png", ".png", "targetsize-48.png", "targetsize-256.png" };
-            var arquivoLogo = Path.Combine(PackageId.InstalledFolder, aplicacao.VisualElements.Square30x30Logo);
+            var nomeArquivoLogo = aplicacao.VisualElements.GetLogo();
+            var arquivoLogoBase = Path.Combine(PackageId.InstalledFolder, nomeArquivoLogo);
 
-            foreach (var size in targetSizes)
+            foreach (var subPasta in ConfiguracaoHelper.Logo.PastasDeContraste)
             {
-                arquivoLogo = Path.ChangeExtension(arquivoLogo, size);
-                if (!File.Exists(arquivoLogo))
-                    continue;
+                var arquivoLogo = Path.Combine(Path.GetDirectoryName(arquivoLogoBase), subPasta, Path.GetFileName(nomeArquivoLogo));
 
-                var logo = Image.FromFile(arquivoLogo);
-                //var graphic = Graphics.FromImage(logo);
-                //var bgColor = (Color)new ColorConverter().ConvertFromString(aplicacao.VisualElements.BackgroundColor);
+                foreach (var tamanho in ConfiguracaoHelper.Logo.TamanhosAlvo)
+                {
+                    var arquivoLogoComTamanho = Path.ChangeExtension(arquivoLogo, tamanho);
+                    if (!File.Exists(arquivoLogoComTamanho))
+                        continue;
 
-                //graphic.Clear(bgColor); // altera o background
-                //graphic.DrawImage(logo, new PointF(0, 0));
-                return logo;
+                    var logo = Image.FromFile(arquivoLogoComTamanho);
+                    var bgColor = GetBackGroundColor(aplicacao);
+
+                    return IconeHelper.GetIcone(logo, bgColor);
+                }
             }
 
             return IconeHelper.GetIcone(this);
+        }
+
+        private Color GetBackGroundColor(Application appxApplication)
+        {
+            var bg = appxApplication.VisualElements.BackgroundColor;
+            if (bg.ToLower() == "transparent")
+                return ColorFunctions.GetImmersiveColor(ImmersiveColors.ImmersiveStartSelectionBackground);
+
+            return (Color)new ColorConverter().ConvertFromString(appxApplication.VisualElements.BackgroundColor);
         }
     }
 }

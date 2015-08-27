@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using WindowsTime.Monitorador.Api.Helpers;
 using WindowsTime.Monitorador.Api.Structs;
+using WindowsTime.Monitorador.Helpers;
 
 namespace WindowsTime.Monitorador.Api
 {

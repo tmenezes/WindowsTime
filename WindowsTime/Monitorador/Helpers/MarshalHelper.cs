@@ -2,7 +2,7 @@
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 
-namespace WindowsTime.Monitorador.Api.Helpers
+namespace WindowsTime.Monitorador.Helpers
 {
     public static class MarshalHelper
     {

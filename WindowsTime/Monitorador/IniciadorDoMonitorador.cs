@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using WindowsTime.Monitorador.Api;
-using WindowsTime.Monitorador.Api.Helpers;
+using WindowsTime.Monitorador.Helpers;
 
 namespace WindowsTime.Monitorador
 {

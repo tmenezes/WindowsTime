@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using System.Drawing;
-using WindowsTime.Monitorador.Api.Helpers;
+using WindowsTime.Monitorador.Helpers;
 
 namespace WindowsTime.Monitorador
 {

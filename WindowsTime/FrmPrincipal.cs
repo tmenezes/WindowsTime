@@ -7,7 +7,6 @@ using Microsoft.VisualBasic;
 using WindowsTime.ImportExport;
 using WindowsTime.Monitorador;
 using WindowsTime.Monitorador.Api;
-using WindowsTime.Monitorador.Api.Helpers;
 
 namespace WindowsTime
 {
@@ -314,8 +313,6 @@ namespace WindowsTime
             //                            .Aggregate((um, outro) => string.Format("{0}\n{1}", um, outro));
             //MessageBox.Show(processes); 
             #endregion
-
-
         }
     }
 }

@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace WindowsTime.Monitorador.Api.Helpers
+namespace WindowsTime.Monitorador.Helpers
 {
     internal static class ProcessHelper
     {
