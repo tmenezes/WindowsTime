@@ -93,17 +93,10 @@ namespace WindowsTime.Monitorador.Api
         {
             try
             {
-                var childWindows = WindowsApi.GetChildWindows(windowHanle);
-                int tries = 1;
-                while (!childWindows.Any())
-                {
-                    childWindows = WindowsApi.GetChildWindows(windowHanle);
-                    Thread.Sleep(100);
+                var childWindows = GetChildWindows(windowHanle);
+                if (!childWindows.Any())
+                    return WindowsApi.GetProcess(windowHanle);
 
-                    tries++;
-                    if (tries > 100)
-                        return WindowsApi.GetProcess(windowHanle);
-                }
 
                 var processes = childWindows.Select(i => WindowsApi.GetProcess(i))
                                             .GroupBy(p => p.Id)
@@ -217,6 +210,22 @@ namespace WindowsTime.Monitorador.Api
             }
 
             return IntPtr.Zero;
+        }
+
+        private static List<IntPtr> GetChildWindows(IntPtr windowHanle)
+        {
+            var childWindows = WindowsApi.GetChildWindows(windowHanle);
+            int tries = 1;
+            while (!childWindows.Any())
+            {
+                childWindows = WindowsApi.GetChildWindows(windowHanle);
+                Thread.Sleep(100);
+
+                tries++;
+                if (tries > 100)
+                    return childWindows;
+            }
+            return childWindows;
         }
 
         private static void LoadRealProcess(IntPtr windowHanle)
