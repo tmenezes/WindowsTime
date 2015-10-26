@@ -105,7 +105,6 @@
       <DependentUpon>frmTeste.cs</DependentUpon>
     </Compile>
     <Compile Include="GraficoHelper.cs" />
-    <Compile Include="DadosDoPrograma.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowsTimeIconeResource.cs" />

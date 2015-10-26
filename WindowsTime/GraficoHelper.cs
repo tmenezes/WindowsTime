@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WindowsTime.Core.Dados;
 using WindowsTime.Core.Monitorador;
 
 namespace WindowsTime

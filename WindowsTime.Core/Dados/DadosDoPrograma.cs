@@ -1,11 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using WindowsTime.Core.ImportExport.CsvFile;
 
-namespace WindowsTime
+namespace WindowsTime.Core.Dados
 {
-    internal class DadosDoPrograma
+    public class DadosDoPrograma
     {
+        public int Id { get; set; }
+
         [CsvFileConfiguration("Programa", Position = 1)]
         public string Nome { get; set; }
 
@@ -14,6 +17,8 @@ namespace WindowsTime
 
         [CsvFileConfiguration("Janelas", Position = 4)]
         public int TotalJanelas { get; set; }
+
+        public IEnumerable<DadosDaJanela> Janelas { get; set; }
 
         public Image Icone { get; set; }
 

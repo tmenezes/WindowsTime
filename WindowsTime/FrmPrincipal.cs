@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using WindowsTime.Core.Dados;
 using WindowsTime.Core.ImportExport;
 using WindowsTime.Core.Monitorador;
 

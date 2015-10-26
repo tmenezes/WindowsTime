@@ -32,9 +32,9 @@ namespace WindowsTime.Core.Monitorador
         public static Programa Carregar(Janela janela)
         {
             var processo = WindowsApi.GetProcess(janela.WindowsHandle);
-            var windowsStoreApp = WindowsApi.IsWindowsStoreApp(processo);
+            var esWindowsStoreApp = WindowsApi.IsWindowsStoreApp(processo);
 
-            var programa = (windowsStoreApp)
+            var programa = (esWindowsStoreApp)
                 ? new ProgramaWindowsStore(processo, janela) as Programa
                 : new ProgramaWin32(processo, janela);
 

@@ -7,14 +7,14 @@ namespace WindowsTime.Core.Monitorador
 {
     public class Janela
     {
-        private readonly Stopwatch _medidorDetempo = new Stopwatch();
+        private readonly Stopwatch _medidorDeTempo = new Stopwatch();
 
         public IntPtr WindowsHandle { get; private set; }
         public string Titulo { get; private set; }
         public Programa Programa { get; private set; }
         public bool EstaAtiva { get; private set; }
 
-        public TimeSpan TempoDeAtividade { get { return _medidorDetempo.Elapsed; } }
+        public TimeSpan TempoDeAtividade { get { return _medidorDeTempo.Elapsed; } }
 
 
         public Janela(IntPtr windowsHandle)
@@ -32,14 +32,14 @@ namespace WindowsTime.Core.Monitorador
         {
             EstaAtiva = true;
 
-            _medidorDetempo.Start();
+            _medidorDeTempo.Start();
         }
 
         public void NotificarJanelaInativa()
         {
             EstaAtiva = false;
 
-            _medidorDetempo.Stop();
+            _medidorDeTempo.Stop();
         }
 
         public void NotificarMudancaDeTitulo(string novoTitulo)
@@ -56,7 +56,7 @@ namespace WindowsTime.Core.Monitorador
 
         public override string ToString()
         {
-            return string.Format("WindowsHandle: {0}, Titulo: {1}", WindowsHandle, Titulo);
+            return $"WindowsHandle: {WindowsHandle}, Titulo: {Titulo}";
         }
     }
 }

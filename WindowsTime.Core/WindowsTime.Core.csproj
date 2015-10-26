@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dados\DadosDoPrograma.cs" />
+    <Compile Include="Dados\DadosDaJanela.cs" />
+    <Compile Include="Dados\Usuario.cs" />
     <Compile Include="ImportExport\CsvFile\CsvFileConfigurationAttribute.cs" />
     <Compile Include="ImportExport\CsvFile\CsvFileExporter.cs" />
     <Compile Include="ImportExport\CsvFile\CsvFileImporter.cs" />
@@ -75,7 +78,11 @@
     <Compile Include="Monitorador\ProgramaWin32.cs" />
     <Compile Include="Monitorador\ProgramaWindowsStore.cs" />
     <Compile Include="Monitorador\TipoDePrograma.cs" />
+    <Compile Include="Dados\UtilizacaoDePrograma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Notificador\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
