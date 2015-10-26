@@ -10,5 +10,12 @@ namespace WindowsTime.Core.Dados
         public DateTime Data { get; set; }
 
         public IEnumerable<DadosDoPrograma> Programas { get; set; }
+
+        public UtilizacaoDePrograma(IEnumerable<DadosDoPrograma> programas)
+        {
+            Usuario = Usuario.Corrente;
+            Data = DateTime.Now;
+            Programas = programas;
+        }
     }
 }
