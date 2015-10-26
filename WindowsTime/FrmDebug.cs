@@ -2,9 +2,9 @@
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using Microsoft.Win32;
-using WindowsTime.Monitorador;
-using WindowsTime.Monitorador.Extensions;
-using WindowsTime.Monitorador.Helpers;
+using WindowsTime.Core.Monitorador;
+using WindowsTime.Core.Monitorador.Extensions;
+using WindowsTime.Core.Monitorador.Helpers;
 
 namespace WindowsTime
 {

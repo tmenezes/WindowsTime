@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
-using WindowsTime.Monitorador;
+using WindowsTime.Core.Monitorador;
 
 namespace WindowsTime
 {

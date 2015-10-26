@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using WindowsTime.Monitorador;
+using WindowsTime.Core.Monitorador;
 
 namespace WindowsTime
 {
@@ -45,7 +45,7 @@ namespace WindowsTime
             }
             catch (Exception)
             {
-                Text = string.Format("Erro: DesenharGrafico - {0}", DateTime.Now);
+                Text = $"Erro: DesenharGrafico - {DateTime.Now}";
             }
         }
 
@@ -65,7 +65,7 @@ namespace WindowsTime
             }
             catch (Exception)
             {
-                Text = string.Format("Erro: CarregarGrid - {0}", DateTime.Now);
+                Text = $"Erro: CarregarGrid - {DateTime.Now}";
             }
         }
     }

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WindowsTime</RootNamespace>
     <AssemblyName>WindowsTime</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -67,8 +67,6 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.Runtime.InteropServices.WindowsRuntime" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -107,40 +105,7 @@
       <DependentUpon>frmTeste.cs</DependentUpon>
     </Compile>
     <Compile Include="GraficoHelper.cs" />
-    <Compile Include="ImportExport\CsvFile\CsvFileConfigurationAttribute.cs" />
-    <Compile Include="ImportExport\CsvFile\CsvFileExporter.cs" />
-    <Compile Include="ImportExport\CsvFile\CsvFileImporter.cs" />
-    <Compile Include="ImportExport\ExportFile.cs" />
-    <Compile Include="ImportExport\IExporter.cs" />
-    <Compile Include="ImportExport\IImporter.cs" />
-    <Compile Include="ImportExport\ImportExportConfigurationBaseAttribute.cs" />
-    <Compile Include="ImportExport\ImportExportException.cs" />
-    <Compile Include="ImportExport\ImportExportHelper.cs" />
-    <Compile Include="ImportExport\ImportExportTypeEnum.cs" />
-    <Compile Include="ImportExport\ImportFile.cs" />
     <Compile Include="DadosDoPrograma.cs" />
-    <Compile Include="Monitorador\Api\WindowsColor\ColorFunctions.cs" />
-    <Compile Include="Monitorador\Api\WindowsColor\ImmersiveColors.cs" />
-    <Compile Include="Monitorador\Api\Structs\AppxManifestStructs.cs" />
-    <Compile Include="Monitorador\Api\Structs\Win32Structs.cs" />
-    <Compile Include="Monitorador\Api\WindowsStoreApi.cs" />
-    <Compile Include="Monitorador\Api\WindowsStorePackageId.cs" />
-    <Compile Include="Monitorador\Extensions\ProcessExtensions.cs" />
-    <Compile Include="Monitorador\Helpers\ConfiguracaoHelper.cs" />
-    <Compile Include="Monitorador\Helpers\IconeHelper.cs" />
-    <Compile Include="Monitorador\Helpers\MarshalHelper.cs" />
-    <Compile Include="Monitorador\Helpers\ProcessHelper.cs" />
-    <Compile Include="Monitorador\Helpers\SerializationHelper.cs" />
-    <Compile Include="Monitorador\IIconeResource.cs" />
-    <Compile Include="Monitorador\IniciadorDoMonitorador.cs" />
-    <Compile Include="Monitorador\Janela.cs" />
-    <Compile Include="Monitorador\MonitoradorDeJanela.cs" />
-    <Compile Include="Monitorador\Programa.cs" />
-    <Compile Include="Monitorador\Api\WindowsApi.cs" />
-    <Compile Include="Monitorador\ProgramaDesconhecido.cs" />
-    <Compile Include="Monitorador\ProgramaWin32.cs" />
-    <Compile Include="Monitorador\ProgramaWindowsStore.cs" />
-    <Compile Include="Monitorador\TipoDePrograma.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowsTimeIconeResource.cs" />
@@ -192,7 +157,12 @@
     <None Include="Resources\windows.ico" />
     <None Include="Resources\windowsIco.bmp" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsTime.Core\WindowsTime.Core.csproj">
+      <Project>{bb1ba005-31b8-43df-99cc-d30bcbc3fb50}</Project>
+      <Name>WindowsTime.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

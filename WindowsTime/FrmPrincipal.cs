@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using Microsoft.VisualBasic;
-using WindowsTime.ImportExport;
-using WindowsTime.Monitorador;
-using WindowsTime.Monitorador.Api;
+using WindowsTime.Core.ImportExport;
+using WindowsTime.Core.Monitorador;
 
 namespace WindowsTime
 {

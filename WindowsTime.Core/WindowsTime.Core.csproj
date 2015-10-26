@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BB1BA005-31B8-43DF-99CC-D30BCBC3FB50}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WindowsTime.Core</RootNamespace>
+    <AssemblyName>WindowsTime.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ImportExport\CsvFile\CsvFileConfigurationAttribute.cs" />
+    <Compile Include="ImportExport\CsvFile\CsvFileExporter.cs" />
+    <Compile Include="ImportExport\CsvFile\CsvFileImporter.cs" />
+    <Compile Include="ImportExport\ExportFile.cs" />
+    <Compile Include="ImportExport\IExporter.cs" />
+    <Compile Include="ImportExport\IImporter.cs" />
+    <Compile Include="ImportExport\ImportExportConfigurationBaseAttribute.cs" />
+    <Compile Include="ImportExport\ImportExportException.cs" />
+    <Compile Include="ImportExport\ImportExportHelper.cs" />
+    <Compile Include="ImportExport\ImportExportTypeEnum.cs" />
+    <Compile Include="ImportExport\ImportFile.cs" />
+    <Compile Include="Monitorador\Api\Structs\AppxManifestStructs.cs" />
+    <Compile Include="Monitorador\Api\Structs\Win32Structs.cs" />
+    <Compile Include="Monitorador\Api\WindowsApi.cs" />
+    <Compile Include="Monitorador\Api\WindowsColor\ColorFunctions.cs" />
+    <Compile Include="Monitorador\Api\WindowsColor\ImmersiveColors.cs" />
+    <Compile Include="Monitorador\Api\WindowsStoreApi.cs" />
+    <Compile Include="Monitorador\Api\WindowsStorePackageId.cs" />
+    <Compile Include="Monitorador\Extensions\ProcessExtensions.cs" />
+    <Compile Include="Monitorador\Helpers\ConfiguracaoHelper.cs" />
+    <Compile Include="Monitorador\Helpers\IconeHelper.cs" />
+    <Compile Include="Monitorador\Helpers\MarshalHelper.cs" />
+    <Compile Include="Monitorador\Helpers\ProcessHelper.cs" />
+    <Compile Include="Monitorador\Helpers\SerializationHelper.cs" />
+    <Compile Include="Monitorador\IIconeResource.cs" />
+    <Compile Include="Monitorador\IniciadorDoMonitorador.cs" />
+    <Compile Include="Monitorador\Janela.cs" />
+    <Compile Include="Monitorador\MonitoradorDeJanela.cs" />
+    <Compile Include="Monitorador\Programa.cs" />
+    <Compile Include="Monitorador\ProgramaDesconhecido.cs" />
+    <Compile Include="Monitorador\ProgramaWin32.cs" />
+    <Compile Include="Monitorador\ProgramaWindowsStore.cs" />
+    <Compile Include="Monitorador\TipoDePrograma.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
