@@ -9,7 +9,6 @@ namespace WindowsTime.Web.Controllers
         public static IList<UtilizacaoDePrograma> UtilizacoesDeProgramas = new List<UtilizacaoDePrograma>();
 
 
-
         // GET api/tempo
         public IEnumerable<UtilizacaoDePrograma> Get()
         {

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using WindowsTime.Core.Monitorador.Api;
 using WindowsTime.Core.Monitorador.Helpers;
+using WindowsTime.Core.Notificador;
 
 namespace WindowsTime.Core.Monitorador
 {
@@ -15,11 +16,14 @@ namespace WindowsTime.Core.Monitorador
             IconeHelper.IconeResource = iconeResource;
 
             monitoradorDeJanela.Iniciar();
+
+            NotificadorDeUtilizacao.Instance.Iniciar();
         }
 
         public static void Parar()
         {
             monitoradorDeJanela.Parar();
+            NotificadorDeUtilizacao.Instance.Parar();
         }
     }
 }

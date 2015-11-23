@@ -8,6 +8,9 @@ namespace WindowsTime.Core.Dados
         public string Titulo { get; set; }
         public double TempoDeUtilizacao { get; set; }
 
+        public DadosDaJanela()
+        {
+        }
         public DadosDaJanela(Janela janela)
         {
             Titulo = janela.Titulo;

@@ -23,6 +23,11 @@ namespace WindowsTime.Core.Dados
         public Image Icone { get; set; }
 
         [CsvFileConfiguration("Tempo Formatado", Position = 3)]
-        public string TempoFormatado { get { return TimeSpan.FromSeconds(TempoDeUtilizacao).ToString(@"hh\:mm\:ss"); } }
+        public string TempoFormatado => TimeSpan.FromSeconds(TempoDeUtilizacao).ToString(@"hh\:mm\:ss");
+
+        public override string ToString()
+        {
+            return $"{Nome}: {TempoFormatado}";
+        }
     }
 }

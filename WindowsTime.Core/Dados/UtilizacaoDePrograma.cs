@@ -11,6 +11,9 @@ namespace WindowsTime.Core.Dados
 
         public IEnumerable<DadosDoPrograma> Programas { get; set; }
 
+        public UtilizacaoDePrograma()
+        {
+        }
         public UtilizacaoDePrograma(IEnumerable<DadosDoPrograma> programas)
         {
             Usuario = Usuario.Corrente;
