@@ -133,7 +133,7 @@ namespace WindowsTime.Core.Monitorador
                                                                              WindowsStoreApi.IsFrameHostProcess(j.Programa.Processo));
                 foreach (var janela in janelasWindowsStore)
                 {
-                    janela.AtualizarPrograma();
+                    janela.CarregarPrograma();
                 }
 
                 _ultimaAtualizacaoDeProgramas = DateTime.Now;

@@ -14,7 +14,7 @@ namespace WindowsTime
                                              .Select(group => new DadosDoPrograma()
                                              {
                                                  Nome = group.Key,
-                                                 TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividade.TotalSeconds),
+                                                 TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividadeTotal.TotalSeconds),
                                                  TotalJanelas = group.Sum(i => i.Programa.TotalDeAreasVisitadas),
                                                  Icone = group.First().Programa.Icone,
                                              })
@@ -30,7 +30,7 @@ namespace WindowsTime
                                              .Select(group => new DadosDoPrograma()
                                              {
                                                  Nome = group.Key,
-                                                 TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividade.TotalSeconds),
+                                                 TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividadeTotal.TotalSeconds),
                                                  TotalJanelas = group.Sum(i => i.Programa.TotalDeAreasVisitadas),
                                                  Icone = group.First().Programa.Icone,
                                              })

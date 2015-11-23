@@ -64,7 +64,8 @@ namespace WindowsTime.Core.Notificador
                                                .Select(group => new DadosDoPrograma()
                                                {
                                                    Nome = group.Key,
-                                                   TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividade.TotalSeconds),
+                                                   TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividadeTotal.TotalSeconds),
+                                                   TempoNaoSincronizado = group.Sum(i => i.CalcularTempoDeAtividadeNaoSincronizado().TotalSeconds),
                                                    Janelas = group.Select(i => new DadosDaJanela(i)),
                                                    //Icone = group.First().Programa.Icone,
                                                })

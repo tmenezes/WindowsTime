@@ -285,7 +285,7 @@ namespace WindowsTime
                                                                                              j.Programa.Processo.ProcessName == "ApplicationFrameHost");
             foreach (var janela in janelasWindowsStore)
             {
-                janela.AtualizarPrograma();
+                janela.CarregarPrograma();
             }
             #endregion
 

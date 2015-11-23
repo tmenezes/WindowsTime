@@ -43,7 +43,7 @@ namespace WindowsTime
                 lblNomeJanela.Text = janela.Titulo;
                 lblPrograma.Text = janela.Programa.Nome;
                 lblExecutavel.Text = janela.Programa.Executavel;
-                lblTempo.Text = janela.TempoDeAtividade.ToString(@"mm\:ss");
+                lblTempo.Text = janela.TempoDeAtividadeTotal.ToString(@"mm\:ss");
 
                 DrawProcessIcon(janela);
             }));

@@ -6,7 +6,8 @@ namespace WindowsTime.Core.Dados
     {
         public int Id { get; set; }
         public string Titulo { get; set; }
-        public double TempoDeUtilizacao { get; set; }
+        public double TempoDeUtilizacaoTotal { get; set; }
+        public double TempoNaoSincronizado { get; set; }
 
         public DadosDaJanela()
         {
@@ -14,7 +15,8 @@ namespace WindowsTime.Core.Dados
         public DadosDaJanela(Janela janela)
         {
             Titulo = janela.Titulo;
-            TempoDeUtilizacao = janela.TempoDeAtividade.TotalSeconds;
+            TempoDeUtilizacaoTotal = janela.TempoDeAtividadeTotal.TotalSeconds;
+            TempoNaoSincronizado = janela.TempoNaoSincronizado.TotalSeconds;
         }
     }
 }

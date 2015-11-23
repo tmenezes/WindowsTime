@@ -7,6 +7,7 @@ namespace WindowsTime.Core.Monitorador
 {
     public class Janela
     {
+        private TimeSpan _tempoMedidoSincronizado = TimeSpan.Zero;
         private readonly Stopwatch _medidorDeTempo = new Stopwatch();
 
         public IntPtr WindowsHandle { get; private set; }
@@ -14,7 +15,8 @@ namespace WindowsTime.Core.Monitorador
         public Programa Programa { get; private set; }
         public bool EstaAtiva { get; private set; }
 
-        public TimeSpan TempoDeAtividade { get { return _medidorDeTempo.Elapsed; } }
+        public TimeSpan TempoDeAtividadeTotal { get { return _medidorDeTempo.Elapsed; } }
+        public TimeSpan TempoNaoSincronizado { get { return _medidorDeTempo.Elapsed - _tempoMedidoSincronizado; } }
 
 
         public Janela(IntPtr windowsHandle)
@@ -24,7 +26,7 @@ namespace WindowsTime.Core.Monitorador
             Programa = Programa.Desconhecido(this);
 
             // carrega o programa corretamente
-            AtualizarPrograma();
+            CarregarPrograma();
         }
 
 
@@ -49,7 +51,15 @@ namespace WindowsTime.Core.Monitorador
             Programa.NotificarNovaAreaAcessada(novoTitulo);
         }
 
-        public void AtualizarPrograma()
+        public TimeSpan CalcularTempoDeAtividadeNaoSincronizado()
+        {
+            var tempo = _medidorDeTempo.Elapsed - _tempoMedidoSincronizado;
+            _tempoMedidoSincronizado = tempo;
+
+            return tempo;
+        }
+
+        public void CarregarPrograma()
         {
             Task.Factory.StartNew(() => Programa = Programa.Carregar(this));
         }

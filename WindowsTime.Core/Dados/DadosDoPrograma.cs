@@ -15,6 +15,8 @@ namespace WindowsTime.Core.Dados
         [CsvFileConfiguration("Tempo (em seg.)", Position = 2, HasDecimalDelimiter = true, DecimalPlaces = 2)]
         public double TempoDeUtilizacao { get; set; }
 
+        public double TempoNaoSincronizado { get; set; }
+
         [CsvFileConfiguration("Janelas", Position = 4)]
         public int TotalJanelas { get; set; }
 
@@ -27,7 +29,7 @@ namespace WindowsTime.Core.Dados
 
         public override string ToString()
         {
-            return $"{Nome}: {TempoFormatado}";
+            return $"{Nome}: {TempoFormatado} (Não sincronizado: {TempoNaoSincronizado:@hh\\:mm\\:ss)}";
         }
     }
 }
