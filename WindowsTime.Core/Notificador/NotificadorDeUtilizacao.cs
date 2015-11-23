@@ -60,6 +60,7 @@ namespace WindowsTime.Core.Notificador
         private UtilizacaoDePrograma ObterUtilizacaoDeProgramas()
         {
             var programas = MonitoradorDeJanela.Instance.Janelas.Values
+                                               .Where(i => i.PendenteDeSincronizacao)
                                                .GroupBy(j => j.Programa.Nome)
                                                .Select(group => new DadosDoPrograma()
                                                {

@@ -58,15 +58,15 @@ namespace WindowsTime.Web.AppCode
                     if (!_utilizacoesDeProgramas.TryDequeue(out utilizacaoDePrograma))
                         continue;
 
-                    //var utilizacaoDoDia = _tempoRepository.ObterUtilizacaoDeProgramasDoDia(utilizacaoDePrograma.Usuario);
-                    //if (utilizacaoDoDia == null)
-                    //{
-                    //    _tempoRepository.Salvar(utilizacaoDePrograma);
-                    //}
-                    //else
-                    //{
-                    //    utilizacaoDoDia.Programas.Union(uti)
-                    //}
+                    var utilizacaoDoDia = _tempoRepository.ObterUtilizacaoDeProgramasDoDia(utilizacaoDePrograma.Usuario);
+                    if (utilizacaoDoDia == null)
+                    {
+                        _tempoRepository.Salvar(utilizacaoDePrograma);
+                    }
+                    else
+                    {
+                        //utilizacaoDoDia.Programas.Union(uti)
+                    }
                 }
 
                 Thread.Sleep(500);

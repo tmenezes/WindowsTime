@@ -17,6 +17,7 @@ namespace WindowsTime.Core.Monitorador
 
         public TimeSpan TempoDeAtividadeTotal { get { return _medidorDeTempo.Elapsed; } }
         public TimeSpan TempoNaoSincronizado { get { return _medidorDeTempo.Elapsed - _tempoMedidoSincronizado; } }
+        public bool PendenteDeSincronizacao { get; private set; }
 
 
         public Janela(IntPtr windowsHandle)
@@ -35,6 +36,8 @@ namespace WindowsTime.Core.Monitorador
             EstaAtiva = true;
 
             _medidorDeTempo.Start();
+
+            PendenteDeSincronizacao = true;
         }
 
         public void NotificarJanelaInativa()
@@ -54,7 +57,9 @@ namespace WindowsTime.Core.Monitorador
         public TimeSpan CalcularTempoDeAtividadeNaoSincronizado()
         {
             var tempo = _medidorDeTempo.Elapsed - _tempoMedidoSincronizado;
+
             _tempoMedidoSincronizado = tempo;
+            PendenteDeSincronizacao = false;
 
             return tempo;
         }

@@ -17,7 +17,7 @@ namespace WindowsTime.Core.Dados
         public UtilizacaoDePrograma(IEnumerable<DadosDoPrograma> programas)
         {
             Usuario = Usuario.Corrente;
-            Data = DateTime.Now;
+            Data = DateTime.Now.Date;
             Programas = programas;
         }
     }
