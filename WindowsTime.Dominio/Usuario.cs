@@ -1,3 +1,5 @@
+using System;
+
 namespace WindowsTime.Dominio
 {
     public class Usuario
@@ -7,6 +9,7 @@ namespace WindowsTime.Dominio
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
+        public DateTime DataDeCadastro { get; set; }
 
         public static Usuario Corrente => _usuarioCorrente;
 

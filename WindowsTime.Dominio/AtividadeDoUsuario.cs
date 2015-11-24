@@ -9,7 +9,7 @@ namespace WindowsTime.Dominio
         public Usuario Usuario { get; set; }
         public DateTime Data { get; set; }
 
-        public IList<Janela> Janelas { get; set; }
+        public virtual IList<Janela> Janelas { get; set; }
 
 
         public AtividadeDoUsuario()

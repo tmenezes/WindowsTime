@@ -66,6 +66,7 @@
     <Compile Include="Web\Ao_registrar_atividade_do_usuario.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
