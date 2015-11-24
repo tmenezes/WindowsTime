@@ -1,5 +1,5 @@
-using WindowsTime.Core.Dominio;
 using Ploeh.AutoFixture;
+using WindowsTime.Core.Dominio;
 using WindowsTime.Core.DTO;
 
 namespace WindowsTime.UnitTest
@@ -31,6 +31,11 @@ namespace WindowsTime.UnitTest
         public static Programa NovoPrograma()
         {
             return _fixture.Build<Programa>().Create();
+        }
+
+        public static Usuario NovoUsuario()
+        {
+            return _fixture.Build<Usuario>().Without(u => u.Id).Create();
         }
     }
 }

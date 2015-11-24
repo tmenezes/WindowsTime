@@ -3,16 +3,16 @@ using WindowsTime.Infraestrutura.Aop;
 
 namespace WindowsTime.Infraestrutura.DAO.Repository
 {
-    public class RepositoyBase<T> : IRepositoryBase<T> where T : class
+    public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         protected RepositoryMediator<T> RepositoryMediator { get; set; }
 
-        public RepositoyBase()
+        public RepositoryBase()
         {
             RepositoryMediator = new RepositoryMediator<T>();
         }
         
-        public RepositoyBase(RepositoryMediator<T> repositoryMediator)
+        public RepositoryBase(RepositoryMediator<T> repositoryMediator)
         {
             RepositoryMediator = repositoryMediator;
         }

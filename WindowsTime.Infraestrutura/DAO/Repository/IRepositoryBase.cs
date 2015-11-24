@@ -8,9 +8,9 @@ namespace WindowsTime.Infraestrutura.DAO.Repository
         IEnumerable<T> GetAll();
 
         void CreateNew(T entity);
-        void Save(T entity);
         void SaveAndPersist(T entity);
         void SaveAll(IEnumerable<T> entityList);
         void Delete(T entity);
+        void Save(T entity);
     }
 }
