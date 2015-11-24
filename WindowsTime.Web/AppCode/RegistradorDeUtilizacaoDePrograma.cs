@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WindowsTime.Core.Dados;
-using WindowsTime.DAO;
+using WindowsTime.Core.DTO;
+using WindowsTime.Dominio.Repository;
 
 namespace WindowsTime.Web.AppCode
 {
@@ -12,15 +12,17 @@ namespace WindowsTime.Web.AppCode
         private static readonly object _syncObject = new object();
         private static volatile RegistradorDeUtilizacaoDePrograma _instance;
         private readonly ITempoRepository _tempoRepository;
-        private readonly ConcurrentQueue<UtilizacaoDePrograma> _utilizacoesDeProgramas = new ConcurrentQueue<UtilizacaoDePrograma>();
+        private readonly IProgramaRepository _programaRepository;
+        private readonly ConcurrentQueue<UtilizacaoDTO> _utilizacoesDeProgramas = new ConcurrentQueue<UtilizacaoDTO>();
         private readonly Task _taskRegistrarUtilizacao;
 
         // construtores
-        private RegistradorDeUtilizacaoDePrograma(ITempoRepository tempoRepository)
+        private RegistradorDeUtilizacaoDePrograma(ITempoRepository tempoRepository, IProgramaRepository programaRepository)
         {
             _tempoRepository = tempoRepository;
+            _programaRepository = programaRepository;
 
-            _taskRegistrarUtilizacao = new Task(RegistrarUtilizacoesInfinitamente, TaskCreationOptions.LongRunning);
+            _taskRegistrarUtilizacao = new Task(ProcessarRegistroDeUtilizacoesInfinitamente, TaskCreationOptions.LongRunning);
         }
 
 
@@ -34,43 +36,53 @@ namespace WindowsTime.Web.AppCode
             {
                 if (_instance == null)
                 {
-                    _instance = new RegistradorDeUtilizacaoDePrograma(new TempoRepository());
+                    _instance = new RegistradorDeUtilizacaoDePrograma(new TempoRepository(), new ProgramaRepository());
                     _instance._taskRegistrarUtilizacao.Start();
                 }
             }
         }
 
-        public void RegistrarUtilizacao(UtilizacaoDePrograma utilizacaoDePrograma)
+        public void SolicitarRegistroDeUtilizacao(UtilizacaoDTO utilizacaoDTO)
         {
-            _utilizacoesDeProgramas.Enqueue(utilizacaoDePrograma);
+            _utilizacoesDeProgramas.Enqueue(utilizacaoDTO);
         }
 
 
         // privados
-        private void RegistrarUtilizacoesInfinitamente()
+        private void ProcessarRegistroDeUtilizacoesInfinitamente()
         {
             while (true) // loop infinito
             {
                 while (_utilizacoesDeProgramas.Any())
                 {
-                    UtilizacaoDePrograma utilizacaoDePrograma;
+                    UtilizacaoDTO utilizacaoDTO;
 
-                    if (!_utilizacoesDeProgramas.TryDequeue(out utilizacaoDePrograma))
+                    if (!_utilizacoesDeProgramas.TryDequeue(out utilizacaoDTO))
                         continue;
 
-                    var utilizacaoDoDia = _tempoRepository.ObterUtilizacaoDeProgramasDoDia(utilizacaoDePrograma.Usuario);
-                    if (utilizacaoDoDia == null)
-                    {
-                        _tempoRepository.Salvar(utilizacaoDePrograma);
-                    }
-                    else
-                    {
-                        //utilizacaoDoDia.Programas.Union(uti)
-                    }
+                    RegistrarUtilizacaoDeProgramas(utilizacaoDTO);
                 }
 
                 Thread.Sleep(500);
             }
+        }
+
+        private void RegistrarUtilizacaoDeProgramas(UtilizacaoDTO utilizacaoDTO)
+        {
+            var utilizacaoDoDia = _tempoRepository.ObterUtilizacaoDeProgramasDoDia(null);
+            if (utilizacaoDoDia == null)
+            {
+                //_tempoRepository.Salvar(utilizacaoDTO);
+            }
+            else
+            {
+                //utilizacaoDoDia.Programas.Union(uti)
+            }
+        }
+
+        private void AtribuirProgramaCorreto(UtilizacaoDTO utilizacaoDTO)
+        {
+            
         }
     }
 }

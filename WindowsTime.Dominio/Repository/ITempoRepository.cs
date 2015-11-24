@@ -1,6 +1,4 @@
-﻿using WindowsTime.Core.Dados;
-
-namespace WindowsTime.DAO
+﻿namespace WindowsTime.Dominio.Repository
 {
     public interface ITempoRepository
     {

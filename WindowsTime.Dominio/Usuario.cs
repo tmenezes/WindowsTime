@@ -1,4 +1,4 @@
-namespace WindowsTime.Core.Dados
+namespace WindowsTime.Dominio
 {
     public class Usuario
     {

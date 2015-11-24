@@ -239,9 +239,9 @@
       <Project>{bb1ba005-31b8-43df-99cc-d30bcbc3fb50}</Project>
       <Name>WindowsTime.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsTime.DAO\WindowsTime.DAO.csproj">
-      <Project>{72BB0DA6-3FBF-4793-8AA9-A26F5C287D4B}</Project>
-      <Name>WindowsTime.DAO</Name>
+    <ProjectReference Include="..\WindowsTime.Dominio\WindowsTime.Dominio.csproj">
+      <Project>{44dd6fa4-0266-4ae9-9114-06d05ae32adc}</Project>
+      <Name>WindowsTime.Dominio</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

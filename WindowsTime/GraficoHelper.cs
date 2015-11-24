@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WindowsTime.Core.Dados;
+using WindowsTime.Core.DTO;
 using WindowsTime.Core.Monitorador;
 
 namespace WindowsTime
 {
     public static class GraficoHelper
     {
-        internal static IEnumerable<DadosDoPrograma> GetProgramas()
+        internal static IEnumerable<ProgramaDTO> GetProgramas()
         {
             var janelas = MonitoradorDeJanela.Instance.Janelas.Values
                                              .GroupBy(j => j.Programa.Nome)
-                                             .Select(group => new DadosDoPrograma()
+                                             .Select(group => new ProgramaDTO()
                                              {
                                                  Nome = group.Key,
                                                  TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividadeTotal.TotalSeconds),
@@ -23,11 +23,11 @@ namespace WindowsTime
             return janelas;
         }
 
-        internal static IEnumerable<DadosDoPrograma> GetProgramas(string programaAlvo)
+        internal static IEnumerable<ProgramaDTO> GetProgramas(string programaAlvo)
         {
             var janelas = MonitoradorDeJanela.Instance.Janelas.Values
                                              .GroupBy(j => (j.Programa.Nome == programaAlvo) ? programaAlvo : "Outros")
-                                             .Select(group => new DadosDoPrograma()
+                                             .Select(group => new ProgramaDTO()
                                              {
                                                  Nome = group.Key,
                                                  TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividadeTotal.TotalSeconds),

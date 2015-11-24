@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using WindowsTime.Core.ImportExport.CsvFile;
 
-namespace WindowsTime.Core.Dados
+namespace WindowsTime.Core.DTO
 {
-    public class DadosDoPrograma
+    public class ProgramaDTO
     {
         public int Id { get; set; }
 
@@ -20,7 +20,7 @@ namespace WindowsTime.Core.Dados
         [CsvFileConfiguration("Janelas", Position = 4)]
         public int TotalJanelas { get; set; }
 
-        public IEnumerable<DadosDaJanela> Janelas { get; set; }
+        public IEnumerable<JanelaDTO> Janelas { get; set; }
 
         public Image Icone { get; set; }
 

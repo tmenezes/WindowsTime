@@ -2,8 +2,8 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using WindowsTime.Core.DTO;
 using Newtonsoft.Json;
-using WindowsTime.Core.Dados;
 
 namespace WindowsTime.Core.Notificador
 {
@@ -11,11 +11,11 @@ namespace WindowsTime.Core.Notificador
     {
         private const string URI_UTILIZACAO_DE_JANELA = "http://localhost:49815/api/tempo";
 
-        public static void PostarUtilizacaoDeProgramas(UtilizacaoDePrograma utilizacaoDePrograma)
+        public static void PostarUtilizacaoDeProgramas(UtilizacaoDTO utilizacaoDTO)
         {
             var uri = new Uri(URI_UTILIZACAO_DE_JANELA);
 
-            var conteudoJson = JsonConvert.SerializeObject(utilizacaoDePrograma);
+            var conteudoJson = JsonConvert.SerializeObject(utilizacaoDTO);
             var conteudo = new StringContent(conteudoJson, Encoding.UTF8, "application/json");
 
             using (var httpClient = new HttpClient())

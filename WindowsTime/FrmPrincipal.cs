@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using WindowsTime.Core.Dados;
+using WindowsTime.Core.DTO;
 using WindowsTime.Core.ImportExport;
 using WindowsTime.Core.Monitorador;
 
@@ -120,7 +120,7 @@ namespace WindowsTime
 
         private void gridProgramas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var programa = gridProgramas.Rows[e.RowIndex].DataBoundItem as DadosDoPrograma;
+            var programa = gridProgramas.Rows[e.RowIndex].DataBoundItem as ProgramaDTO;
 
             if (programa == null)
                 return;
@@ -167,7 +167,7 @@ namespace WindowsTime
             this.Cursor = Cursors.Default;
         }
 
-        private void DesenharGrafico(IEnumerable<DadosDoPrograma> programas)
+        private void DesenharGrafico(IEnumerable<ProgramaDTO> programas)
         {
             try
             {
@@ -189,7 +189,7 @@ namespace WindowsTime
             }
         }
 
-        private void CarregarGrid(IEnumerable<DadosDoPrograma> programas)
+        private void CarregarGrid(IEnumerable<ProgramaDTO> programas)
         {
             try
             {

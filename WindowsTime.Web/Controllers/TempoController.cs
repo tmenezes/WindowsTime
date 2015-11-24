@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
-using WindowsTime.Core.Dados;
-using WindowsTime.DAO;
+using WindowsTime.Core.DTO;
+using WindowsTime.Dominio.Repository;
 
 namespace WindowsTime.Web.Controllers
 {
@@ -22,13 +22,13 @@ namespace WindowsTime.Web.Controllers
 
 
         // GET api/tempo
-        public IEnumerable<UtilizacaoDePrograma> Get()
+        public IEnumerable<UtilizacaoDTO> Get()
         {
             return null;
         }
 
         // POST api/tempo
-        public void Post([FromBody]UtilizacaoDePrograma utilizacaoDePrograma)
+        public void Post([FromBody]UtilizacaoDTO utilizacaoDTO)
         {
         }
     }

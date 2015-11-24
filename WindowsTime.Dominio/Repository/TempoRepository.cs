@@ -1,17 +1,14 @@
-﻿using WindowsTime.Core.Dados;
-
-namespace WindowsTime.DAO
+﻿namespace WindowsTime.Dominio.Repository
 {
     public class TempoRepository : ITempoRepository
     {
-        public UtilizacaoDePrograma ObterUtilizacaoDeProgramasDoDia(Usuario usuario)
+        UtilizacaoDePrograma ITempoRepository.ObterUtilizacaoDeProgramasDoDia(Usuario usuario)
         {
             return null;
         }
 
         public void Salvar(UtilizacaoDePrograma utilizacaoDePrograma)
         {
-
         }
     }
 }
