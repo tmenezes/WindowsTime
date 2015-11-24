@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Owin;
-using Owin;
-
-[assembly: OwinStartup(typeof(WindowsTime.Web.Startup))]
+﻿using Owin;
+using WindowsTime.Web.AppCode;
 
 namespace WindowsTime.Web
 {
@@ -12,7 +7,7 @@ namespace WindowsTime.Web
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            RegistradorDeAtividadeDoUsuario.Iniciar();
         }
     }
 }

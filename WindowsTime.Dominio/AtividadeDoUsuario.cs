@@ -9,9 +9,9 @@ namespace WindowsTime.Dominio
         public Usuario Usuario { get; set; }
         public DateTime Data { get; set; }
 
-        public IEnumerable<Janela> Janelas { get; set; }
+        public IList<Janela> Janelas { get; set; }
 
-        
+
         public AtividadeDoUsuario()
         {
         }
@@ -20,6 +20,7 @@ namespace WindowsTime.Dominio
         {
             Usuario = usuario;
             Data = DateTime.Today;
+            Janelas = new List<Janela>();
         }
     }
 }

@@ -9,5 +9,16 @@ namespace WindowsTime.Dominio
         public string Email { get; set; }
 
         public static Usuario Corrente => _usuarioCorrente;
+
+
+        public Usuario()
+        {
+
+        }
+
+        public Usuario(string email)
+        {
+            Email = email;
+        }
     }
 }

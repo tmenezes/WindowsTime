@@ -20,7 +20,7 @@ namespace WindowsTime.Web.AppCode
         private readonly Task _taskRegistrarUtilizacao;
 
         // construtores
-        private RegistradorDeAtividadeDoUsuario(IAtividadeDoUsuarioRepository atividadeDoUsuarioRepository, IProgramaRepository programaRepository,
+        public RegistradorDeAtividadeDoUsuario(IAtividadeDoUsuarioRepository atividadeDoUsuarioRepository, IProgramaRepository programaRepository,
                                                 IUsuarioRepository usuarioRepository)
         {
             _atividadeDoUsuarioRepository = atividadeDoUsuarioRepository;
@@ -77,15 +77,15 @@ namespace WindowsTime.Web.AppCode
             var usuario = _usuarioRepository.ObterUsuario(atividadeDoUsuarioDTO.EmailDoUsuario);
             var atividadeDoDia = _atividadeDoUsuarioRepository.ObterAtividadeDoUsuarioDoDia(usuario) ?? new AtividadeDoUsuario(usuario);
 
-            var janelas = atividadeDoUsuarioDTO.Programas.SelectMany(p => p.Janelas, (prog, jan) =>
+            atividadeDoUsuarioDTO.Programas.SelectMany(p => p.Janelas, (prog, jan) =>
             {
                 var programa = _programaRepository.ObterPrograma(prog.Nome) ?? new Programa(prog.Nome);
                 var janela = new Janela(jan.Titulo, programa, jan.TempoDeUtilizacaoTotal);
 
+                atividadeDoDia.Janelas.Add(janela);
                 return janela;
-            });
-
-            atividadeDoDia.Janelas = janelas;
+            })
+            .ToList();
 
             _atividadeDoUsuarioRepository.Salvar(atividadeDoDia);
         }
