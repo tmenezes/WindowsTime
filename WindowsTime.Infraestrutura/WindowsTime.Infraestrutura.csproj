@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{44DD6FA4-0266-4AE9-9114-06D05AE32ADC}</ProjectGuid>
+    <ProjectGuid>{287EDC83-7990-4262-8B47-9BC0E977F540}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WindowsTime.Dominio</RootNamespace>
-    <AssemblyName>WindowsTime.Dominio</AssemblyName>
+    <RootNamespace>WindowsTime.Infraestrutura</RootNamespace>
+    <AssemblyName>WindowsTime.Infraestrutura</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <DontImportPostSharp>True</DontImportPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,8 +43,18 @@
       <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PostSharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.2.1.7.32\lib\net20\PostSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,29 +63,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Janela.cs" />
-    <Compile Include="Map\AtividadeMap.cs" />
-    <Compile Include="Map\JanelaMap.cs" />
-    <Compile Include="Map\ProgramaMap.cs" />
-    <Compile Include="Map\UsuarioMap.cs" />
-    <Compile Include="Programa.cs" />
+    <Compile Include="DAO\IAtividadeDoUsuarioRepository.cs" />
+    <Compile Include="DAO\Infra\NHibernateHelper.cs" />
+    <Compile Include="DAO\IProgramaRepository.cs" />
+    <Compile Include="DAO\IUsuarioRepository.cs" />
+    <Compile Include="DAO\Map\AtividadeMap.cs" />
+    <Compile Include="DAO\Map\JanelaMap.cs" />
+    <Compile Include="DAO\Map\ProgramaMap.cs" />
+    <Compile Include="DAO\Map\UsuarioMap.cs" />
+    <Compile Include="DAO\ProgramaRepository.cs" />
+    <Compile Include="DAO\Repository\IRepository.cs" />
+    <Compile Include="DAO\Repository\IRepositoryBase.cs" />
+    <Compile Include="DAO\Repository\NHibernateRepository.cs" />
+    <Compile Include="DAO\Repository\RepositoryMediator.cs" />
+    <Compile Include="DAO\Repository\RepositoyBase.cs" />
+    <Compile Include="DAO\TempoRepository.cs" />
+    <Compile Include="DAO\UsuarioRepository.cs" />
+    <Compile Include="Framework\Aop\CacheAspectAttribute.cs" />
+    <Compile Include="Framework\Aop\ExpirationConst.cs" />
+    <Compile Include="Framework\Aop\ICache.cs" />
+    <Compile Include="Framework\Aop\LogAspectAttribute.cs" />
+    <Compile Include="Framework\Aop\OnErrorResumeNextAttribute.cs" />
+    <Compile Include="Framework\Aop\OnErrorReturnNullAttribute.cs" />
+    <Compile Include="Framework\Aop\PerformanceLoggerAttribute.cs" />
+    <Compile Include="Framework\Aop\RetryAspectAttribute.cs" />
+    <Compile Include="Framework\Aop\StaticInMemoryCache.cs" />
+    <Compile Include="Framework\Logging\ILogger.cs" />
+    <Compile Include="Framework\Logging\Logger.cs" />
+    <Compile Include="Framework\Logging\LogTypeEnum.cs" />
+    <Compile Include="Framework\Logging\NLogLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IProgramaRepository.cs" />
-    <Compile Include="Repository\IAtividadeDoUsuarioRepository.cs" />
-    <Compile Include="Repository\IUsuarioRepository.cs" />
-    <Compile Include="Repository\ProgramaRepository.cs" />
-    <Compile Include="Repository\TempoRepository.cs" />
-    <Compile Include="Repository\UsuarioRepository.cs" />
-    <Compile Include="Usuario.cs" />
-    <Compile Include="AtividadeDoUsuario.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Service\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsTime.Core\WindowsTime.Core.csproj">
+      <Project>{bb1ba005-31b8-43df-99cc-d30bcbc3fb50}</Project>
+      <Name>WindowsTime.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\PostSharp.2.1.7.32\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.2.1.7.32\tools\PostSharp.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WindowsTime.Dominio
+namespace WindowsTime.Core.Dominio
 {
     public class AtividadeDoUsuario
     {

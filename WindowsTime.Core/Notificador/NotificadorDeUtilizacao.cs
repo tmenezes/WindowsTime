@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Timers;
+using WindowsTime.Core.Dominio;
 using WindowsTime.Core.DTO;
 using WindowsTime.Core.Monitorador;
-using WindowsTime.Dominio;
 
 namespace WindowsTime.Core.Notificador
 {

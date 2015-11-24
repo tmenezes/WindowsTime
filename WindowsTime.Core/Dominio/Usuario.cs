@@ -1,6 +1,6 @@
 using System;
 
-namespace WindowsTime.Dominio
+namespace WindowsTime.Core.Dominio
 {
     public class Usuario
     {

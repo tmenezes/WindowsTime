@@ -74,9 +74,9 @@
       <Project>{BB1BA005-31B8-43DF-99CC-D30BCBC3FB50}</Project>
       <Name>WindowsTime.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsTime.Dominio\WindowsTime.Dominio.csproj">
-      <Project>{44DD6FA4-0266-4AE9-9114-06D05AE32ADC}</Project>
-      <Name>WindowsTime.Dominio</Name>
+    <ProjectReference Include="..\WindowsTime.Infraestrutura\WindowsTime.Infraestrutura.csproj">
+      <Project>{287edc83-7990-4262-8b47-9bc0e977f540}</Project>
+      <Name>WindowsTime.Infraestrutura</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsTime.Web\WindowsTime.Web.csproj">
       <Project>{9C48AEE4-E9E8-415F-8FB7-6DB28D2BD09B}</Project>

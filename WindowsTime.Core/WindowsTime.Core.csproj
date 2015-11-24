@@ -55,6 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dominio\AtividadeDoUsuario.cs" />
+    <Compile Include="Dominio\Janela.cs" />
+    <Compile Include="Dominio\Programa.cs" />
+    <Compile Include="Dominio\Usuario.cs" />
     <Compile Include="DTO\ProgramaDTO.cs" />
     <Compile Include="DTO\JanelaDTO.cs" />
     <Compile Include="ImportExport\CsvFile\CsvFileConfigurationAttribute.cs" />
@@ -97,12 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WindowsTime.Dominio\WindowsTime.Dominio.csproj">
-      <Project>{44dd6fa4-0266-4ae9-9114-06d05ae32adc}</Project>
-      <Name>WindowsTime.Dominio</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

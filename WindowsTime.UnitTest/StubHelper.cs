@@ -1,6 +1,6 @@
+using WindowsTime.Core.Dominio;
 using Ploeh.AutoFixture;
 using WindowsTime.Core.DTO;
-using WindowsTime.Dominio;
 
 namespace WindowsTime.UnitTest
 {

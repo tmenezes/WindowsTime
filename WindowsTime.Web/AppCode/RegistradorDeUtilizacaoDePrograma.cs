@@ -2,9 +2,9 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WindowsTime.Core.Dominio;
 using WindowsTime.Core.DTO;
-using WindowsTime.Dominio;
-using WindowsTime.Dominio.Repository;
+using WindowsTime.Infraestrutura.DAO;
 
 namespace WindowsTime.Web.AppCode
 {
@@ -23,7 +23,7 @@ namespace WindowsTime.Web.AppCode
 
         // construtores
         public RegistradorDeAtividadeDoUsuario(IAtividadeDoUsuarioRepository atividadeDoUsuarioRepository, IProgramaRepository programaRepository,
-                                                IUsuarioRepository usuarioRepository)
+                                               IUsuarioRepository usuarioRepository)
         {
             _atividadeDoUsuarioRepository = atividadeDoUsuarioRepository;
             _programaRepository = programaRepository;

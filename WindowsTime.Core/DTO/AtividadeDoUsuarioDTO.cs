@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using WindowsTime.Dominio;
+using WindowsTime.Core.Dominio;
 
 namespace WindowsTime.Core.DTO
 {

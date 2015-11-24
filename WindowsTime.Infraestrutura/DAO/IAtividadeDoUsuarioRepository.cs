@@ -1,4 +1,6 @@
-﻿namespace WindowsTime.Dominio.Repository
+﻿using WindowsTime.Core.Dominio;
+
+namespace WindowsTime.Infraestrutura.DAO
 {
     public interface IAtividadeDoUsuarioRepository
     {
