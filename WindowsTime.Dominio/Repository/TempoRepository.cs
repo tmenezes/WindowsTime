@@ -1,13 +1,13 @@
 ﻿namespace WindowsTime.Dominio.Repository
 {
-    public class TempoRepository : ITempoRepository
+    public class AtividadeDoUsuarioRepository : IAtividadeDoUsuarioRepository
     {
-        UtilizacaoDePrograma ITempoRepository.ObterUtilizacaoDeProgramasDoDia(Usuario usuario)
+        public AtividadeDoUsuario ObterAtividadeDoUsuarioDoDia(Usuario usuario)
         {
             return null;
         }
 
-        public void Salvar(UtilizacaoDePrograma utilizacaoDePrograma)
+        public void Salvar(AtividadeDoUsuario atividadeDoUsuario)
         {
         }
     }

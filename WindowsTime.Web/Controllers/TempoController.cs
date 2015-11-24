@@ -7,7 +7,7 @@ namespace WindowsTime.Web.Controllers
 {
     public class TempoController : ApiController
     {
-        private readonly ITempoRepository _tempoRepository;
+        private readonly IAtividadeDoUsuarioRepository _atividadeDoUsuarioRepository;
 
         // construtor
         public TempoController()
@@ -15,9 +15,9 @@ namespace WindowsTime.Web.Controllers
 
         }
 
-        public TempoController(ITempoRepository tempoRepository)
+        public TempoController(IAtividadeDoUsuarioRepository atividadeDoUsuarioRepository)
         {
-            _tempoRepository = tempoRepository;
+            _atividadeDoUsuarioRepository = atividadeDoUsuarioRepository;
         }
 
 
