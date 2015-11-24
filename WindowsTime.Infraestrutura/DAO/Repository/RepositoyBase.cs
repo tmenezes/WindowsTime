@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using WindowsTime.Infraestrutura.Aop;
 
-namespace WindowsTime.DAO.Repository
+namespace WindowsTime.Infraestrutura.DAO.Repository
 {
     public class RepositoyBase<T> : IRepositoryBase<T> where T : class
     {
@@ -17,38 +18,38 @@ namespace WindowsTime.DAO.Repository
         }
 
 
-        //[LogAspect]
+        [LogAspect]
         public T GetById(object id)
         {
             return RepositoryMediator.GetById(id);
         }
-        //[LogAspect]
+        [LogAspect]
         public IEnumerable<T> GetAll()
         {
             return RepositoryMediator.GetAll();
         }
 
-        //[LogAspect]
+        [LogAspect]
         public virtual void CreateNew(T entity)
         {
             RepositoryMediator.CreateNew(entity);
         }
-        //[LogAspect]
+        [LogAspect]
         public void Save(T entity)
         {
             RepositoryMediator.Save(entity);
         }
-        //[LogAspect]
+        [LogAspect]
         public void SaveAndPersist(T entity)
         {
             RepositoryMediator.SalvarEPersistir(entity);
         }
-        //[LogAspect]
+        [LogAspect]
         public void SaveAll(IEnumerable<T> entityList)
         {
             RepositoryMediator.SavarTodos(entityList);
         }
-        //[LogAspect]
+        [LogAspect]
         public void Delete(T entity)
         {
             RepositoryMediator.Excluir(entity);

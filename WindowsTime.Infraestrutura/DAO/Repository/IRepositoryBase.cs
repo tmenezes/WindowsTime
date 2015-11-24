@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace WindowsTime.DAO.Repository
+namespace WindowsTime.Infraestrutura.DAO.Repository
 {
     public interface IRepositoryBase<T> where T : class
     {

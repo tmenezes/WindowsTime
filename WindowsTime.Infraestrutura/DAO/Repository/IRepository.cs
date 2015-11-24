@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace WindowsTime.DAO.Repository
+namespace WindowsTime.Infraestrutura.DAO.Repository
 {
     public interface IRepository<T> where T : class
     {

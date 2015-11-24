@@ -8,7 +8,7 @@ using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 
-namespace WindowsTime.DAO.Repository
+namespace WindowsTime.Infraestrutura.DAO.Repository
 {
     public class NHibernateRepository<T> : IRepository<T> where T : class
     {
@@ -28,7 +28,7 @@ namespace WindowsTime.DAO.Repository
         }
         private ISession GetNewSession()
         {
-            return NHibernateHelper.OpenSession();
+            return DataBase.SessionFactoryHolder.OpenSession();
         }
 
         public T GetById(object id)
