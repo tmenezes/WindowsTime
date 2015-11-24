@@ -9,7 +9,7 @@ namespace WindowsTime.Core.Notificador
 {
     public static class ClienteHttp
     {
-        private const string URI_UTILIZACAO_DE_JANELA = "http://localhost:49815/api/tempo";
+        private const string URI_UTILIZACAO_DE_JANELA = "http://localhost:49815/api/atividade";
 
         public static void PostarUtilizacaoDeProgramas(AtividadeDoUsuarioDTO atividadeDoUsuarioDTO)
         {

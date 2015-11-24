@@ -19,6 +19,8 @@ namespace WindowsTime.Web.AppCode
         private readonly ConcurrentQueue<AtividadeDoUsuarioDTO> _utilizacoesDeProgramas = new ConcurrentQueue<AtividadeDoUsuarioDTO>();
         private readonly Task _taskRegistrarUtilizacao;
 
+        public static RegistradorDeAtividadeDoUsuario Instancia => _instance;
+
         // construtores
         public RegistradorDeAtividadeDoUsuario(IAtividadeDoUsuarioRepository atividadeDoUsuarioRepository, IProgramaRepository programaRepository,
                                                 IUsuarioRepository usuarioRepository)
