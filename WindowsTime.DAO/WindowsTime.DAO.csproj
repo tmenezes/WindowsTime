@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{287EDC83-7990-4262-8B47-9BC0E977F540}</ProjectGuid>
+    <ProjectGuid>{50A4E3CA-662C-4E1C-8475-E9F2BD48DD4F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WindowsTime.Infraestrutura</RootNamespace>
-    <AssemblyName>WindowsTime.Infraestrutura</AssemblyName>
+    <RootNamespace>WindowsTime.DAO</RootNamespace>
+    <AssemblyName>WindowsTime.DAO</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <DontImportPostSharp>True</DontImportPostSharp>
@@ -43,10 +43,6 @@
       <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.2.1\lib\net45\NLog.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PostSharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.2.1.7.32\lib\net20\PostSharp.dll</HintPath>
       <Private>True</Private>
@@ -54,7 +50,6 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,29 +58,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aop\CacheAspectAttribute.cs" />
-    <Compile Include="Aop\ExpirationConst.cs" />
-    <Compile Include="Aop\ICache.cs" />
-    <Compile Include="Aop\LogAspectAttribute.cs" />
-    <Compile Include="Aop\OnErrorResumeNextAttribute.cs" />
-    <Compile Include="Aop\OnErrorReturnNullAttribute.cs" />
-    <Compile Include="Aop\PerformanceLoggerAttribute.cs" />
-    <Compile Include="Aop\RetryAspectAttribute.cs" />
-    <Compile Include="Aop\StaticInMemoryCache.cs" />
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Logging\LogTypeEnum.cs" />
-    <Compile Include="Logging\NLogLogger.cs" />
+    <Compile Include="IAtividadeDoUsuarioRepository.cs" />
+    <Compile Include="IProgramaRepository.cs" />
+    <Compile Include="IUsuarioRepository.cs" />
+    <Compile Include="Map\AtividadeMap.cs" />
+    <Compile Include="Map\JanelaMap.cs" />
+    <Compile Include="Map\ProgramaMap.cs" />
+    <Compile Include="Map\UsuarioMap.cs" />
+    <Compile Include="NHibernateHelper.cs" />
+    <Compile Include="ProgramaRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\IRepositoryBase.cs" />
+    <Compile Include="Repository\NHibernateRepository.cs" />
+    <Compile Include="Repository\RepositoryMediator.cs" />
+    <Compile Include="Repository\RepositoyBase.cs" />
+    <Compile Include="TempoRepository.cs" />
+    <Compile Include="UsuarioRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WindowsTime.Core\WindowsTime.Core.csproj">
       <Project>{bb1ba005-31b8-43df-99cc-d30bcbc3fb50}</Project>
       <Name>WindowsTime.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowsTime.Infraestrutura\WindowsTime.Infraestrutura.csproj">
+      <Project>{287edc83-7990-4262-8b47-9bc0e977f540}</Project>
+      <Name>WindowsTime.Infraestrutura</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\PostSharp.2.1.7.32\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.2.1.7.32\tools\PostSharp.targets')" />

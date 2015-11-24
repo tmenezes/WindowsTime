@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using WindowsTime.Core.Dominio;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
+using WindowsTime.Core.Dominio;
 using WindowsTime.Core.DTO;
-using WindowsTime.Infraestrutura.DAO;
+using WindowsTime.DAO;
 using WindowsTime.Web.AppCode;
 
 namespace WindowsTime.UnitTest.Web

@@ -247,6 +247,10 @@
       <Project>{bb1ba005-31b8-43df-99cc-d30bcbc3fb50}</Project>
       <Name>WindowsTime.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowsTime.DAO\WindowsTime.DAO.csproj">
+      <Project>{50A4E3CA-662C-4E1C-8475-E9F2BD48DD4F}</Project>
+      <Name>WindowsTime.DAO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsTime.Infraestrutura\WindowsTime.Infraestrutura.csproj">
       <Project>{287EDC83-7990-4262-8B47-9BC0E977F540}</Project>
       <Name>WindowsTime.Infraestrutura</Name>

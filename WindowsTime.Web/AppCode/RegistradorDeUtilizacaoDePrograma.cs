@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WindowsTime.Core.Dominio;
 using WindowsTime.Core.DTO;
-using WindowsTime.Infraestrutura.DAO;
+using WindowsTime.DAO;
 
 namespace WindowsTime.Web.AppCode
 {
