@@ -8,25 +8,26 @@ using WindowsTime.Dominio.Repository;
 
 namespace WindowsTime.Web.AppCode
 {
-    public class RegistradorDeUtilizacaoDePrograma
+    public class RegistradorDeAtividadeDoUsuario
     {
         private static readonly object _syncObject = new object();
-        private static volatile RegistradorDeUtilizacaoDePrograma _instance;
+        private static volatile RegistradorDeAtividadeDoUsuario _instance;
+
         private readonly IAtividadeDoUsuarioRepository _atividadeDoUsuarioRepository;
         private readonly IProgramaRepository _programaRepository;
         private readonly IUsuarioRepository _usuarioRepository;
-        private readonly ConcurrentQueue<UtilizacaoDTO> _utilizacoesDeProgramas = new ConcurrentQueue<UtilizacaoDTO>();
+        private readonly ConcurrentQueue<AtividadeDoUsuarioDTO> _utilizacoesDeProgramas = new ConcurrentQueue<AtividadeDoUsuarioDTO>();
         private readonly Task _taskRegistrarUtilizacao;
 
         // construtores
-        private RegistradorDeUtilizacaoDePrograma(IAtividadeDoUsuarioRepository atividadeDoUsuarioRepository, IProgramaRepository programaRepository,
-                                                  IUsuarioRepository usuarioRepository)
+        private RegistradorDeAtividadeDoUsuario(IAtividadeDoUsuarioRepository atividadeDoUsuarioRepository, IProgramaRepository programaRepository,
+                                                IUsuarioRepository usuarioRepository)
         {
             _atividadeDoUsuarioRepository = atividadeDoUsuarioRepository;
             _programaRepository = programaRepository;
             _usuarioRepository = usuarioRepository;
 
-            _taskRegistrarUtilizacao = new Task(ProcessarRegistroDeUtilizacoesInfinitamente, TaskCreationOptions.LongRunning);
+            _taskRegistrarUtilizacao = new Task(ProcessarRegistrosDeAtividadesInfinitamente, TaskCreationOptions.LongRunning);
         }
 
 
@@ -40,43 +41,43 @@ namespace WindowsTime.Web.AppCode
             {
                 if (_instance == null)
                 {
-                    _instance = new RegistradorDeUtilizacaoDePrograma(new AtividadeDoUsuarioRepository(), new ProgramaRepository(), new UsuarioRepository());
+                    _instance = new RegistradorDeAtividadeDoUsuario(new AtividadeDoUsuarioRepository(), new ProgramaRepository(), new UsuarioRepository());
                     _instance._taskRegistrarUtilizacao.Start();
                 }
             }
         }
 
-        public void SolicitarRegistroDeUtilizacao(UtilizacaoDTO utilizacaoDTO)
+        public void SolicitarRegistroDeAtividade(AtividadeDoUsuarioDTO atividadeDoUsuarioDTO)
         {
-            _utilizacoesDeProgramas.Enqueue(utilizacaoDTO);
+            _utilizacoesDeProgramas.Enqueue(atividadeDoUsuarioDTO);
         }
 
 
         // privados
-        private void ProcessarRegistroDeUtilizacoesInfinitamente()
+        private void ProcessarRegistrosDeAtividadesInfinitamente()
         {
             while (true) // loop infinito
             {
                 while (_utilizacoesDeProgramas.Any())
                 {
-                    UtilizacaoDTO utilizacaoDTO;
+                    AtividadeDoUsuarioDTO atividadeDoUsuarioDTO;
 
-                    if (!_utilizacoesDeProgramas.TryDequeue(out utilizacaoDTO))
+                    if (!_utilizacoesDeProgramas.TryDequeue(out atividadeDoUsuarioDTO))
                         continue;
 
-                    RegistrarUtilizacaoDeProgramas(utilizacaoDTO);
+                    RegistrarUtilizacaoDeProgramas(atividadeDoUsuarioDTO);
                 }
 
                 Thread.Sleep(500);
             }
         }
 
-        private void RegistrarUtilizacaoDeProgramas(UtilizacaoDTO utilizacaoDTO)
+        private void RegistrarUtilizacaoDeProgramas(AtividadeDoUsuarioDTO atividadeDoUsuarioDTO)
         {
-            var usuario = _usuarioRepository.ObterUsuario(utilizacaoDTO.EmailDoUsuario);
+            var usuario = _usuarioRepository.ObterUsuario(atividadeDoUsuarioDTO.EmailDoUsuario);
             var atividadeDoDia = _atividadeDoUsuarioRepository.ObterAtividadeDoUsuarioDoDia(usuario) ?? new AtividadeDoUsuario(usuario);
 
-            var janelas = utilizacaoDTO.Programas.SelectMany(p => p.Janelas, (prog, jan) =>
+            var janelas = atividadeDoUsuarioDTO.Programas.SelectMany(p => p.Janelas, (prog, jan) =>
             {
                 var programa = _programaRepository.ObterPrograma(prog.Nome) ?? new Programa(prog.Nome);
                 var janela = new Janela(jan.Titulo, programa, jan.TempoDeUtilizacaoTotal);

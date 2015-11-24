@@ -22,13 +22,13 @@ namespace WindowsTime.Web.Controllers
 
 
         // GET api/tempo
-        public IEnumerable<UtilizacaoDTO> Get()
+        public IEnumerable<AtividadeDoUsuarioDTO> Get()
         {
             return null;
         }
 
         // POST api/tempo
-        public void Post([FromBody]UtilizacaoDTO utilizacaoDTO)
+        public void Post([FromBody]AtividadeDoUsuarioDTO atividadeDoUsuarioDTO)
         {
         }
     }

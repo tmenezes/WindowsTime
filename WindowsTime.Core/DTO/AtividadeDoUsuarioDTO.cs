@@ -3,16 +3,16 @@ using WindowsTime.Dominio;
 
 namespace WindowsTime.Core.DTO
 {
-    public class UtilizacaoDTO
+    public class AtividadeDoUsuarioDTO
     {
         public string EmailDoUsuario { get; set; }
 
         public IEnumerable<ProgramaDTO> Programas { get; set; }
 
-        public UtilizacaoDTO()
+        public AtividadeDoUsuarioDTO()
         {
         }
-        public UtilizacaoDTO(IEnumerable<ProgramaDTO> programas)
+        public AtividadeDoUsuarioDTO(IEnumerable<ProgramaDTO> programas)
         {
             EmailDoUsuario = Usuario.Corrente.Email;
             Programas = programas;

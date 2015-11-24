@@ -58,7 +58,7 @@ namespace WindowsTime.Core.Notificador
             ClienteHttp.PostarUtilizacaoDeProgramas(utilizacaoDeProgramas);
         }
 
-        private UtilizacaoDTO ObterUtilizacaoDeProgramas()
+        private AtividadeDoUsuarioDTO ObterUtilizacaoDeProgramas()
         {
             var programas = MonitoradorDeJanela.Instance.Janelas.Values
                                                .Where(i => i.PendenteDeSincronizacao)
@@ -73,7 +73,7 @@ namespace WindowsTime.Core.Notificador
                                                })
                                                .ToList();
 
-            var utilizacaoDeProgramas = new UtilizacaoDTO(programas);
+            var utilizacaoDeProgramas = new AtividadeDoUsuarioDTO(programas);
 
             return utilizacaoDeProgramas;
         }

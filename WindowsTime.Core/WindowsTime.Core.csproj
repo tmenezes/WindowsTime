@@ -90,7 +90,7 @@
     <Compile Include="Monitorador\ProgramaWin32.cs" />
     <Compile Include="Monitorador\ProgramaWindowsStore.cs" />
     <Compile Include="Monitorador\TipoDePrograma.cs" />
-    <Compile Include="DTO\UtilizacaoDTO.cs" />
+    <Compile Include="DTO\AtividadeDoUsuarioDTO.cs" />
     <Compile Include="Notificador\ClienteHttp.cs" />
     <Compile Include="Notificador\NotificadorDeUtilizacao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
