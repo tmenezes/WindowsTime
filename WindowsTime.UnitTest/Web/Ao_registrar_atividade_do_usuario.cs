@@ -31,17 +31,17 @@ namespace WindowsTime.UnitTest.Web
             programa2 = StubHelper.NovoPrograma();
 
             mockIUsuarioRepository = MockRepository.GenerateMock<IUsuarioRepository>();
-            mockIUsuarioRepository.Expect(mock => mock.ObterUsuario(atividadeDTO.EmailDoUsuario))
+            mockIUsuarioRepository.Expect(mock => mock.ObterUsuarioPorEmail(atividadeDTO.EmailDoUsuario))
                                   .Repeat.Once()
                                   .Return(usuario);
 
             mockIAtividadeDoUsuarioRepository = MockRepository.GenerateMock<IAtividadeDoUsuarioRepository>();
 
             mockIProgramaRepository = MockRepository.GenerateMock<IProgramaRepository>();
-            mockIProgramaRepository.Expect(mock => mock.ObterPrograma(atividadeDTO.Programas.First().Nome))
+            mockIProgramaRepository.Expect(mock => mock.ObterProgramaPorNome(atividadeDTO.Programas.First().Nome))
                                    .Repeat.Times(3)
                                    .Return(programa1);
-            mockIProgramaRepository.Expect(mock => mock.ObterPrograma(atividadeDTO.Programas.ElementAt(1).Nome))
+            mockIProgramaRepository.Expect(mock => mock.ObterProgramaPorNome(atividadeDTO.Programas.ElementAt(1).Nome))
                                    .Repeat.Times(3)
                                    .Return(programa2);
 

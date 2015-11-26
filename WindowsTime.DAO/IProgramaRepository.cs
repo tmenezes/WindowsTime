@@ -4,7 +4,7 @@ namespace WindowsTime.DAO
 {
     public interface IProgramaRepository
     {
-        Programa ObterPrograma(string nome);
+        Programa ObterProgramaPorNome(string nome);
         void Save(Programa programa);
     }
 }

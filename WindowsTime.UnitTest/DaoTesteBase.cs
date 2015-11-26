@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using FluentNHibernate.Cfg;
@@ -15,7 +16,26 @@ namespace WindowsTime.UnitTest
     [TestClass]
     public class DaoTesteBase : ISessionFactoryHolder
     {
+        private static string _instanceName = "WindowsTimeLocalDb";
+        private static string _workingDbName = "WindowsTime";
         private static ISessionFactory _sessionFactory = null;
+
+
+        private static string WorkingDbConnectionString
+        {
+            get
+            {
+                var dbDirectory = Directory.GetCurrentDirectory();
+                var connString = $"Server=(localdb)\\{_instanceName};AttachDbFilename={dbDirectory}\\{_workingDbName}.MDF;Initial Catalog={_workingDbName};Integrated Security=True";
+
+                return connString;
+            }
+        }
+        private static string MasterDbConnectionString
+        {
+            get { return $"server=(localdb)\\{_instanceName};Trusted_Connection=yes;database=master; Integrated Security=true; connection timeout=30"; }
+        }
+
 
         public void InitializeSessionFactory<T>()
         {
@@ -23,7 +43,7 @@ namespace WindowsTime.UnitTest
                 return;
 
             var config = Fluently.Configure()
-                                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(c => c.FromConnectionStringWithKey("WindowsTime")).ShowSql())
+                                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(WorkingDbConnectionString).ShowSql())
                                  .Mappings(m => m.FluentMappings.AddFromAssemblyOf<T>()
                                                  .Conventions.Add(FluentNHibernate.Conventions.Helpers.DefaultLazy.Never()))
                                  .ExposeConfiguration(cfg => new SchemaExport(cfg).Create(true, true));
@@ -33,51 +53,93 @@ namespace WindowsTime.UnitTest
 
         public ISession OpenSession()
         {
-            return default(ISession);
+            return _sessionFactory.OpenSession();
         }
 
-        public static void CreateDatabaseLocalDb(string databaseName, string instanceConnection)
-        {
-            string databaseDirectory = Directory.GetCurrentDirectory();
-
-            var db = new SqlConnection("server=" + instanceConnection + ";" +
-                                       "Trusted_Connection=yes;" +
-                                       "database=master; " +
-                                       "Integrated Security=true; " +
-                                       "connection timeout=30");
-
-            var myCommand = new SqlCommand(string.Format(@"CREATE DATABASE [{0}]
-                CONTAINMENT = NONE
-                ON  PRIMARY 
-                ( NAME = N'{0}', FILENAME = N'{1}\{0}.mdf' , SIZE = 4096KB , FILEGROWTH = 1024KB )
-                LOG ON 
-                ( NAME = N'{0}_log', FILENAME = N'{1}\{0}_log.ldf' , SIZE = 1024KB , FILEGROWTH = 10%)
-                ", databaseName, databaseDirectory), db);
-
-            db.Open();
-            myCommand.ExecuteNonQuery();
-            db.Close();
-        }
 
 
         [AssemblyInitialize]
         public static void TestInitialize(TestContext testContext)
         {
-            RunSqlLocalDbComand("/c sqllocaldb create \"testinstance\" -s");
-            CreateDatabaseLocalDb("WindowsTime", "(localdb)\\testinstance");
+            try
+            {
+                TestCleanup();
 
-            XmlConfigurator.Configure();
-            DataBase.Inicializar<UsuarioMap>(new DaoTesteBase());
+                RunSqlLocalDbComand($"/c sqllocaldb create \"{_instanceName}\" -s");
+                CreateDatabaseLocalDb(_workingDbName);
+
+                XmlConfigurator.Configure();
+                DataBase.Inicializar<UsuarioMap>(new DaoTesteBase());
+
+                SetupDatabase();
+            }
+            catch (Exception)
+            {
+                TestCleanup();
+                throw;
+            }
         }
 
         [AssemblyCleanup]
         public static void TestCleanup()
         {
-            RunSqlLocalDbComand("/c sqllocaldb stop \"testinstance\"");
-            RunSqlLocalDbComand("/c sqllocaldb delete \"testinstance\"");
+            RunSqlLocalDbComand($"/c sqllocaldb stop \"{_instanceName}\"");
+            RunSqlLocalDbComand($"/c sqllocaldb delete \"{_instanceName}\"");
 
-            var dbFile = Path.Combine(Directory.GetCurrentDirectory(), "WindowsTime.mdf");
-            File.Delete(dbFile);
+            var dbFile = Path.Combine(Directory.GetCurrentDirectory(), $"{_workingDbName}.mdf");
+            var logFile = Path.Combine(Directory.GetCurrentDirectory(), $"{_workingDbName}_log.ldf");
+            File.Delete(dbFile); Trace.WriteLine($"delete {dbFile}");
+            File.Delete(logFile); Trace.WriteLine($"delete {logFile}");
+        }
+
+
+        private static void SetupDatabase()
+        {
+            var usuarioPadrao = "INSERT INTO Usuario (Email, Nome, DataDeCadastro) VALUES ('thiagomenezes2k7@gmail.com', 'TMenezes', '2015-01-01');";
+            var programaPadrao = "INSERT INTO Programa (Nome) VALUES ('Visual Studio 2050')";
+
+            RunSqlCommands(WorkingDbConnectionString, new[]
+                                                      {
+                                                          usuarioPadrao,
+                                                          programaPadrao
+                                                      });
+        }
+
+        private static void CreateDatabaseLocalDb(string dbName)
+        {
+            var dbDirectory = Directory.GetCurrentDirectory();
+            var commandText = $@"CREATE DATABASE [{dbName}] CONTAINMENT = NONE
+                ON  PRIMARY ( NAME = N'{dbName}', FILENAME = N'{dbDirectory}\{dbName}.mdf' , SIZE = 4096KB , FILEGROWTH = 1024KB )
+                LOG ON      ( NAME = N'{dbName}_log', FILENAME = N'{dbDirectory}\{dbName}_log.ldf' , SIZE = 1024KB , FILEGROWTH = 10%)";
+
+            RunSqlCommand(MasterDbConnectionString, commandText);
+        }
+
+        private static void RunSqlCommand(string connString, string commandText)
+        {
+            using (var conn = new SqlConnection(connString))
+            using (var cmd = new SqlCommand(commandText, conn))
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                Trace.WriteLine($"sql cmd executed: {commandText}");
+            }
+        }
+        private static void RunSqlCommands(string connString, string[] commands)
+        {
+            using (var conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                var cmd = new SqlCommand("", conn);
+                foreach (var cmdText in commands)
+                {
+                    cmd.CommandText = cmdText;
+                    cmd.ExecuteNonQuery();
+                    Trace.WriteLine($"sql cmd executed: {cmdText}");
+                }
+                cmd.Dispose();
+            }
         }
 
         private static void RunSqlLocalDbComand(string command)

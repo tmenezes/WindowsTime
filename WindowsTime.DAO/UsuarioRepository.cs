@@ -6,9 +6,9 @@ namespace WindowsTime.DAO
 {
     public class UsuarioRepository : RepositoryBase<Usuario>, IUsuarioRepository
     {
-        public Usuario ObterUsuario(string email)
+        public Usuario ObterUsuarioPorEmail(string email)
         {
-            return RepositoryMediator.LinqQuery().First(u => u.Email == email);
+            return RepositoryMediator.LinqQuery().FirstOrDefault(u => u.Email == email);
         }
     }
 }

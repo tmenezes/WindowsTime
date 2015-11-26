@@ -84,6 +84,9 @@
     <Compile Include="AbstractTeste.cs" />
     <Compile Include="AssertBase.cs" />
     <Compile Include="DaoTesteBase.cs" />
+    <Compile Include="DAO\ProgramaRepositoryTestes\Ao_obter_programa_existente.cs" />
+    <Compile Include="DAO\ProgramaRepositoryTestes\Ao_salvar_novo_programa.cs" />
+    <Compile Include="DAO\UsuarioRepositoryTestes\Ao_obter_usuario_existente.cs" />
     <Compile Include="DAO\UsuarioRepositoryTestes\Ao_salvar_novo_usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StubHelper.cs" />
@@ -111,6 +114,7 @@
       <Name>WindowsTime.Web</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

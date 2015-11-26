@@ -76,12 +76,12 @@ namespace WindowsTime.Web.AppCode
 
         private void RegistrarUtilizacaoDeProgramas(AtividadeDoUsuarioDTO atividadeDoUsuarioDTO)
         {
-            var usuario = _usuarioRepository.ObterUsuario(atividadeDoUsuarioDTO.EmailDoUsuario);
+            var usuario = _usuarioRepository.ObterUsuarioPorEmail(atividadeDoUsuarioDTO.EmailDoUsuario);
             var atividadeDoDia = _atividadeDoUsuarioRepository.ObterAtividadeDoUsuarioDoDia(usuario) ?? new AtividadeDoUsuario(usuario);
 
             atividadeDoUsuarioDTO.Programas.SelectMany(p => p.Janelas, (prog, jan) =>
             {
-                var programa = _programaRepository.ObterPrograma(prog.Nome) ?? new Programa(prog.Nome);
+                var programa = _programaRepository.ObterProgramaPorNome(prog.Nome) ?? new Programa(prog.Nome);
                 var janela = new Janela(jan.Titulo, programa, jan.TempoDeUtilizacaoTotal);
 
                 atividadeDoDia.Janelas.Add(janela);

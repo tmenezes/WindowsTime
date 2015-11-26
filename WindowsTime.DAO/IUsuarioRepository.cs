@@ -4,7 +4,7 @@ namespace WindowsTime.DAO
 {
     public interface IUsuarioRepository
     {
-        Usuario ObterUsuario(string email);
+        Usuario ObterUsuarioPorEmail(string email);
         void Save(Usuario usuario);
     }
 }

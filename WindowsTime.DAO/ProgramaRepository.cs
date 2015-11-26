@@ -6,7 +6,7 @@ namespace WindowsTime.DAO
 {
     public class ProgramaRepository : RepositoryBase<Programa>, IProgramaRepository
     {
-        public Programa ObterPrograma(string nome)
+        public Programa ObterProgramaPorNome(string nome)
         {
             return RepositoryMediator.LinqQuery().First(p => p.Nome == nome);
         }
