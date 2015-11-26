@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WindowsTime.DAO;
+using WindowsTime.UnitTest;
 
-namespace WindowsTime.UnitTest.DAO.ProgramaRepositoryTestes
+namespace WindowsTime.IntegratedTest.DAO.ProgramaRepositoryTestes
 {
     [TestClass]
     public class Ao_salvar_novo_programa : AbstractDaoTesteAutoAct

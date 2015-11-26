@@ -1,7 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WindowsTime.DAO;
+﻿using WindowsTime.DAO;
+using WindowsTime.UnitTest;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace WindowsTime.UnitTest.DAO.UsuarioRepositoryTestes
+namespace WindowsTime.IntegratedTest.DAO.UsuarioRepositoryTestes
 {
     [TestClass]
     public class Ao_salvar_novo_usuario : AbstractDaoTesteAutoAct

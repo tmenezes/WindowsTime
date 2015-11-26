@@ -11,7 +11,7 @@ using NHibernate.Tool.hbm2ddl;
 using WindowsTime.DAO.Map;
 using WindowsTime.Infraestrutura.DAO;
 
-namespace WindowsTime.UnitTest
+namespace WindowsTime.IntegratedTest
 {
     [TestClass]
     public class DaoTesteBase : ISessionFactoryHolder

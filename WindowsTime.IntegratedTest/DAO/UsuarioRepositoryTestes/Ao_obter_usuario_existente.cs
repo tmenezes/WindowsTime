@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WindowsTime.DAO;
+﻿using WindowsTime.DAO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace WindowsTime.UnitTest.DAO.UsuarioRepositoryTestes
+namespace WindowsTime.IntegratedTest.DAO.UsuarioRepositoryTestes
 {
     [TestClass]
     public class Ao_obter_usuario_existente : AbstractDaoTesteAutoAct
@@ -20,9 +20,9 @@ namespace WindowsTime.UnitTest.DAO.UsuarioRepositoryTestes
             var usuario = new UsuarioRepository().ObterUsuarioPorEmail("thiagomenezes2k7@gmail.com");
 
             Assert.IsNotNull(usuario);
-            Assert.AreEqual(1, usuario.Id);
-            Assert.AreEqual("thiagomenezes2k7@gmail.com", usuario.Email);
-            Assert.AreEqual("TMenezes", usuario.Nome);
+            Assert.AreEqual<int>(1, usuario.Id);
+            Assert.AreEqual<string>("thiagomenezes2k7@gmail.com", usuario.Email);
+            Assert.AreEqual<string>("TMenezes", usuario.Nome);
         }
     }
 }

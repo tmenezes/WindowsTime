@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{54841FBD-9576-49EA-ACE3-952A4F0336DE}</ProjectGuid>
+    <ProjectGuid>{B01E29B6-F1D2-46EA-A058-6ADF5F1267FF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WindowsTime.UnitTest</RootNamespace>
-    <AssemblyName>WindowsTime.UnitTest</AssemblyName>
+    <RootNamespace>WindowsTime.IntegratedTest</RootNamespace>
+    <AssemblyName>WindowsTime.IntegratedTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,25 +36,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Ploeh.AutoFixture, Version=3.36.12.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoFixture.3.36.12\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.4\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PostSharp, Version=4.1.30.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.4.1.30\lib\net35-client\PostSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
-      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -71,9 +74,12 @@
   <ItemGroup>
     <Compile Include="AbstractTeste.cs" />
     <Compile Include="AssertBase.cs" />
+    <Compile Include="DaoTesteBase.cs" />
+    <Compile Include="DAO\ProgramaRepositoryTestes\Ao_obter_programa_existente.cs" />
+    <Compile Include="DAO\ProgramaRepositoryTestes\Ao_salvar_novo_programa.cs" />
+    <Compile Include="DAO\UsuarioRepositoryTestes\Ao_obter_usuario_existente.cs" />
+    <Compile Include="DAO\UsuarioRepositoryTestes\Ao_salvar_novo_usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StubHelper.cs" />
-    <Compile Include="Web\Ao_registrar_atividade_do_usuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -81,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WindowsTime.Core\WindowsTime.Core.csproj">
-      <Project>{BB1BA005-31B8-43DF-99CC-D30BCBC3FB50}</Project>
+      <Project>{bb1ba005-31b8-43df-99cc-d30bcbc3fb50}</Project>
       <Name>WindowsTime.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsTime.DAO\WindowsTime.DAO.csproj">
@@ -92,12 +98,11 @@
       <Project>{287edc83-7990-4262-8b47-9bc0e977f540}</Project>
       <Name>WindowsTime.Infraestrutura</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsTime.Web\WindowsTime.Web.csproj">
-      <Project>{9C48AEE4-E9E8-415F-8FB7-6DB28D2BD09B}</Project>
-      <Name>WindowsTime.Web</Name>
+    <ProjectReference Include="..\WindowsTime.UnitTest\WindowsTime.UnitTest.csproj">
+      <Project>{54841fbd-9576-49ea-ace3-952a4f0336de}</Project>
+      <Name>WindowsTime.UnitTest</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
