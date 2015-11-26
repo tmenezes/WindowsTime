@@ -71,7 +71,7 @@
     <Compile Include="Map\UsuarioMap.cs" />
     <Compile Include="ProgramaRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TempoRepository.cs" />
+    <Compile Include="AtividadeDoUsuarioRepository.cs" />
     <Compile Include="UsuarioRepository.cs" />
   </ItemGroup>
   <ItemGroup>

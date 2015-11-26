@@ -87,7 +87,7 @@ namespace WindowsTime.UnitTest.Web
                                                  .Repeat.Once()
                                                  .Return(null);
 
-                mockIAtividadeDoUsuarioRepository.Expect(mock => mock.Salvar(null)).IgnoreArguments()
+                mockIAtividadeDoUsuarioRepository.Expect(mock => mock.Save(null)).IgnoreArguments()
                                                  .Repeat.Once()
                                                  .WhenCalled(a => atividadeSalva = a.Arguments.First() as AtividadeDoUsuario);
             }
@@ -117,7 +117,7 @@ namespace WindowsTime.UnitTest.Web
                                                  .Repeat.Once()
                                                  .Return(atividadeDoUsuario);
 
-                mockIAtividadeDoUsuarioRepository.Expect(mock => mock.Salvar(null)).IgnoreArguments()
+                mockIAtividadeDoUsuarioRepository.Expect(mock => mock.Save(null)).IgnoreArguments()
                                                  .Repeat.Once()
                                                  .WhenCalled(a => atividadeSalva = a.Arguments.First() as AtividadeDoUsuario);
             }

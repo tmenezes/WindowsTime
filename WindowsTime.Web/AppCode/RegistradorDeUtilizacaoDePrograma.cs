@@ -89,7 +89,7 @@ namespace WindowsTime.Web.AppCode
             })
             .ToList();
 
-            _atividadeDoUsuarioRepository.Salvar(atividadeDoDia);
+            _atividadeDoUsuarioRepository.Save(atividadeDoDia);
         }
     }
 }

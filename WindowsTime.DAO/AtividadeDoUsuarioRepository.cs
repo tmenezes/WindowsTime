@@ -1,16 +1,13 @@
 ﻿using WindowsTime.Core.Dominio;
+using WindowsTime.Infraestrutura.DAO.Repository;
 
 namespace WindowsTime.DAO
 {
-    public class AtividadeDoUsuarioRepository : IAtividadeDoUsuarioRepository
+    public class AtividadeDoUsuarioRepository : RepositoryBase<AtividadeDoUsuario>, IAtividadeDoUsuarioRepository
     {
         public AtividadeDoUsuario ObterAtividadeDoUsuarioDoDia(Usuario usuario)
         {
             return null;
-        }
-
-        public void Salvar(AtividadeDoUsuario atividadeDoUsuario)
-        {
         }
     }
 }

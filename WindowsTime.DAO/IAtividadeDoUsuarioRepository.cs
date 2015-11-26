@@ -5,6 +5,6 @@ namespace WindowsTime.DAO
     public interface IAtividadeDoUsuarioRepository
     {
         AtividadeDoUsuario ObterAtividadeDoUsuarioDoDia(Usuario usuario);
-        void Salvar(AtividadeDoUsuario atividadeDoUsuario);
+        void Save(AtividadeDoUsuario atividadeDoUsuario);
     }
 }

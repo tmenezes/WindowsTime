@@ -1,3 +1,4 @@
+using System.Linq;
 using Ploeh.AutoFixture;
 using WindowsTime.Core.Dominio;
 using WindowsTime.Core.DTO;
@@ -36,6 +37,20 @@ namespace WindowsTime.UnitTest
         public static Usuario NovoUsuario()
         {
             return _fixture.Build<Usuario>().Without(u => u.Id).Create();
+        }
+
+        public static AtividadeDoUsuario NovoAtividadeDoUsuario(Usuario usuario, Programa programa, int qtdeJanelas)
+        {
+            var atividade = _fixture.Build<AtividadeDoUsuario>()
+                                    .Without(a => a.Id)
+                                    .With(a => a.Usuario, usuario)
+                                    .With(a => a.Janelas, _fixture.Build<Janela>()
+                                                                  .Without(x => x.Id)
+                                                                  .With(x => x.Programa, programa)
+                                                                  .CreateMany(qtdeJanelas).ToList())
+                                    .Create();
+
+            return atividade;
         }
     }
 }

@@ -16,7 +16,6 @@ namespace WindowsTime.DAO.Map
 
             HasMany(x => x.Janelas)
                 .KeyColumns.Add("IdAtividade")
-                .Inverse()
                 .Cascade.All()
                 .LazyLoad();
         }
