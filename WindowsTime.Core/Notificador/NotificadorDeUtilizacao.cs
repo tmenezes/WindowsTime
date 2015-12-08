@@ -10,7 +10,7 @@ namespace WindowsTime.Core.Notificador
     public class NotificadorDeUtilizacao
     {
         // atributos
-        private const int INTERVALO = 1000 * 60 * 5; // 5 minutos
+        private const int INTERVALO = 1000 * 5 * 5; // 5 minutos
         private static NotificadorDeUtilizacao _instance;
         private readonly Timer _timer;
 

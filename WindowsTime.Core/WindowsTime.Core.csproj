@@ -98,6 +98,7 @@
     <Compile Include="Notificador\ClienteHttp.cs" />
     <Compile Include="Notificador\NotificadorDeUtilizacao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowsTimeConfigSection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

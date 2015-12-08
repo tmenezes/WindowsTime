@@ -43,7 +43,7 @@ namespace WindowsTime.IntegratedTest
                 return;
 
             var config = Fluently.Configure()
-                                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(WorkingDbConnectionString).ShowSql())
+                                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(WorkingDbConnectionString).ShowSql().FormatSql())
                                  .Mappings(m => m.FluentMappings.AddFromAssemblyOf<T>()
                                                  .Conventions.Add(FluentNHibernate.Conventions.Helpers.DefaultLazy.Never()))
                                  .ExposeConfiguration(cfg => new SchemaExport(cfg).Create(true, true));
@@ -97,11 +97,15 @@ namespace WindowsTime.IntegratedTest
         {
             var usuarioPadrao = "INSERT INTO Usuario (Email, Nome, DataDeCadastro) VALUES ('thiagomenezes2k7@gmail.com', 'TMenezes', '2015-01-01');";
             var programaPadrao = "INSERT INTO Programa (Nome) VALUES ('Visual Studio 2050')";
+            var atividadePadrao = $"INSERT INTO Atividade (IdUsuario, Data) VALUES (1, '{DateTime.Now:yyyy-MM-dd}');";
+            var janelaPadrao = $"INSERT INTO Janela (IdAtividade, IdPrograma, Titulo, TempoDeAtividade) VALUES (1, 1, 'VS 2015', 5.250);";
 
             RunSqlCommands(WorkingDbConnectionString, new[]
                                                       {
                                                           usuarioPadrao,
-                                                          programaPadrao
+                                                          programaPadrao,
+                                                          atividadePadrao,
+                                                          janelaPadrao,
                                                       });
         }
 

@@ -8,7 +8,7 @@ namespace WindowsTime.DAO
     {
         public Programa ObterProgramaPorNome(string nome)
         {
-            return RepositoryMediator.LinqQuery().First(p => p.Nome == nome);
+            return RepositoryMediator.LinqQuery().FirstOrDefault(p => p.Nome == nome);
         }
     }
 }

@@ -44,11 +44,16 @@ namespace WindowsTime.UnitTest
             var atividade = _fixture.Build<AtividadeDoUsuario>()
                                     .Without(a => a.Id)
                                     .With(a => a.Usuario, usuario)
-                                    .With(a => a.Janelas, _fixture.Build<Janela>()
-                                                                  .Without(x => x.Id)
-                                                                  .With(x => x.Programa, programa)
-                                                                  .CreateMany(qtdeJanelas).ToList())
+                                    .Without(a => a.Janelas)
                                     .Create();
+
+            var janelas = _fixture.Build<Janela>()
+                                  .Without(x => x.Id)
+                                  .With(x => x.Atividade, atividade)
+                                  .With(x => x.Programa, programa)
+                                  .CreateMany(qtdeJanelas).ToList();
+
+            atividade.Janelas = janelas;
 
             return atividade;
         }

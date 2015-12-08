@@ -111,7 +111,7 @@ namespace WindowsTime.UnitTest.Web
                 base.Arrange();
 
                 atividadeDoUsuario = new AtividadeDoUsuario(usuario);
-                atividadeDoUsuario.Janelas.Add(new Janela("Teste", programa1, 1));
+                atividadeDoUsuario.Janelas.Add(new Janela(atividadeDoUsuario, "Teste", programa1, 1));
 
                 mockIAtividadeDoUsuarioRepository.Expect(mock => mock.ObterAtividadeDoUsuarioDoDia(usuario))
                                                  .Repeat.Once()

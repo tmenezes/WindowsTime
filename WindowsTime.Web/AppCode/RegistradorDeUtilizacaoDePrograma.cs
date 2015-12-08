@@ -82,7 +82,7 @@ namespace WindowsTime.Web.AppCode
             atividadeDoUsuarioDTO.Programas.SelectMany(p => p.Janelas, (prog, jan) =>
             {
                 var programa = _programaRepository.ObterProgramaPorNome(prog.Nome) ?? new Programa(prog.Nome);
-                var janela = new Janela(jan.Titulo, programa, jan.TempoDeUtilizacaoTotal);
+                var janela = new Janela(atividadeDoDia, jan.Titulo, programa, jan.TempoNaoSincronizado);
 
                 atividadeDoDia.Janelas.Add(janela);
                 return janela;
