@@ -37,14 +37,14 @@ namespace WindowsTime.IntegratedTest
         }
 
 
-        public void InitializeSessionFactory<T>()
+        public void InitializeSessionFactory()
         {
             if (_sessionFactory != null)
                 return;
 
             var config = Fluently.Configure()
                                  .Database(MsSqlConfiguration.MsSql2012.ConnectionString(WorkingDbConnectionString).ShowSql().FormatSql())
-                                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<T>()
+                                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<UsuarioMap>()
                                                  .Conventions.Add(FluentNHibernate.Conventions.Helpers.DefaultLazy.Never()))
                                  .ExposeConfiguration(cfg => new SchemaExport(cfg).Create(true, true));
 
@@ -69,7 +69,7 @@ namespace WindowsTime.IntegratedTest
                 CreateDatabaseLocalDb(_workingDbName);
 
                 XmlConfigurator.Configure();
-                DataBase.Inicializar<UsuarioMap>(new DaoTesteBase());
+                DataBase.Inicializar(new DaoTesteBase());
 
                 SetupDatabase();
             }

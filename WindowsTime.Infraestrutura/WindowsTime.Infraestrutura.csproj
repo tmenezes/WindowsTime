@@ -82,7 +82,6 @@
     <Compile Include="DAO\Repository\NHibernateRepository.cs" />
     <Compile Include="DAO\Repository\RepositoryMediator.cs" />
     <Compile Include="DAO\Repository\RepositoryBase.cs" />
-    <Compile Include="DAO\SessionFactoryHolder.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\LogTypeEnum.cs" />

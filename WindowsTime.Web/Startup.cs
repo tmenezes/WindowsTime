@@ -1,5 +1,5 @@
 ﻿using Owin;
-using WindowsTime.DAO.Map;
+using WindowsTime.DAO;
 using WindowsTime.Infraestrutura.DAO;
 using WindowsTime.Web.AppCode;
 
@@ -9,7 +9,7 @@ namespace WindowsTime.Web
     {
         public void Configuration(IAppBuilder app)
         {
-            DataBase.Inicializar<UsuarioMap>(new SessionFactoryHolder());
+            DataBase.Inicializar(new SessionFactoryHolder());
             RegistradorDeAtividadeDoUsuario.Iniciar();
         }
     }

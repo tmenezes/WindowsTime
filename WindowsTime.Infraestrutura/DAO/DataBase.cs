@@ -4,9 +4,9 @@ namespace WindowsTime.Infraestrutura.DAO
     {
         public static ISessionFactoryHolder SessionFactoryHolder { get; private set; }
 
-        public static void Inicializar<T>(ISessionFactoryHolder sessionFactoryHolder)
+        public static void Inicializar(ISessionFactoryHolder sessionFactoryHolder)
         {
-            sessionFactoryHolder.InitializeSessionFactory<T>();
+            sessionFactoryHolder.InitializeSessionFactory();
 
             SessionFactoryHolder = sessionFactoryHolder;
         }

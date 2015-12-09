@@ -4,7 +4,7 @@ namespace WindowsTime.Infraestrutura.DAO
 {
     public interface ISessionFactoryHolder
     {
-        void InitializeSessionFactory<T>();
+        void InitializeSessionFactory();
         ISession OpenSession();
     }
 }
