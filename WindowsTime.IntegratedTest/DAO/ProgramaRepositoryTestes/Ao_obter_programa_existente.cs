@@ -4,16 +4,8 @@ using WindowsTime.DAO;
 namespace WindowsTime.IntegratedTest.DAO.ProgramaRepositoryTestes
 {
     [TestClass]
-    public class Ao_obter_programa_existente : AbstractDaoTesteAutoAct
+    public class Ao_obter_programa_existente
     {
-        public override void Arrange()
-        {
-        }
-
-        public override void Act()
-        {
-        }
-
         [TestMethod]
         public void Deve_obter_com_sucesso()
         {

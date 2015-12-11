@@ -1,19 +1,11 @@
-﻿using WindowsTime.DAO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WindowsTime.DAO;
 
 namespace WindowsTime.IntegratedTest.DAO.UsuarioRepositoryTestes
 {
     [TestClass]
-    public class Ao_obter_usuario_existente : AbstractDaoTesteAutoAct
+    public class Ao_obter_usuario_existente
     {
-        public override void Arrange()
-        {
-        }
-
-        public override void Act()
-        {
-        }
-
         [TestMethod]
         public void Deve_obter_com_sucesso()
         {

@@ -80,7 +80,7 @@ namespace WindowsTime.IntegratedTest
             }
         }
 
-        //[AssemblyCleanup]
+        [AssemblyCleanup]
         public static void TestCleanup()
         {
             RunSqlLocalDbComand($"/c sqllocaldb stop \"{_instanceName}\"");

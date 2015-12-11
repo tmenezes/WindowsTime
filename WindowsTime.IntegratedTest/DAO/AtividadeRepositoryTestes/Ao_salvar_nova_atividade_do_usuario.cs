@@ -6,16 +6,8 @@ using WindowsTime.UnitTest;
 namespace WindowsTime.IntegratedTest.DAO.AtividadeRepositoryTestes
 {
     [TestClass]
-    public class Ao_salvar_nova_atividade_do_usuario : AbstractDaoTesteAutoAct
+    public class Ao_salvar_nova_atividade_do_usuario
     {
-        public override void Arrange()
-        {
-        }
-
-        public override void Act()
-        {
-        }
-
         [TestMethod]
         public void Deve_salvar_programa_com_sucesso()
         {
