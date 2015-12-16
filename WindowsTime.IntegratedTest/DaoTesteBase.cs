@@ -4,12 +4,18 @@ using System.Diagnostics;
 using System.IO;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using log4net;
+using log4net.Appender;
 using log4net.Config;
+using log4net.Core;
+using log4net.Layout;
+using log4net.Repository.Hierarchy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using WindowsTime.DAO.Map;
 using WindowsTime.Infraestrutura.DAO;
+using WindowsTime.Infraestrutura.Logging.Log4NetAppender;
 
 namespace WindowsTime.IntegratedTest
 {
@@ -68,7 +74,8 @@ namespace WindowsTime.IntegratedTest
                 RunSqlLocalDbComand($"/c sqllocaldb create \"{_instanceName}\" -s");
                 CreateDatabaseLocalDb(_workingDbName);
 
-                XmlConfigurator.Configure();
+                //XmlConfigurator.Configure();
+                ConfigureLogger();
                 DataBase.Inicializar(new DaoTesteBase());
 
                 SetupDatabase();
@@ -96,16 +103,20 @@ namespace WindowsTime.IntegratedTest
         private static void SetupDatabase()
         {
             var usuarioPadrao = "INSERT INTO Usuario (Email, Nome, DataDeCadastro) VALUES ('thiagomenezes2k7@gmail.com', 'TMenezes', '2015-01-01');";
-            var programaPadrao = "INSERT INTO Programa (Nome) VALUES ('Visual Studio 2050')";
+            var programaPadrao1 = "INSERT INTO Programa (Nome) VALUES ('Visual Studio 2050')";
+            var programaPadrao2 = "INSERT INTO Programa (Nome) VALUES ('Windows Explorer')";
             var atividadePadrao = $"INSERT INTO Atividade (IdUsuario, Data) VALUES (1, '{DateTime.Now:yyyy-MM-dd}');";
-            var janelaPadrao = $"INSERT INTO Janela (IdAtividade, IdPrograma, Titulo, TempoDeAtividade) VALUES (1, 1, 'VS 2015', 5.250);";
+            var janelaPadrao1 = $"INSERT INTO Janela (IdAtividade, IdPrograma, Titulo, TempoDeAtividade) VALUES (1, 1, 'VS 2015', 5.250);";
+            var janelaPadrao2 = $"INSERT INTO Janela (IdAtividade, IdPrograma, Titulo, TempoDeAtividade) VALUES (1, 2, 'Explorer', 2.100);";
 
             RunSqlCommands(WorkingDbConnectionString, new[]
                                                       {
                                                           usuarioPadrao,
-                                                          programaPadrao,
+                                                          programaPadrao1,
+                                                          programaPadrao2,
                                                           atividadePadrao,
-                                                          janelaPadrao,
+                                                          janelaPadrao1,
+                                                          janelaPadrao2,
                                                       });
         }
 
@@ -160,6 +171,34 @@ namespace WindowsTime.IntegratedTest
             process.WaitForExit();
 
             Trace.WriteLine($"{startInfo.FileName} {startInfo.Arguments}");
+        }
+
+        private static void ConfigureLogger()
+        {
+            var hierarchy = (Hierarchy)LogManager.GetRepository();
+
+            var layout = new PatternLayout();
+            layout.ConversionPattern = "%date [%thread] %-5level %logger - %message%newline";
+            layout.ActivateOptions();
+
+            var traceAppender = new TraceAppender();
+            traceAppender.Layout = layout;
+            traceAppender.ActivateOptions();
+
+            var fileAppender = new SimpleFileAppender();
+            fileAppender.Layout = layout;
+            fileAppender.ActivateOptions();
+
+            var nhLoadLogger = (Logger)LogManager.GetLogger("NHibernate.Loader").Logger;
+            nhLoadLogger.Level = Level.All;
+            nhLoadLogger.AddAppender(fileAppender);
+            nhLoadLogger.Additivity = false;
+
+
+            BasicConfigurator.Configure(traceAppender);
+            BasicConfigurator.Configure(fileAppender);
+
+            hierarchy.Root.RemoveAppender(fileAppender);
         }
     }
 }

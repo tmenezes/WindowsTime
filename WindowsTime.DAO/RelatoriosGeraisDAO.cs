@@ -29,7 +29,6 @@ namespace WindowsTime.DAO
                                                     Nome = group.Key,
                                                     TempoDeAtividade = group.Sum(j => j.TempoDeAtividade)
                                                 }).ToList();
-
             return programas;
         }
     }
