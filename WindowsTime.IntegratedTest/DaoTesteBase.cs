@@ -7,7 +7,6 @@ using FluentNHibernate.Cfg.Db;
 using log4net;
 using log4net.Appender;
 using log4net.Config;
-using log4net.Core;
 using log4net.Layout;
 using log4net.Repository.Hierarchy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -35,11 +34,12 @@ namespace WindowsTime.IntegratedTest
                 var connString = $"Server=(localdb)\\{_instanceName};AttachDbFilename={dbDirectory}\\{_workingDbName}.MDF;Initial Catalog={_workingDbName};Integrated Security=True";
 
                 return connString;
+                //return @"Data Source=192.168.2.83\SQLDEV;Database=iMusicaClosing;User ID=SA;Password=iMusicaBackOffice@123;";
             }
         }
         private static string MasterDbConnectionString
         {
-            get { return $"server=(localdb)\\{_instanceName};Trusted_Connection=yes;database=master; Integrated Security=true; connection timeout=30"; }
+            get { return $"server=(localdb)\\{_instanceName};Trusted_Connection=yes;database=master;Integrated Security=true;connection timeout=30"; }
         }
 
 
@@ -49,9 +49,10 @@ namespace WindowsTime.IntegratedTest
                 return;
 
             var config = Fluently.Configure()
-                                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(WorkingDbConnectionString).ShowSql().FormatSql())
+                                 .Database(MsSqlConfiguration.MsSql2008.ConnectionString(WorkingDbConnectionString).ShowSql().FormatSql())
                                  .Mappings(m => m.FluentMappings.AddFromAssemblyOf<UsuarioMap>()
-                                                 .Conventions.Add(FluentNHibernate.Conventions.Helpers.DefaultLazy.Never()))
+                                                 .Conventions.Add(FluentNHibernate.Conventions.Helpers.DefaultLazy.Never())
+                                                 .Conventions.Add())
                                  .ExposeConfiguration(cfg => new SchemaExport(cfg).Create(true, true));
 
             _sessionFactory = config.BuildSessionFactory();
@@ -189,16 +190,16 @@ namespace WindowsTime.IntegratedTest
             fileAppender.Layout = layout;
             fileAppender.ActivateOptions();
 
-            var nhLoadLogger = (Logger)LogManager.GetLogger("NHibernate.Loader").Logger;
-            nhLoadLogger.Level = Level.All;
-            nhLoadLogger.AddAppender(fileAppender);
-            nhLoadLogger.Additivity = false;
+            //var nhLoadLogger = (Logger)LogManager.GetLogger("NHibernate.Loader").Logger;
+            //nhLoadLogger.Level = Level.All;
+            //nhLoadLogger.AddAppender(fileAppender);
+            //nhLoadLogger.Additivity = false;
 
 
             BasicConfigurator.Configure(traceAppender);
-            BasicConfigurator.Configure(fileAppender);
+            //BasicConfigurator.Configure(fileAppender);
 
-            hierarchy.Root.RemoveAppender(fileAppender);
+            //hierarchy.Root.RemoveAppender(fileAppender);
         }
     }
 }

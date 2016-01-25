@@ -93,6 +93,7 @@ namespace WindowsTime.Infraestrutura.DAO.Repository
         {
             Session.SaveOrUpdate(entity);
         }
+
         public void SaveAndPersist(T entity)
         {
             using (var session = GetNewSession())

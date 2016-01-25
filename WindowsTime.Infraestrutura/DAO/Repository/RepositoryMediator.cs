@@ -68,7 +68,7 @@ namespace WindowsTime.Infraestrutura.DAO.Repository
         public void Save(T entity)
         {
             RepositoryInterno.Save(entity);
-        }
+        }        
         public void SalvarEPersistir(T entity)
         {
             RepositoryInterno.SaveAndPersist(entity);

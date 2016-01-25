@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NHibernate.Linq;
 using WindowsTime.Core.Dominio;
 using WindowsTime.DAO;
+using WindowsTime.Infraestrutura.DAO;
 
 namespace WindowsTime.IntegratedTest.DAO.ProgramaRepositoryTestes
 {
@@ -27,6 +30,33 @@ namespace WindowsTime.IntegratedTest.DAO.ProgramaRepositoryTestes
         }
 
         [TestMethod]
+        public void Deve_Atualizar()
+        {
+            using (var session = DataBase.SessionFactoryHolder.OpenSession())
+            using (var tx = session.BeginTransaction())
+            {
+                var programa = session.Query<Programa>().FirstOrDefault(p => p.Nome == "Visual Studio 2050");
+                programa.Nome = "Visual Studio (alterado)";
+                session.Update(programa);
+
+                tx.Commit();
+            }
+        }
+
+        [TestMethod]
+        public void Deve_Deletar()
+        {
+            using (var session = DataBase.SessionFactoryHolder.OpenSession())
+            using (var tx = session.BeginTransaction())
+            {
+                var programa = session.Query<Programa>().FirstOrDefault(p => p.Nome == "Visual Studio 2050");
+                session.Delete(programa);
+
+                tx.Commit();
+            }
+        }
+
+        [TestMethod]
         public void Threads_devem_obter_com_sucesso()
         {
             Programa programa1 = null;
@@ -40,6 +70,25 @@ namespace WindowsTime.IntegratedTest.DAO.ProgramaRepositoryTestes
             Assert.IsNotNull(programa1);
             Assert.AreEqual<int>(1, programa1.Id);
             Assert.AreEqual<string>("Visual Studio 2050", programa1.Nome);
+        }
+
+        [TestMethod]
+        public void FuturesQueries_devem_obter_com_sucesso()
+        {
+            using (var session = DataBase.SessionFactoryHolder.OpenSession())
+            using (var tx = session.BeginTransaction())
+            {
+                var programa1 = session.Query<Programa>().ToFuture().FirstOrDefault(p => p.Nome == "Visual Studio 2050");
+                var programa2 = session.Query<Programa>().ToFuture().FirstOrDefault(p => p.Nome == "Visual Studio 2051");
+
+
+                Assert.IsNotNull(programa1);
+                Assert.IsNotNull(programa1.Nome);
+
+                Assert.IsNull(programa2);
+
+                tx.Commit();
+            }
         }
     }
 }
