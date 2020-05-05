@@ -92,6 +92,10 @@
       <Project>{287edc83-7990-4262-8b47-9bc0e977f540}</Project>
       <Name>WindowsTime.Infraestrutura</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowsTime.Web\WindowsTime.Web.csproj">
+      <Project>{9c48aee4-e9e8-415f-8fb7-6db28d2bd09b}</Project>
+      <Name>WindowsTime.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Choose>

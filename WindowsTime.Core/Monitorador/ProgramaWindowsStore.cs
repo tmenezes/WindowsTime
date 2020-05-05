@@ -70,7 +70,6 @@ namespace WindowsTime.Core.Monitorador
             if (nomeValido)
                 return nomeDeExibicao;
 
-
             var isFrameHost = WindowsStoreApi.IsFrameHostProcess(Processo);
 
             return (isFrameHost)
@@ -91,21 +90,42 @@ namespace WindowsTime.Core.Monitorador
             if (nomeEhResource)
             {
                 var uri = new Uri(nomeDeExibicao);
-                var chave = string.Format("ms-resource://{0}/resources/{1}", PackageId.Name, uri.Segments.Last());
-                var nomeDeExibicaoPorResource = WindowsApi.GetResourceString(PackageId.ResourcesPriFilePath, chave);
-
-                bool nomeDoResourceValido = !string.IsNullOrEmpty(nomeDeExibicaoPorResource);
-                if (!nomeDoResourceValido)
+                var chave = $"ms-resource://{PackageId.Name}/resources/{uri.Segments.Last()}";
+                var possibleResourcePaths = new[]
                 {
-                    nomeDeExibicao = null;
-                    return false;
+                    GetResourcesPath(PackageId.ResourcesPriFilePath),
+                    GetResourcesPath(Path.GetDirectoryName(Executavel)),
+                };
+
+                foreach (var resourcePath in possibleResourcePaths)
+                {
+                    var nomeDeExibicaoPorResource = WindowsApi.GetResourceString(resourcePath, chave);
+
+                    var nomeDoResourceValido = !string.IsNullOrEmpty(nomeDeExibicaoPorResource);
+                    if (nomeDoResourceValido)
+                    {
+                        nomeDeExibicao = nomeDeExibicaoPorResource;
+                        return true;
+                    }
                 }
 
-                nomeDeExibicao = nomeDeExibicaoPorResource;
-                return true;
+                nomeDeExibicao = null;
+                return false;
             }
 
             return true;
+        }
+        private string GetResourcesPath(string basePath)
+        {
+            var containsBasePath = PackageId.ResourcesPriFilePath.Contains(basePath);
+            if (containsBasePath)
+                return basePath;
+
+            var containsInstallationFolder = PackageId.ResourcesPriFilePath.Contains(PackageId.InstalledFolder);
+            if (containsInstallationFolder)
+                return PackageId.ResourcesPriFilePath.Replace(PackageId.InstalledFolder, basePath);
+
+            return Path.Combine(basePath, PackageId.ResourcesPriFilePath);
         }
 
         private Image GetIcone()
@@ -126,27 +146,31 @@ namespace WindowsTime.Core.Monitorador
             if (AppxPackage == null)
                 return IconeHelper.GetIcone(this);
 
-
             var aplicacao = AppxPackage.Applications.First();
             var nomeArquivoLogo = aplicacao.VisualElements.GetLogo();
-            var arquivoLogoBase = Path.Combine(PackageId.InstalledFolder, nomeArquivoLogo);
-
-            foreach (var subPasta in ConfiguracaoHelper.Logo.PastasDeContraste)
+            var possibleLogoPaths = new[]
             {
-                var arquivoLogo = Path.Combine(Path.GetDirectoryName(arquivoLogoBase), subPasta, Path.GetFileName(nomeArquivoLogo));
+                Path.Combine(PackageId.InstalledFolder, nomeArquivoLogo),
+                Path.Combine(Path.GetDirectoryName(Executavel), nomeArquivoLogo),
+            };
 
-                foreach (var tamanho in ConfiguracaoHelper.Logo.TamanhosAlvo)
+            foreach (var logoPath in possibleLogoPaths)
+                foreach (var subPasta in ConfiguracaoHelper.Logo.PastasDeContraste)
                 {
-                    var arquivoLogoComTamanho = Path.ChangeExtension(arquivoLogo, tamanho);
-                    if (!File.Exists(arquivoLogoComTamanho))
-                        continue;
+                    var arquivoLogo = Path.Combine(Path.GetDirectoryName(logoPath), subPasta, Path.GetFileName(nomeArquivoLogo));
 
-                    var logo = Image.FromFile(arquivoLogoComTamanho);
-                    var bgColor = GetBackGroundColor(aplicacao);
+                    foreach (var tamanho in ConfiguracaoHelper.Logo.TamanhosAlvo)
+                    {
+                        var arquivoLogoComTamanho = Path.ChangeExtension(arquivoLogo, tamanho);
+                        if (!File.Exists(arquivoLogoComTamanho))
+                            continue;
 
-                    return IconeHelper.GetIcone(logo, bgColor);
+                        var logo = Image.FromFile(arquivoLogoComTamanho);
+                        var bgColor = GetBackGroundColor(aplicacao);
+
+                        return IconeHelper.GetIcone(logo, bgColor);
+                    }
                 }
-            }
 
             return IconeHelper.GetIcone(this);
         }

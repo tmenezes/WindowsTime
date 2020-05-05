@@ -15,7 +15,6 @@ namespace WindowsTime.Core.Monitorador.Helpers
             if (IconeResource == null)
                 throw new InvalidOperationException("IconeResource inválido");
 
-
             if (programa.Processo == null)
                 return IconeResource.WindowsLogo;
 
