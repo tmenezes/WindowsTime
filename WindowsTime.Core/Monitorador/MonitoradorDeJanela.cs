@@ -71,6 +71,9 @@ namespace WindowsTime.Core.Monitorador
 
 
             var handle = WindowsApi.GetActiveWindowHandle();
+            if (handle == (IntPtr)0)
+                return;
+
             var janela = GetJanelaCorrente(handle);
 
             if (!janela.EstaAtiva)

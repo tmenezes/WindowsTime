@@ -88,7 +88,7 @@ namespace WindowsTime.Core.Monitorador.Api
             }
         }
 
-        [HandleProcessCorruptedStateExceptions()]
+        [HandleProcessCorruptedStateExceptions]
         public static Process GetWindowsStoreRealProcess(IntPtr windowHanle)
         {
             try
@@ -212,13 +212,13 @@ namespace WindowsTime.Core.Monitorador.Api
             return IntPtr.Zero;
         }
 
-        private static List<IntPtr> GetChildWindows(IntPtr windowHanle)
+        private static List<IntPtr> GetChildWindows(IntPtr windowHandle)
         {
-            var childWindows = WindowsApi.GetChildWindows(windowHanle);
+            var childWindows = WindowsApi.GetChildWindows(windowHandle);
             int tries = 1;
             while (!childWindows.Any())
             {
-                childWindows = WindowsApi.GetChildWindows(windowHanle);
+                childWindows = WindowsApi.GetChildWindows(windowHandle);
                 Thread.Sleep(100);
 
                 tries++;

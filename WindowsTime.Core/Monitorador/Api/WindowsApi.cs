@@ -29,6 +29,9 @@ namespace WindowsTime.Core.Monitorador.Api
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
+        [DllImport("Kernel32.dll")]
+        internal static extern uint QueryFullProcessImageName([In] IntPtr hProcess, [In] uint dwFlags, [Out] StringBuilder lpExeName, [In, Out] ref uint lpdwSize);
+
         [DllImport("Shell32.dll", EntryPoint = "ExtractIconExW", CharSet = CharSet.Unicode, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         internal static extern int ExtractIconEx(string sFile, int iIndex, out IntPtr piLargeVersion, out IntPtr piSmallVersion, int amountIcons);
 
@@ -95,6 +98,16 @@ namespace WindowsTime.Core.Monitorador.Api
             return GetWindowThreadProcessId(handle, out processId) > 0
                        ? ProcessHelper.GetProcess((int)processId)
                        : null;
+        }
+
+        [HandleProcessCorruptedStateExceptions]
+        public static string GetMainModuleFileName(Process process, int buffer = 1024)
+        {
+            var fileNameBuilder = new StringBuilder(buffer);
+            uint bufferLength = (uint)fileNameBuilder.Capacity + 1;
+            return QueryFullProcessImageName(process.Handle, 0, fileNameBuilder, ref bufferLength) != 0
+                    ? fileNameBuilder.ToString()
+                    : null;
         }
 
         [HandleProcessCorruptedStateExceptions()]

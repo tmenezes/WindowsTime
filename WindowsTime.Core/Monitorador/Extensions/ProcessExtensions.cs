@@ -56,8 +56,12 @@ namespace WindowsTime.Core.Monitorador.Extensions
         {
             try
             {
-                if (HasMainModule(process))
-                    return WindowsApi.GetIcon(process.MainModule.FileName, 0, true);
+                var mainModuleFilename = HasMainModule(process)
+                        ? process.MainModule.FileName
+                        : WindowsApi.GetMainModuleFileName(process);
+                
+                if (!string.IsNullOrEmpty(mainModuleFilename))
+                    return WindowsApi.GetIcon(mainModuleFilename, 0, true);
 
                 if (IsExplorerProcess(process))
                     return WindowsApi.GetExplorerIcon(0, true);
