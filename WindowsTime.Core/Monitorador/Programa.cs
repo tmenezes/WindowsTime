@@ -18,7 +18,7 @@ namespace WindowsTime.Core.Monitorador
         public int TotalDeAreasVisitadas { get; private set; }
 
         public IEnumerable<string> AreasVisitadas { get { return _areasVisitadas.Keys.ToList(); } }
-        public abstract Image Icone { get; }
+        public abstract Image Icon { get; }
 
 
         // construtor

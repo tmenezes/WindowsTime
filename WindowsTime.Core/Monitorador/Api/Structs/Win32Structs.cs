@@ -29,4 +29,27 @@ namespace WindowsTime.Core.Monitorador.Api.Structs
         [FieldOffset(6)]
         public ushort Major;
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int iLeft;
+        public int iTop;
+        public int iRight;
+        public int iBottom;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct GUITHREADINFO
+    {
+        public int    cbSize;
+        public int    flags;
+        public IntPtr hwndActive;
+        public IntPtr hwndFocus;
+        public IntPtr hwndCapture;
+        public IntPtr hwndMenuOwner;
+        public IntPtr hwndMoveSize;
+        public IntPtr hwndCaret;
+        public RECT   rectCaret;
+    }
 }

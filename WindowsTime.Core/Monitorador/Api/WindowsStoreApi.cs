@@ -13,7 +13,7 @@ namespace WindowsTime.Core.Monitorador.Api
 {
     public static class WindowsStoreApi
     {
-        private static readonly IDictionary<IntPtr, Process> windowsStoreWindowsHandles;// handle janela, processo
+        private static readonly IDictionary<IntPtr, Process> windowsStoreWindowsHandles; // handle janela, processo
         private static readonly IDictionary<string, bool> appFrameHostNames;
         private static bool loadingStoreProcess = false;
 
@@ -34,8 +34,10 @@ namespace WindowsTime.Core.Monitorador.Api
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
         private static extern uint GetPackageFullName(IntPtr hProcess, ref uint packageFullNameLength, StringBuilder packageFullName);
 
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+        private static extern uint GetPackagePath(ref PACKAGE_ID package, uint reserved, ref uint pathLength, StringBuilder path);
 
-        [HandleProcessCorruptedStateExceptions()]
+        [HandleProcessCorruptedStateExceptions]
         public static WindowsStorePackageId GetWindowsStorePackageId(Process process)
         {
             int len = 0;
@@ -52,7 +54,8 @@ namespace WindowsTime.Core.Monitorador.Api
                 PACKAGE_ID packageID = (PACKAGE_ID)Marshal.PtrToStructure(buffer, typeof(PACKAGE_ID));
 
                 var fullname = GetWindowsStorePackageFullName(process);
-                return new WindowsStorePackageId(packageID, fullname);
+                var path = GetWindowsStorePackagePath(packageID);
+                return new WindowsStorePackageId(packageID, fullname, path);
             }
             finally
             {
@@ -60,7 +63,7 @@ namespace WindowsTime.Core.Monitorador.Api
             }
         }
 
-        [HandleProcessCorruptedStateExceptions()]
+        [HandleProcessCorruptedStateExceptions]
         public static string GetWindowsStorePackageFullName(Process process)
         {
             try
@@ -89,19 +92,48 @@ namespace WindowsTime.Core.Monitorador.Api
         }
 
         [HandleProcessCorruptedStateExceptions]
-        public static Process GetWindowsStoreRealProcess(IntPtr windowHanle)
+        public static string GetWindowsStorePackagePath(PACKAGE_ID packageId)
         {
             try
             {
-                var childWindows = GetChildWindows(windowHanle);
+                uint pathLength = 0;
+                var pathSb = new StringBuilder();
+
+                var ret = GetPackagePath(ref packageId, 0, ref pathLength, pathSb);
+
+                //if ((ret == APPMODEL_ERROR_NO_PACKAGE) || (packageFullNameLength == 0))
+                //{
+                //    // Not a WindowsStoreApp process
+                //    return;
+                //}
+
+                // Call again, now that we know the size
+                pathSb = new StringBuilder((int)pathLength);
+                ret = GetPackagePath(ref packageId, 0, ref pathLength, pathSb);
+
+                return pathSb.ToString();
+            }
+            catch (Exception)
+            {
+                return String.Empty;
+            }
+        }
+
+
+        [HandleProcessCorruptedStateExceptions]
+        public static Process GetWindowsStoreRealProcess(IntPtr windowHandle)
+        {
+            try
+            {
+                var childWindows = GetChildWindows(windowHandle);
                 if (!childWindows.Any())
-                    return WindowsApi.GetProcess(windowHanle);
+                    return WindowsApi.GetProcess(windowHandle);
 
 
                 var processes = childWindows.Select(i => WindowsApi.GetProcess(i))
                                             .GroupBy(p => p.Id)
                                             .Select(group => group.First())
-                                            .Where(p => !appFrameHostNames.ContainsKey(p.ProcessName))
+                                            .Where(p => p.ProcessName != "ApplicationFrameHost")
                                             .ToList();
                 if (processes.Count == 1)
                     return processes.First();
@@ -109,13 +141,13 @@ namespace WindowsTime.Core.Monitorador.Api
                 foreach (var process in processes)
                 {
                     var handle = FindWindowsStoreWindowHandle(process);
-                    var isTheWindowHandleProcess = (handle == windowHanle) || (WindowsApi.GetParent(handle) == windowHanle);
+                    var isTheWindowHandleProcess = (handle == windowHandle) || (WindowsApi.GetParent(handle) == windowHandle);
 
                     if (isTheWindowHandleProcess)
                         return process;
                 }
 
-                return WindowsApi.GetProcess(windowHanle);
+                return WindowsApi.GetProcess(windowHandle);
             }
             catch (Exception)
             {
@@ -228,7 +260,7 @@ namespace WindowsTime.Core.Monitorador.Api
             return childWindows;
         }
 
-        private static void LoadRealProcess(IntPtr windowHanle)
+        private static void LoadRealProcess(IntPtr windowHandle)
         {
             // wait for background thread loading Windows Store processes
             if (loadingStoreProcess)
@@ -236,12 +268,12 @@ namespace WindowsTime.Core.Monitorador.Api
                 while (loadingStoreProcess)
                     Thread.Sleep(50);
 
-                if (windowsStoreWindowsHandles.ContainsKey(windowHanle))
+                if (windowsStoreWindowsHandles.ContainsKey(windowHandle))
                     return;
             }
 
 
-            var childWindows = WindowsApi.GetChildWindows(windowHanle);
+            var childWindows = WindowsApi.GetChildWindows(windowHandle);
             if (!childWindows.Any())
                 return;
 

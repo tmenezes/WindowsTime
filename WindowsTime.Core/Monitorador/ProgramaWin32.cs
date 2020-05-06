@@ -8,7 +8,7 @@ namespace WindowsTime.Core.Monitorador
     public class ProgramaWin32 : Programa
     {
         private Image _icone;
-        public override Image Icone { get { return _icone ?? (_icone = IconeHelper.GetIcone(this)); } }
+        public override Image Icon { get { return _icone ?? (_icone = IconeHelper.GetIcone(this)); } }
 
 
         public ProgramaWin32(Process processo, Janela janela)

@@ -25,7 +25,7 @@ namespace WindowsTime.Core.Monitorador.Api
         public string InstalledFolder { get; set; }
         public string ResourcesPriFilePath { get; set; }
 
-        public WindowsStorePackageId(PACKAGE_ID packageId, string fullname)
+        public WindowsStorePackageId(PACKAGE_ID packageId, string fullname, string path)
         {
             Reserved = (int)packageId.reserved;
             ProcessorArchitecture = (int)packageId.processorArchitecture;
@@ -42,7 +42,7 @@ namespace WindowsTime.Core.Monitorador.Api
             Build = (int)packageId.version.Build;
             Revision = (int)packageId.version.Revision;
 
-            InstalledFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps", FullName);
+            InstalledFolder = path;
             ResourcesPriFilePath = Path.Combine(InstalledFolder, "resources.pri");
         }
 

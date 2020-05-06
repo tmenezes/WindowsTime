@@ -14,11 +14,11 @@ namespace WindowsTime.Core.Monitorador
 {
     public class ProgramaWindowsStore : Programa
     {
-        private Image _icone;
+        private Image _icon;
         public WindowsStorePackageId PackageId { get; private set; }
         public Package AppxPackage { get; private set; }
 
-        public override Image Icone { get { return _icone ?? (_icone = GetIcone()); } }
+        public override Image Icon => _icon ?? (_icon = GetIcon());
 
 
         // construtor
@@ -27,13 +27,13 @@ namespace WindowsTime.Core.Monitorador
         {
             Tipo = TipoDePrograma.WindowsStore;
 
-            Processo = ObterProcessoReal(processo, janela);
+            Processo = GetRealProcess(processo, janela);
 
-            CarregarDadosDoPrograma();
+            LoadProgramData();
         }
 
 
-        private Process ObterProcessoReal(Process processo, Janela janela)
+        private Process GetRealProcess(Process processo, Janela janela)
         {
             var isFrameHost = WindowsStoreApi.IsFrameHostProcess(processo);
             if (!isFrameHost)
@@ -45,28 +45,36 @@ namespace WindowsTime.Core.Monitorador
 
             return WindowsStoreApi.GetWindowsStoreRealProcess(janela.WindowsHandle) ?? WindowsApi.GetProcess(janela.WindowsHandle);
         }
-        private void CarregarDadosDoPrograma()
+        private void LoadProgramData()
         {
-            var isFrameHost = WindowsStoreApi.IsFrameHostProcess(Processo);
-
             PackageId = WindowsStoreApi.GetWindowsStorePackageId(Processo);
             Executavel = Processo.GetFileName();
 
-            var pastaBase = (isFrameHost)
-                ? PackageId.InstalledFolder
-                : Path.GetDirectoryName(Executavel);
+            AppxPackage = SerializationHelper.DeSerializeObject<Package>(GetAppxManifestPath()); ;
+            Nome = GetName();
+        }
+        private string GetAppxManifestPath()
+        {
+            var possiblePaths = new[]
+            {
+                PackageId.InstalledFolder,
+                Path.GetDirectoryName(Executavel),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "WindowsApps", PackageId.FullName),
+            };
 
-            var arquivoAppxManifest = Path.Combine(pastaBase, "AppxManifest.xml");
-            var pacoteAppxManifest = SerializationHelper.DeSerializeObject<Package>(arquivoAppxManifest);
-
-            AppxPackage = pacoteAppxManifest;
-            Nome = ObterNome();
+            foreach (var path in possiblePaths)
+            {
+                var appxManifestFile = Path.Combine(path, "AppxManifest.xml");
+                if (File.Exists(appxManifestFile))
+                    return appxManifestFile;
+            }
+            return null;
         }
 
-        private string ObterNome()
+        private string GetName()
         {
             string nomeDeExibicao;
-            var nomeValido = TentarObterNomeDoPacote(out nomeDeExibicao);
+            var nomeValido = TryGetNmeFromPackage(out nomeDeExibicao);
             if (nomeValido)
                 return nomeDeExibicao;
 
@@ -76,7 +84,7 @@ namespace WindowsTime.Core.Monitorador
                 ? PackageId.Name ?? "Windows Store App"
                 : Processo.GetDescription() ?? PackageId.Name ?? PackageId.FullName ?? "Windows Store App";
         }
-        private bool TentarObterNomeDoPacote(out string nomeDeExibicao)
+        private bool TryGetNmeFromPackage(out string nomeDeExibicao)
         {
             nomeDeExibicao = (AppxPackage != null)
                 ? AppxPackage.GetDisplayName()
@@ -128,45 +136,46 @@ namespace WindowsTime.Core.Monitorador
             return Path.Combine(basePath, PackageId.ResourcesPriFilePath);
         }
 
-        private Image GetIcone()
+        private Image GetIcon()
         {
             var isFrameHost = WindowsStoreApi.IsFrameHostProcess(Processo);
-
             if (isFrameHost)
-                return GetWindowsStoreIcone();
+                return GetWindowsStoreIcon();
 
-            var iconeDoExecutavel = (Processo != null) ? Processo.GetIcon() : null;
-            if (iconeDoExecutavel != null)
-                return iconeDoExecutavel.ToBitmap();
+            var exeIcon = Processo?.GetIcon();
+            if (exeIcon != null)
+                return exeIcon.ToBitmap();
 
-            return GetWindowsStoreIcone();
+            return GetWindowsStoreIcon();
         }
-        private Image GetWindowsStoreIcone()
+        private Image GetWindowsStoreIcon()
         {
             if (AppxPackage == null)
                 return IconeHelper.GetIcone(this);
 
-            var aplicacao = AppxPackage.Applications.First();
-            var nomeArquivoLogo = aplicacao.VisualElements.GetLogo();
+            var app = AppxPackage.Applications.First();
+            var appLogo = app.VisualElements.GetLogo();
+
             var possibleLogoPaths = new[]
             {
-                Path.Combine(PackageId.InstalledFolder, nomeArquivoLogo),
-                Path.Combine(Path.GetDirectoryName(Executavel), nomeArquivoLogo),
+                Path.Combine(PackageId.InstalledFolder, appLogo),
+                Path.Combine(Path.GetDirectoryName(Executavel), appLogo),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "WindowsApps", PackageId.FullName),
             };
 
             foreach (var logoPath in possibleLogoPaths)
                 foreach (var subPasta in ConfiguracaoHelper.Logo.PastasDeContraste)
                 {
-                    var arquivoLogo = Path.Combine(Path.GetDirectoryName(logoPath), subPasta, Path.GetFileName(nomeArquivoLogo));
+                    var logoFile = Path.Combine(Path.GetDirectoryName(logoPath), subPasta, Path.GetFileName(appLogo));
 
-                    foreach (var tamanho in ConfiguracaoHelper.Logo.TamanhosAlvo)
+                    foreach (var size in ConfiguracaoHelper.Logo.TamanhosAlvo)
                     {
-                        var arquivoLogoComTamanho = Path.ChangeExtension(arquivoLogo, tamanho);
-                        if (!File.Exists(arquivoLogoComTamanho))
+                        var logoFileAlternativeSize = Path.ChangeExtension(logoFile, size);
+                        if (!File.Exists(logoFileAlternativeSize))
                             continue;
 
-                        var logo = Image.FromFile(arquivoLogoComTamanho);
-                        var bgColor = GetBackGroundColor(aplicacao);
+                        var logo = Image.FromFile(logoFileAlternativeSize);
+                        var bgColor = GetBackGroundColor(app);
 
                         return IconeHelper.GetIcone(logo, bgColor);
                     }

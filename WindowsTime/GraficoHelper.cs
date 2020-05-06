@@ -16,7 +16,7 @@ namespace WindowsTime
                                                  Nome = group.Key,
                                                  TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividadeTotal.TotalSeconds),
                                                  TotalJanelas = group.Sum(i => i.Programa.TotalDeAreasVisitadas),
-                                                 Icone = group.First().Programa.Icone,
+                                                 Icone = group.First().Programa.Icon,
                                              })
                                              .OrderByDescending(i => i.TempoDeUtilizacao)
                                              .ToList();
@@ -32,7 +32,7 @@ namespace WindowsTime
                                                  Nome = group.Key,
                                                  TempoDeUtilizacao = group.Sum(i => i.TempoDeAtividadeTotal.TotalSeconds),
                                                  TotalJanelas = group.Sum(i => i.Programa.TotalDeAreasVisitadas),
-                                                 Icone = group.First().Programa.Icone,
+                                                 Icone = group.First().Programa.Icon,
                                              })
                                              .OrderByDescending(i => i.TempoDeUtilizacao)
                                              .ToList();

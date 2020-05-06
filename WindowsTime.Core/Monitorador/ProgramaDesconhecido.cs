@@ -5,7 +5,7 @@ namespace WindowsTime.Core.Monitorador
 {
     public class ProgramaDesconhecido : Programa
     {
-        public override Image Icone { get { return IconeHelper.IconeResource.WindowsLogo; } }
+        public override Image Icon { get { return IconeHelper.IconeResource.WindowsLogo; } }
 
         public ProgramaDesconhecido(Janela janela)
             : base(janela)

@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using WindowsTime.Core.Monitorador.Api.Structs;
 using WindowsTime.Core.Monitorador.Extensions;
 using WindowsTime.Core.Monitorador.Helpers;
 
@@ -28,6 +29,10 @@ namespace WindowsTime.Core.Monitorador.Api
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool GetGUIThreadInfo(IntPtr hTreadID, ref GUITHREADINFO lpgui);
+
 
         [DllImport("Kernel32.dll")]
         internal static extern uint QueryFullProcessImageName([In] IntPtr hProcess, [In] uint dwFlags, [Out] StringBuilder lpExeName, [In, Out] ref uint lpdwSize);
@@ -73,13 +78,13 @@ namespace WindowsTime.Core.Monitorador.Api
         private static extern int SHLoadIndirectString(string pszSource, StringBuilder pszOutBuf, int cchOutBuf, IntPtr ppvReserved);
 
 
-        [HandleProcessCorruptedStateExceptions()]
+        [HandleProcessCorruptedStateExceptions]
         public static IntPtr GetActiveWindowHandle()
         {
             return GetForegroundWindow();
         }
 
-        [HandleProcessCorruptedStateExceptions()]
+        [HandleProcessCorruptedStateExceptions]
         public static string GetWindowsText(IntPtr handle)
         {
             const int chars = 256;
@@ -90,7 +95,15 @@ namespace WindowsTime.Core.Monitorador.Api
                        : "[ indefinido ]";
         }
 
-        [HandleProcessCorruptedStateExceptions()]
+        public static bool GetInfo(IntPtr processId, out GUITHREADINFO lpgui)
+        {
+            lpgui = new GUITHREADINFO();
+            lpgui.cbSize = Marshal.SizeOf(lpgui);
+
+            return GetGUIThreadInfo(processId, ref lpgui); //<!- error here, returns false
+        }
+
+        [HandleProcessCorruptedStateExceptions]
         public static Process GetProcess(IntPtr handle)
         {
             uint processId;
@@ -110,7 +123,7 @@ namespace WindowsTime.Core.Monitorador.Api
                     : null;
         }
 
-        [HandleProcessCorruptedStateExceptions()]
+        [HandleProcessCorruptedStateExceptions]
         public static bool IsWindowsStoreApp(Process process)
         {
             try
@@ -123,7 +136,7 @@ namespace WindowsTime.Core.Monitorador.Api
             }
         }
 
-        [HandleProcessCorruptedStateExceptions()]
+        [HandleProcessCorruptedStateExceptions]
         public static List<IntPtr> GetChildWindows(IntPtr windowHanle)
         {
             var result = new List<IntPtr>();
@@ -143,7 +156,7 @@ namespace WindowsTime.Core.Monitorador.Api
             return result;
         }
 
-        [HandleProcessCorruptedStateExceptions()]
+        [HandleProcessCorruptedStateExceptions]
         public static string GetResourceString(string resourcePath, string resourceKey)
         {
             string resourceManifestString = string.Format("@{{{0}? {1}}}", resourcePath, resourceKey);
@@ -165,7 +178,7 @@ namespace WindowsTime.Core.Monitorador.Api
             return GetIcon(explorerPath, number, largeIcon);
         }
 
-        [HandleProcessCorruptedStateExceptions()]
+        [HandleProcessCorruptedStateExceptions]
         public static Icon GetIcon(string filename, int number, bool largeIcon)
         {
             try
